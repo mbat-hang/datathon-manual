@@ -1,0 +1,359 @@
+---
+pagetitle: "Trying out mongodb"
+---
+
+# NoSQL and MongoDB: An Introduction for Statisticians
+
+*Written for readers comfortable with R, data frames, and relational databases
+(SQL, normalized tables, joins).*
+
+--------------------------------------------------------------------------------
+
+## 1. Why This Tutorial Exists
+
+If you've spent time with relational databases, your mental model of data
+storage is probably something like this:
+
+- Data lives in **tables** with a **fixed schema** (columns defined in advance,
+  with types).
+- Rows relate to each other through **foreign keys**, and you stitch related
+  data back together with **joins**.
+- You enforce consistency using constraints (primary keys, foreign keys,
+  `NOT NULL`, etc.).
+- A single logical "thing" --- like a customer with multiple orders --- is
+  normalized across several tables to avoid duplication.
+
+This model maps naturally onto how you already think about data as a
+statistician: a rectangular data frame, one row per observation, one column per
+variable, `merge()` or `dplyr::left_join()` to combine data frames.
+
+NoSQL databases (of which MongoDB is the most popular example) relax or abandon
+several of these assumptions. Understanding *why* they do this, and *what you
+gain and lose*, is the goal of this tutorial.
+
+--------------------------------------------------------------------------------
+
+## 2. What "NoSQL" Actually Means
+
+"NoSQL" is a loose umbrella term (sometimes glossed as "Not Only SQL") covering
+several different data models that don't follow the relational (table-and-join)
+paradigm. The major families are:
+
+  | Type        | Data model                            | Example systems  |
+  | ----------- | ------------------------------------- | ---------------- |
+  | Document    | Semi-structured documents (JSON-like) | MongoDB, CouchDB |
+  | Key-value   | Simple key → value lookups            | Redis, DynamoDB  |
+  | Wide-column | Sparse, column-family tables          | Cassandra, HBase |
+  | Graph       | Nodes and edges                       | Neo4j, ArangoDB  |
+
+This tutorial focuses on **document stores**, and specifically **MongoDB**,
+because they're the most common entry point and the comparison to relational
+tables is the most direct.
+
+--------------------------------------------------------------------------------
+
+## 3. The Core Idea: Documents Instead of Rows
+
+In a relational database, a customer and their orders might be split across two
+tables:
+
+```sql
+-- customers table
+customer_id | name    | email
+------------|---------|------------------
+1           | Alice   | alice@email.com
+
+-- orders table
+order_id | customer_id | item      | amount
+---------|-------------|-----------|-------
+101      | 1           | Widget    | 9.99
+102      | 1           | Gadget    | 19.99
+```
+
+To get "Alice and all her orders," you `JOIN` on `customer_id`.
+
+In MongoDB, you'd likely store this as a **single document**:
+
+```json
+{
+  "_id": "1",
+  "name": "Alice",
+  "email": "alice@email.com",
+  "orders": [
+    { "item": "Widget", "amount": 9.99 },
+    { "item": "Gadget", "amount": 19.99 }
+  ]
+}
+```
+
+A "document" is essentially a JSON object (technically stored as **BSON**, a
+binary superset of JSON with extra types like dates and integers). Documents are
+grouped into **collections**, which are the loose analogue of tables --- except
+a collection has no fixed schema. Two documents in the same collection can have
+completely different fields.
+
+### A translation table for vocabulary
+
+  | Relational term | MongoDB term                                            |
+  | --------------- | ------------------------------------------------------- |
+  | Database        | Database                                                |
+  | Table           | Collection                                              |
+  | Row             | Document                                                |
+  | Column          | Field                                                   |
+  | Primary key     | `_id` field                                             |
+  | Join            | Embedding, or `$lookup` (an actual join-like operation) |
+  | Schema (rigid)  | Schema (optional / flexible)                            |
+
+--------------------------------------------------------------------------------
+
+## 4. Why Embed Instead of Normalize?
+
+This is the conceptual heart of the difference, and it's worth dwelling on
+because it inverts a habit that's deeply ingrained if you've learned relational
+design.
+
+**Relational design philosophy:** normalize aggressively. Store each fact once.
+Avoid redundancy. Joins are cheap(-ish) and consistency matters more than read
+speed.
+
+**Document design philosophy:** model around your *access patterns*. If you
+almost always fetch a customer along with their orders together, store them
+together, even if that means the word "Widget" is duplicated across many
+documents. Reads become a single lookup instead of a join across multiple tables ---
+this matters a lot for web-application workloads with high read volume and
+simple, predictable query shapes.
+
+The tradeoff: - **Relational**: harder to scale horizontally, but strong
+guarantees around consistency and no duplicated data to keep in sync. -
+**Document**: easier to scale horizontally and often faster for "fetch this one
+entity and everything about it" queries, but you may duplicate data and must
+manage the consequences (e.g., if Alice changes her email, and it's embedded in
+old order documents, you may need to update it in multiple places, or decide you
+don't care).
+
+There's no free lunch here --- it's an explicit modeling decision, not a
+strictly-better technology.
+
+--------------------------------------------------------------------------------
+
+## 5. Schema Flexibility: A Blessing and a Curse
+
+In a relational database, adding a column to a 10-million-row table requires an
+`ALTER TABLE` migration and some care. In MongoDB, you can insert a document
+with a new field at any time --- the collection doesn't complain.
+
+For a statistician, the closest analogy is the difference between:
+
+- An R `data.frame`/tibble with fixed columns (relational table), versus
+- A `list` of `list`s, where each element can have different named entries
+  (MongoDB collection).
+
+```r
+# Relational-style: a data.frame, fixed columns
+df <- data.frame(id = 1:2, name = c("Alice", "Bob"), age = c(30, NA))
+
+# Document-style: a list of lists, heterogeneous structure
+docs <- list(
+  list(id = 1, name = "Alice", age = 30, hobbies = c("chess", "running")),
+  list(id = 2, name = "Bob") # no age, no hobbies — and that's fine
+)
+```
+
+This flexibility is genuinely useful when your data is naturally irregular
+(user-generated content, event logs with varying attributes, nested/hierarchical
+records). It's a liability when you *want* the enforcement --- e.g., you want
+the database itself to guarantee that `age` is always numeric, or that every
+document has an `email`. MongoDB does support optional **schema validation**
+rules, but they're opt-in rather than the default posture of the system.
+
+--------------------------------------------------------------------------------
+
+## 6. Querying: `dplyr`/SQL Habits vs. MongoDB's Query Language
+
+MongoDB queries are expressed as documents themselves (essentially, nested
+lists/JSON), which feels unusual at first if you're used to SQL's
+`SELECT ... WHERE ...` syntax or `dplyr::filter()`.
+
+### Comparison table
+
+  | Task              | SQL                                      | dplyr                                      | MongoDB (shell syntax)                       |
+  | ----------------- | ---------------------------------------- | ------------------------------------------ | -------------------------------------------- |
+  | Filter rows       | `SELECT * FROM orders WHERE amount > 10` | `filter(orders, amount > 10)`              | `db.orders.find({ amount: { $gt: 10 } })`    |
+  | Select columns    | `SELECT item, amount FROM orders`        | `select(orders, item, amount)`             | `db.orders.find({}, { item: 1, amount: 1 })` |
+  | Sort              | `ORDER BY amount DESC`                   | `arrange(desc(amount))`                    | `.sort({ amount: -1 })`                      |
+  | Group + aggregate | `GROUP BY customer_id`                   | `group_by(customer_id) %>% summarise(...)` | `$group` stage in an aggregation pipeline    |
+
+MongoDB's analogue to a SQL query with `GROUP BY`/joins/multiple transformations
+is the **aggregation pipeline** --- a sequence of stages, each transforming the
+documents flowing through it, conceptually similar to chaining `dplyr` verbs
+with `%>%`:
+
+```javascript
+db.orders.aggregate([
+  { $match: { amount: { $gt: 5 } } },       // like filter()
+  { $group: { _id: "$customer_id",
+              total: { $sum: "$amount" } } }, // like group_by() %>% summarise()
+  { $sort: { total: -1 } }                   // like arrange(desc())
+])
+```
+
+If you're comfortable reading a `dplyr` pipe, the aggregation pipeline will feel
+more familiar than it first appears --- it's a sequence of verbs applied in
+order, just expressed as JSON stage objects instead of R function calls.
+
+--------------------------------------------------------------------------------
+
+## 7. Using MongoDB from R
+
+You don't have to leave R to work with MongoDB. The `mongolite` package provides
+a clean interface, and the workflow will feel close to what you already do with
+`DBI`.
+
+```r
+install.packages("mongolite")
+library(mongolite)
+
+# Connect to a collection (analogous to opening a DBI connection to a table)
+orders <- mongo(collection = "orders", db = "shop", url = "mongodb://localhost")
+
+# Insert documents (rows) — takes a data.frame directly
+orders$insert(data.frame(item = "Widget", amount = 9.99, customer_id = 1))
+
+# Query and get a data.frame back — this is the key convenience
+result <- orders$find('{"amount": {"$gt": 5}}')
+head(result)
+
+# Aggregation pipeline, expressed as a JSON string
+pipeline <- '[
+  {"$group": {"_id": "$customer_id", "total": {"$sum": "$amount"}}},
+  {"$sort": {"total": -1}}
+]'
+summary_df <- orders$aggregate(pipeline)
+```
+
+Compare this to a typical relational workflow with `DBI`:
+
+```r
+library(DBI)
+library(RPostgres)
+
+con <- dbConnect(RPostgres::Postgres(), dbname = "shop")
+result <- dbGetQuery(con, "SELECT * FROM orders WHERE amount > 5")
+```
+
+The big practical difference: `mongolite` queries and pipeline stages are
+written as **JSON strings**, not SQL strings --- but the round trip (query in,
+tibble/data.frame out) is conceptually identical, which is good news for how
+much of your existing R workflow transfers.
+
+--------------------------------------------------------------------------------
+
+## 8. Consistency, Transactions, and Why This Matters to You
+
+Relational databases are traditionally built around **ACID** guarantees
+(Atomicity, Consistency, Isolation, Durability) --- a transaction either fully
+happens or fully doesn't, and the database enforces referential integrity via
+constraints.
+
+Historically, NoSQL document stores traded some of these guarantees for
+scalability, often described (loosely) via the **CAP theorem**: in the presence
+of a network partition across distributed servers, a system must choose between
+**Consistency** (every read gets the latest write) and **Availability** (every
+request gets *a* response, possibly stale). Many early NoSQL systems leaned
+toward availability and "eventual consistency."
+
+Modern MongoDB has narrowed this gap substantially --- it now supports
+multi-document ACID transactions --- but the *default* mode of use, and the
+ecosystem's design instincts, still favor flexible, denormalized,
+single-document operations over enforced cross-table integrity. If your work
+involves financial ledgers or anything where "the numbers must always add up, no
+exceptions, ever," that's traditionally been relational-database territory, and
+it's worth understanding that this is a design lineage question, not just a
+feature checkbox --- you can bolt strong consistency onto MongoDB, but it's
+swimming against the current of how the system is typically used.
+
+--------------------------------------------------------------------------------
+
+## 9. When Each Approach Tends to Fit Better
+
+  | Favor relational (SQL) when...                                                                         | Favor document (MongoDB) when...                                                    |
+  | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+  | Your data is naturally tabular and stable in structure                                                 | Your data is nested, hierarchical, or has varying fields per record                 |
+  | You need complex multi-table joins and strong referential integrity                                    | You mostly fetch one entity plus its closely related data together                  |
+  | Strong consistency/transactions across entities is essential                                           | High write/read throughput and horizontal scaling matter more                       |
+  | Your analysis workflow is fundamentally about tidy rectangular tables (which is common in statistics!) | Your data is closer to logs, events, user profiles, or content with irregular shape |
+
+For a lot of statistical work --- clean, rectangular datasets destined for
+modeling --- relational databases (or just flat files/data frames) remain a very
+natural fit, and you'll often find yourself **flattening** MongoDB documents
+back into rectangular data frames before doing any actual analysis, since most
+statistical methods assume tidy, rectangular input.
+
+--------------------------------------------------------------------------------
+
+## 10. A Worked Mini-Example: Same Data, Both Ways
+
+**Relational (two tables + a join):**
+
+```sql
+CREATE TABLE customers (customer_id INT PRIMARY KEY, name TEXT);
+CREATE TABLE orders (
+  order_id INT PRIMARY KEY,
+  customer_id INT REFERENCES customers(customer_id),
+  item TEXT,
+  amount NUMERIC
+);
+
+SELECT c.name, o.item, o.amount
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id;
+```
+
+**Document (one collection, embedded):**
+
+```r
+library(mongolite)
+customers <- mongo("customers", db = "shop")
+
+customers$insert('{
+  "_id": 1,
+  "name": "Alice",
+  "orders": [
+    {"item": "Widget", "amount": 9.99},
+    {"item": "Gadget", "amount": 19.99}
+  ]
+}')
+
+# Pull it back out, then flatten to a data.frame for analysis
+raw <- customers$find()
+flat <- tidyr::unnest(raw, orders)
+```
+
+Notice the last line: even when working with MongoDB, you often end up reaching
+for `tidyr::unnest()` to get back to the rectangular shape you actually want for
+modeling. This is a common and completely normal pattern --- document stores are
+often optimized for how an *application* writes and reads data, not for how a
+*statistician* wants to analyze it, and translating between the two is a routine
+part of the workflow.
+
+--------------------------------------------------------------------------------
+
+## 11. Summary
+
+- MongoDB stores flexible, JSON-like **documents** in **collections**, instead
+  of enforcing rows-in-tables with a fixed schema.
+- The relational instinct to *normalize* is replaced by a document instinct to
+  *denormalize/embed*, optimized around how the data will be read.
+- Querying feels different syntactically (JSON-shaped queries, aggregation
+  pipelines) but maps conceptually onto SQL/`dplyr` verbs you already know.
+- Consistency and transactional guarantees are available in modern MongoDB but
+  aren't the system's traditional default posture the way they are in relational
+  databases.
+- For statistical analysis specifically, you'll frequently pull data *out* of
+  MongoDB and flatten it back into rectangular form --- so document databases
+  are often best understood as an operational/application-layer tool, with
+  relational-style rectangular data as the destination for actual modeling.
+
+If you want to go deeper next, worthwhile follow-ups are: MongoDB's aggregation
+pipeline in more depth, schema validation rules, and how sharding/replication
+work for horizontal scaling.

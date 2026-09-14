@@ -1,0 +1,444 @@
+---
+title: "Getting Your Competition Data Out of MongoDB Atlas and Into R"
+---
+
+This sheet walks you through connecting to the competition's MongoDB Atlas
+cluster from R, pulling the data down into a tidy data frame, and doing text
+analysis on it with the tidyverse / tidytext ecosystem. It's written against the
+actual schema you've been given (this is the AI Incident Database schema), so
+the field names below match what you'll actually see. Work through it top to
+bottom before the competition starts so the connection and package setup is one
+less thing to debug on the day.
+
+--------------------------------------------------------------------------------
+
+## 1. What you'll need
+
+- R (4.x) and RStudio (or Positron / VS Code with the R extension)
+- The connection string for your Atlas cluster (competition organisers will give
+  you this --- it looks like
+  `mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/`)
+- The database name (organisers will confirm this)
+- Your IP address allow-listed in Atlas (or "Allow access from anywhere" if the
+  organisers have set that up for the competition)
+
+Install the packages you'll need once, up front:
+
+```r
+install.packages(c(
+  "mongolite",   # connect to MongoDB and pull data into R
+  "tidyverse",   # dplyr, purrr, ggplot2, tidyr, etc.
+  "tidytext",    # tokenisation, sentiment lexicons, tf-idf
+  "jsonlite",    # handling nested JSON/BSON fields
+  "textclean",   # cleaning up messy text (contractions, HTML, etc.)
+  "wordcloud2",  # optional, for word cloud visuals
+  "widyr"        # optional, for word-pair / correlation analysis
+))
+```
+
+`mongolite` is the key package here --- it's the simplest way to talk to MongoDB
+from R and it hands data back as a data frame, which is exactly the shape
+tidyverse tools expect.
+
+--------------------------------------------------------------------------------
+
+## 2. Know your collections before you connect
+
+The schema you were given defines several collections. The two you'll care about
+for text analysis are:
+
+- **`reports`** --- the actual documents/articles. This is where the free text
+  lives. Key fields:
+  - `_id` (objectId), `report_number` (number) --- `report_number` is the
+    human-friendly key used to link a report to the incident(s) it belongs to
+  - `title`, `text`, `plain_text` --- `text` may retain markdown/HTML formatting
+    from the original source; `plain_text` is the cleaned version and is almost
+    always what you want for tokenising/sentiment work
+  - `description` --- a short editor-written summary, separate from the report
+    body
+  - `authors`, `submitters` --- arrays of strings
+  - `tags` --- array of free-text tags
+  - `language`, `source_domain`, `url`
+  - `date_published`, `date_submitted`, `date_downloaded`, `date_modified`
+  - `embedding` --- a precomputed vector embedding of the text (nested object
+    with a `vector` field); you generally won't need to touch this unless you're
+    doing similarity/clustering work directly on the provided vectors
+  - `is_incident_report` (boolean)
+
+- **`incidents`** --- the higher-level "event" that one or more reports are
+  describing. Key fields:
+  - `_id` (objectId), `incident_id` (number)
+  - `title`, `description`, `date`
+  - `reports` --- an **array of `report_number` values** (not full documents)
+    pointing back into the `reports` collection --- this is how you join the two
+    collections
+  - `Alleged deployer of AI system`, `Alleged developer of AI system`,
+    `Alleged harmed or nearly harmed parties` --- arrays of entity-name strings
+  - `implicated_systems` --- array of strings
+  - `editors`, `editor_notes`
+
+- **`classifications`** --- tagging/label data (an `attributes` field) that
+  links back to `incidents`/`reports` by their IDs --- useful if you want to
+  bring in categorical labels alongside the report text.
+
+- **`entities`** --- a lookup table of named entities (`entity_id`, `name`)
+  referenced by the "alleged deployer/developer/harmed parties" fields above.
+
+For most text-analysis tasks, you'll mainly work with `reports.plain_text`,
+optionally joined to `incidents` for grouping/labels.
+
+--------------------------------------------------------------------------------
+
+## 3. Connect to the cluster
+
+Never hard-code your username and password directly into a script you might
+commit to GitHub or share with teammates. Use an `.Renviron` file instead.
+
+**Create/edit your `.Renviron` file** (run this once):
+
+```r
+usethis::edit_r_environ()
+```
+
+Add a line like this, save, and restart R:
+
+```
+MONGO_URI="mongodb+srv://myusername:mypassword@cluster0.abcde.mongodb.net/"
+```
+
+**Now connect from your script** --- one connection object per collection:
+
+```r
+library(mongolite)
+
+db_name <- "your_database_name"   # confirm with organisers
+
+reports_conn <- mongo(collection = "reports", db = db_name,
+                       url = Sys.getenv("MONGO_URI"))
+
+incidents_conn <- mongo(collection = "incidents", db = db_name,
+                         url = Sys.getenv("MONGO_URI"))
+
+# quick sanity check
+reports_conn$count()
+incidents_conn$count()
+```
+
+If `$count()` returns a number rather than an error, you're connected.
+
+--------------------------------------------------------------------------------
+
+## 4. Pulling data out
+
+### 4.1 Grab the fields you actually need
+
+Don't pull every field (especially not `embedding`, which is a large numeric
+vector per document) if you don't need it. Use the `fields` argument to project
+server-side:
+
+```r
+library(tidyverse)
+
+reports <- reports_conn$find(
+  fields = '{
+    "_id": 1, "report_number": 1, "title": 1, "plain_text": 1,
+    "description": 1, "tags": 1, "authors": 1, "language": 1,
+    "source_domain": 1, "date_published": 1
+  }'
+) |> as_tibble()
+
+glimpse(reports)
+```
+
+### 4.2 Filter server-side
+
+`mongolite` accepts standard MongoDB query syntax as a JSON string, e.g. to grab
+only English-language reports:
+
+```r
+reports_en <- reports_conn$find(
+  query  = '{"language": "en"}',
+  fields = '{"_id": 1, "report_number": 1, "title": 1, "plain_text": 1}'
+) |> as_tibble()
+```
+
+### 4.3 Pull the incidents and join on `report_number`
+
+`incidents$reports` is an array of `report_number`s, not embedded report
+documents, so joining means unnesting that array and matching it up:
+
+```r
+incidents <- incidents_conn$find(
+  fields = '{
+    "_id": 1, "incident_id": 1, "title": 1, "description": 1, "date": 1,
+    "reports": 1, "Alleged deployer of AI system": 1,
+    "Alleged developer of AI system": 1,
+    "Alleged harmed or nearly harmed parties": 1
+  }'
+) |> as_tibble()
+
+# one row per (incident_id, report_number) pair
+incident_report_map <- incidents |>
+  select(incident_id, reports) |>
+  unnest_longer(reports) |>
+  rename(report_number = reports)
+
+# now every report row can carry its incident's metadata
+reports_with_incident <- reports |>
+  left_join(incident_report_map, by = "report_number") |>
+  left_join(
+    incidents |> select(incident_id, incident_title = title, date),
+    by = "incident_id"
+  )
+```
+
+### 4.4 Aggregation pipelines (optional, for heavier lifting)
+
+For grouping/counting server-side before pulling data down:
+
+```r
+reports_per_year <- reports_conn$aggregate('[
+  { "$group": {
+      "_id": { "$substr": ["$date_published", 0, 4] },
+      "n": { "$sum": 1 }
+  }},
+  { "$sort": { "_id": 1 } }
+]') |> as_tibble()
+```
+
+### 4.5 Other nested/array fields
+
+Several fields come back from `mongolite` as **list-columns**: `authors`,
+`submitters`, `tags` (on `reports`); the "alleged deployer/developer/harmed
+parties" fields (on `incidents`). Each of these is a simple *array of strings
+per document*, so `unnest_longer()` is usually what you want (not
+`unnest_wider()`, which is for nested *objects*):
+
+```r
+reports_authors <- reports |>
+  select(report_number, authors) |>
+  unnest_longer(authors)   # one row per (report_number, author)
+
+incidents_parties <- incidents |>
+  select(incident_id, `Alleged harmed or nearly harmed parties`) |>
+  unnest_longer(`Alleged harmed or nearly harmed parties`) |>
+  rename(harmed_party = `Alleged harmed or nearly harmed parties`)
+```
+
+Guard against missing/empty text before tokenising:
+
+```r
+reports <- reports |>
+  mutate(plain_text = replace_na(plain_text, ""))
+```
+
+--------------------------------------------------------------------------------
+
+## 5. Cleaning the text
+
+`plain_text` is already stripped of most markup, but scraped news text still
+tends to carry boilerplate (bylines, "read more" links, share-button text). Do a
+light cleaning pass and keep the original column in case later analysis needs
+it:
+
+```r
+library(textclean)
+
+reports <- reports |>
+  mutate(
+    text_clean = plain_text |>
+      replace_contraction() |>          # "don't" -> "do not"
+      replace_url("") |>
+      replace_html() |>
+      str_squish()                       # trim/collapse whitespace
+  )
+```
+
+--------------------------------------------------------------------------------
+
+## 6. Tokenising with tidytext
+
+`tidytext` works on the "one-token-per-row" principle, which plugs directly into
+`dplyr`/`ggplot2`.
+
+```r
+library(tidytext)
+
+tokens <- reports |>
+  select(report_number, text_clean) |>
+  unnest_tokens(word, text_clean)
+
+# remove stop words
+tokens_clean <- tokens |>
+  anti_join(stop_words, by = "word")
+```
+
+### 6.1 Word frequencies
+
+```r
+top_words <- tokens_clean |>
+  count(word, sort = TRUE)
+
+top_words |>
+  slice_max(n, n = 20) |>
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "count", title = "Most frequent words across reports")
+```
+
+### 6.2 TF-IDF (which words distinguish one incident/domain from another)
+
+This is a natural fit here: use `incident_id` or `source_domain` as the grouping
+variable to see what language is distinctive to a given incident or outlet.
+
+```r
+tfidf <- reports_with_incident |>
+  select(report_number, incident_id, text_clean) |>
+  unnest_tokens(word, text_clean) |>
+  anti_join(stop_words, by = "word") |>
+  count(incident_id, word, sort = TRUE) |>
+  bind_tf_idf(word, incident_id, n)
+
+tfidf |>
+  group_by(incident_id) |>
+  slice_max(tf_idf, n = 10) |>
+  ungroup()
+```
+
+### 6.3 N-grams
+
+For phrase-level patterns rather than single words:
+
+```r
+bigrams <- reports |>
+  unnest_tokens(bigram, text_clean, token = "ngrams", n = 2) |>
+  separate(bigram, into = c("word1", "word2"), sep = " ") |>
+  filter(!word1 %in% stop_words$word, !word2 %in% stop_words$word) |>
+  count(word1, word2, sort = TRUE)
+```
+
+--------------------------------------------------------------------------------
+
+## 7. Sentiment analysis
+
+`tidytext` bundles several sentiment lexicons (`bing`, `afinn`, `nrc`,
+`loughran`). Join tokens to a lexicon the same way you joined stop words.
+`loughran` is worth knowing about here specifically --- it was built for
+financial/news text and includes categories like "uncertainty" and "litigious",
+which can be more informative than generic positive/negative for news-style
+incident reports.
+
+```r
+sentiment_scores <- tokens_clean |>
+  inner_join(get_sentiments("bing"), by = "word") |>
+  count(report_number, sentiment) |>
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) |>
+  mutate(net_sentiment = positive - negative)
+```
+
+For a numeric score per word (rather than positive/negative labels), use
+`afinn`:
+
+```r
+afinn_scores <- tokens_clean |>
+  inner_join(get_sentiments("afinn"), by = "word") |>
+  group_by(report_number) |>
+  summarise(sentiment_score = sum(value), .groups = "drop")
+```
+
+`get_sentiments()` will prompt a one-time download/license confirmation the
+first time you use a given lexicon --- do this well before the competition
+starts, not on the day, in case you don't have internet access at the venue.
+
+--------------------------------------------------------------------------------
+
+## 8. Word co-occurrence / correlation (optional, `widyr`)
+
+Useful for exploring which words tend to appear together within the same report:
+
+```r
+library(widyr)
+
+word_pairs <- tokens_clean |>
+  pairwise_count(word, report_number, sort = TRUE)
+
+word_cors <- tokens_clean |>
+  group_by(word) |>
+  filter(n() >= 20) |>          # drop very rare words first
+  pairwise_cor(word, report_number, sort = TRUE)
+```
+
+--------------------------------------------------------------------------------
+
+## 9. Putting it together: a minimal end-to-end script
+
+```r
+library(mongolite)
+library(tidyverse)
+library(tidytext)
+library(textclean)
+
+db_name <- "your_database_name"
+reports_conn <- mongo(collection = "reports", db = db_name,
+                       url = Sys.getenv("MONGO_URI"))
+
+reports <- reports_conn$find(
+  fields = '{"_id": 1, "report_number": 1, "title": 1, "plain_text": 1, "tags": 1}'
+) |>
+  as_tibble() |>
+  mutate(
+    plain_text = replace_na(plain_text, ""),
+    text_clean = str_squish(replace_contraction(replace_url(plain_text, "")))
+  )
+
+word_counts <- reports |>
+  unnest_tokens(word, text_clean) |>
+  anti_join(stop_words, by = "word") |>
+  count(word, sort = TRUE)
+
+word_counts |> slice_max(n, n = 15)
+```
+
+--------------------------------------------------------------------------------
+
+## 10. Common pitfalls
+
+- **Connection refused / timeout** --- your IP isn't allow-listed in Atlas
+  Network Access, or you're on a network (uni wifi, VPN) that blocks the MongoDB
+  port. Test the connection *before* the competition.
+- **Pulling `embedding` by accident** --- it's a full numeric vector per
+  document; leave it out of your `fields` projection unless you specifically
+  need it, or your `find()` calls will be slow and memory-heavy.
+- **Using `text` instead of `plain_text`** --- `text` can retain markdown/HTML
+  from the original source, which will pollute your tokens (`<`, `##`, `href=`,
+  etc.). Prefer `plain_text` for tokenising.
+- **`unnest_wider()` on the wrong field** --- `authors`, `tags`, and the
+  "alleged parties" fields are arrays of *strings*, so they need
+  `unnest_longer()`. `unnest_wider()` is for fields that are nested *objects*
+  (there aren't many of those in `reports`/`incidents`).
+- **Joining `incidents` to `reports` on the wrong key** --- `incidents.reports`
+  holds `report_number` values, not `_id` (objectId) values. Join on
+  `report_number`, not `_id`.
+- **Encoding issues (garbled characters)** --- check `Encoding()` on your text
+  column and re-encode with `iconv()` if you see mojibake.
+- **Credentials in scripts** --- always use `Sys.getenv()` against an
+  `.Renviron` file, never paste the connection string directly into a script
+  you'll share or commit.
+
+--------------------------------------------------------------------------------
+
+## 11. Quick reference: package cheat sheet
+
+  | Task                   | Package       | Key function(s)                                            |
+  | ---------------------- | ------------- | ---------------------------------------------------------- |
+  | Connect to MongoDB     | mongolite     | `mongo()`, `$find()`, `$aggregate()`, `$count()`           |
+  | Wrangle data           | dplyr / tidyr | `mutate()`, `filter()`, `unnest_longer()`, `left_join()`   |
+  | Clean text             | textclean     | `replace_contraction()`, `replace_url()`, `replace_html()` |
+  | Tokenise               | tidytext      | `unnest_tokens()`                                          |
+  | Frequency / TF-IDF     | tidytext      | `count()`, `bind_tf_idf()`                                 |
+  | Sentiment              | tidytext      | `get_sentiments()`, `inner_join()`                         |
+  | Word pairs/correlation | widyr         | `pairwise_count()`, `pairwise_cor()`                       |
+  | Plotting               | ggplot2       | `geom_col()`, `geom_point()`                               |
+
+Good luck with the competition.

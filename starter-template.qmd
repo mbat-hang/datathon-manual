@@ -1,0 +1,86 @@
+---
+pagetitle: "Starter Template"
+---
+
+# Using the Starter Template {#sec-starter-template}
+
+::: {.callout-note title="Why this matters"}
+The template gives every team the same layout and a couple of pieces
+(a database-connection stub, report/slide skeletons) already wired up, so
+you spend Day 1 morning on data, not project setup.
+:::
+
+## Folder structure
+
+- `src/` — your R script files. Ships with `main.R`, which stubs out a
+  `connect_to_db()` function for you to implement.
+- `data/` — intermediate computed datasets you save as you go.
+- `docs/` — your Quarto files: `report.qmd` (written report) and
+  `slides.qmd` (presentation) — see @sec-quarto.
+- `_docs/` — generated automatically when you render (set as the
+  `output-dir` in `_quarto.yml`). This holds your final rendered report and
+  slides — commit and push it, since it's what organisers see.
+- `manual/` — reference material from organisers.
+
+Following this layout isn't mandatory, but it's what lets organisers find
+your work quickly — worth it for the Professional Communication judging
+pillar.
+
+## Get set up
+
+1. Clone your team's repo (@sec-git-github).
+2. Open it in RStudio/Positron.
+3. Install the packages the template uses: `dplyr`, `mongolite`, `here`.
+4. Open `src/main.R` and implement `connect_to_db()` using your Atlas
+   connection string (@sec-mongodb-connect) — read it with `Sys.getenv()`,
+   never hardcode it.
+
+## Use your script from a `.qmd`
+
+Don't copy-paste code between `src/main.R` and your `.qmd` files — source it
+instead. `docs/report.qmd` already does this at the top:
+
+```r
+source(here::here("src/main.R"))
+```
+
+`here::here()` keeps file paths working no matter which file you render
+from — always reference files this way rather than relative paths like
+`"../src/main.R"`.
+
+For more selective imports, `box::use()` is also available if you're
+already familiar with it — optional, not required.
+
+## Fill in the report and slides
+
+1. `docs/report.qmd` — starts as `format: html` only. Both HTML **and**
+   PDF are required, so add a `pdf:` entry to the YAML before you submit
+   (@sec-quarto shows the format block and PDF setup). Set your team name in
+   the title too.
+2. `docs/slides.qmd` — already set to `format: revealjs`. A finished deck is
+   required from every team, not just finalists — only the 5 finalists
+   present it live, but everyone submits one (@sec-quarto covers building
+   slides).
+
+## Render everything
+
+From the project root:
+
+```bash
+quarto render
+```
+
+This renders every `.qmd` under `docs/` and writes the output into
+`_docs/`.
+
+## Submit
+
+There's no file to zip or upload — organisers submit by cloning your
+repository directly.
+
+1. Run `quarto render` so `_docs/` is up to date.
+2. Commit and push everything, including `_docs/` (@sec-git-github) —
+   unlike a typical build folder, this one needs to be pushed, since it's
+   your actual submitted report and slides.
+3. Confirm the repo is public and the final push landed before the
+   deadline.

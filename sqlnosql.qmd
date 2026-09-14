@@ -2,7 +2,18 @@
 pagetitle: "Trying out mongodb"
 ---
 
-# NoSQL and MongoDB: An Introduction for Statisticians
+# NoSQL and MongoDB: An Introduction for Statisticians {#sec-sql-nosql}
+
+::: {.callout-note title="Why this matters"}
+The competition data lives in MongoDB, not tables. If your mental model is
+still "rows and joins," a few of MongoDB's habits will trip you up — this
+chapter re-orients that model before you touch the real connection in
+@sec-mongodb-connect.
+:::
+
+Already comfortable with SQL vs. NoSQL? Skip straight to @sec-mongodb-connect
+and test your connection before the event starts — see its "Common
+pitfalls" section on network/allow-listing issues.
 
 *Written for readers comfortable with R, data frames, and relational databases
 (SQL, normalized tables, joins).*

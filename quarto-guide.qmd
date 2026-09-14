@@ -1,0 +1,151 @@
+---
+pagetitle: "Quarto"
+---
+
+# Quarto {#sec-quarto}
+
+::: {.callout-note title="Why this matters"}
+Your submission requires both a reproducible report and a set of
+presentation slides — Quarto builds both from the same kind of source file.
+It runs your R code and inserts the real output every time you render, so
+you never copy-paste a number or a plot in by hand.
+:::
+
+The starter template (@sec-starter-template) already includes both:
+`docs/report.qmd` for the written report and `docs/slides.qmd` for
+presentation slides.
+
+## Anatomy of a `.qmd` file
+
+````markdown
+---
+title: "Team Name — Datathon Submission"
+author: "Team Name"
+format: html
+---
+
+# Introduction
+
+We analyse the AI Incident Database to answer...
+
+```{{r}}
+library(tidyverse)
+summary(cars)
+```
+````
+
+- Text outside code chunks is normal Markdown.
+- Anything inside ```` ```{r} ``` ```` blocks runs at render time.
+- Add `#| echo: false` inside a chunk to keep the output but hide the code —
+  useful for staying within a word limit.
+
+## Render your report
+
+- RStudio/Positron: click **Render**, or press `Cmd/Ctrl+Shift+K`.
+- Command line:
+  ```bash
+  quarto render report.qmd            # render using the format in the YAML
+  quarto render report.qmd --to pdf   # force a specific format
+  quarto preview report.qmd           # live preview, reloads on save
+  ```
+
+Use `quarto preview` while you write — it catches broken chunks immediately
+instead of at the end.
+
+## Set your output format
+
+Both HTML **and** PDF are required for the report — list both formats in
+the YAML and Quarto renders one file for each:
+
+```yaml
+format:
+  html:
+    toc: true
+    code-fold: true   # readers can expand/collapse code blocks
+  pdf:
+    documentclass: article
+```
+
+```bash
+quarto render report.qmd   # produces report.html and report.pdf
+```
+
+The report has a **3,000-word limit**, excluding code, tables, figure
+captions, and references.
+
+## Build presentation slides (required from every team)
+
+A finished slide deck is part of your submission, not an optional extra —
+every team builds one, even though only the 5 finalists actually present it
+live (2:15–3:30 PM, Day 2: 10 min talk + 5 min Q&A each). Treat it with the
+same care as the report: it's judged on Professional Communication just
+like everything else you submit.
+
+```yaml
+---
+title: "Team Name — Datathon Presentation"
+format: revealjs
+---
+```
+
+1. Start each new slide with a `##` heading.
+2. Write R chunks exactly as you would in the report — plots and tables
+   render live into the deck.
+3. Render the same way: **Render** button, `Cmd/Ctrl+Shift+K`, or
+   `quarto render slides.qmd`.
+4. Open the resulting `.html` in a browser; press `f` for fullscreen, use
+   arrow keys or space to advance.
+
+````markdown
+## Introduction
+
+The question we investigated...
+
+## Our Approach
+
+```{{r}}
+ggplot(data, aes(x, y)) + geom_point()
+```
+
+## Results
+
+Key finding...
+````
+
+## Set up PDF rendering (before the event)
+
+Since PDF is a required output, don't leave this until Day 2. PDF needs
+LaTeX — install it once, ahead of time:
+
+```r
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
+Render both formats and open both files before the deadline — a report
+that renders fine to HTML can still fail on PDF (e.g. an image or table
+that doesn't fit the page).
+
+## Keep the report reproducible and inside the word limit
+
+1. Render early and often — don't wait until the deadline to find a broken
+   chunk.
+2. Decide how much code you want visible in the final report — the `echo`,
+   `warning`, and `message` options (set per chunk, or globally under
+   `execute:` in the YAML) control this. There's no required setup here;
+   choose whatever makes your report read cleanly.
+3. Cache slow steps (a MongoDB pull, a model fit) with `#| cache: true` on
+   that chunk.
+4. Use `knitr::kable()` or `gt` for tables, and pipe large printed output
+   through `head()` — raw tibble/model printouts can quietly blow out your
+   word count.
+5. Keep the raw `.qmd` in your GitHub repo, not just the rendered file — the
+   repo is what gets checked for reproducibility.
+
+## Learn more
+
+- <startr.numbat.space> — the club's starting point for Quarto.
+- <https://quarto.org/docs/guide/> — official docs, every format and option.
+- `quarto --help` on the command line, or `?quarto::quarto_render` in R.
+
+Stuck on a YAML typo for more than a few minutes? Ask the help desk.

@@ -2,15 +2,18 @@ project:
   type: book
 
 book:
-  title: "Datathon Instruction Manual"
-  author: "MBAT Hang"
+  title: "MBAT Club Datathon 2026 — Participant Manual"
+  author: "MBAT Club"
   chapters:
     - index.qmd
-    - mongodbcon.qmd
-    - sqlnosql.qmd 
-    - references.qmd
-
-bibliography: references.bib
+    - git-github.qmd
+    - quarto-guide.qmd
+    - starter-template.qmd
+    - part: "Databases + MongoDB"
+      chapters:
+        - sqlnosql.qmd
+        - mongodbcon.qmd
+    - tidytext.qmd
 
 format:
   html:

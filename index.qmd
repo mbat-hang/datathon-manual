@@ -1,5 +1,51 @@
-# Preface {.unnumbered}
+# Welcome {.unnumbered}
 
-This is a Quarto book.
+This is the participant manual for the **MBAt Club Datathon 2026**
+(Econometrics and Business Statistics), held Monday 21 – Tuesday 22 September at Learning and Teaching Building, Clayton campus.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+It's a reference to work through **before** the event and to keep open
+**during** the event — you're not expected to read it cover to cover in one
+sitting, but every chapter should make sense as a standalone lookup when
+you're stuck on something specific.
+
+::: {.callout-warning title="Never push API keys or credentials to GitHub"}
+Your team's repository is **public**. Your MongoDB connection string (and
+any other password or API key) must never appear in a committed file — keep
+it in a local `.Renviron` that stays out of the repo. See @sec-git-github
+and @sec-mongodb-connect for the full setup.
+:::
+
+## How to use this manual
+
+- @sec-git-github — your team's submission is a public GitHub repository,
+  so this is the one chapter everyone on the team should be comfortable
+  with before Day 1.
+- @sec-quarto — how to write and render the reproducible report and the
+  presentation slides your submission requires — both are mandatory, not
+  just for finalists.
+- @sec-starter-template — the folder layout your team's repository starts
+  from, and how to fill in and render it.
+- @sec-sql-nosql and @sec-mongodb-connect — the competition dataset lives in
+  a MongoDB Atlas cluster; these two chapters cover the concepts and the
+  hands-on connection guide for pulling it into R.
+- @sec-tidytext — further reading and techniques for text mining the
+  (mostly free-text) dataset, beyond what's already worked through in the
+  MongoDB chapter.
+
+## Before you arrive
+
+- Install R, RStudio (or Positron/VS Code with the R extension), Quarto, and
+  GitHub Desktop.
+- Create a GitHub account if you don't already have one, and share your
+  username with organisers — they create and share your team's repository,
+  so you just need to clone it (@sec-git-github).
+- Skim @sec-git-github and @sec-quarto ahead of time — Day 1 morning is
+  registration, opening remarks, and the dataset introduction, and the
+  working session doesn't start until 10:30 AM, so setup issues are much
+  cheaper to fix beforehand than mid-competition.
+
+## Getting help on the day
+
+A help desk is staffed for the full duration of both days. If you're stuck
+on something in this manual for more than a few minutes, ask rather than
+losing working time to it.

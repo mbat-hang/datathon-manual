@@ -1,6 +1,20 @@
 ---
-title: "Getting Your Competition Data Out of MongoDB Atlas and Into R"
+pagetitle: "Getting Your Competition Data Out of MongoDB Atlas and Into R"
 ---
+
+# Getting Your Competition Data Out of MongoDB Atlas and Into R {#sec-mongodb-connect}
+
+::: {.callout-note title="Why this matters"}
+You can't analyse the dataset until you can pull it out of Atlas and into a
+tidy data frame. Working through this before the event means the connection
+and package setup aren't things you're debugging on the day.
+:::
+
+::: {.callout-tip}
+The starter template's `src/main.R` (@sec-starter-template) has an empty
+`connect_to_db()` function waiting for you — that's where the connection
+code below goes.
+:::
 
 This sheet walks you through connecting to the competition's MongoDB Atlas
 cluster from R, pulling the data down into a tidy data frame, and doing text

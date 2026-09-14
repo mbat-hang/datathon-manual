@@ -1,0 +1,112 @@
+---
+pagetitle: "Git + GitHub Desktop"
+---
+
+# Git + GitHub Desktop {#sec-git-github}
+
+::: {.callout-note title="Why this matters"}
+Your submission is a public GitHub repository. A team that can't reliably
+commit and push loses time to lost work, overwritten files, or a repo that
+isn't actually up to date at the deadline.
+:::
+
+## The daily loop
+
+Everything below is a variation on this:
+
+1. **Pull** the latest changes.
+2. Do some work.
+3. **Commit** with a short message.
+4. **Push** so your team can see it.
+
+## Install (before the event)
+
+1. Install [GitHub Desktop](https://desktop.github.com/).
+2. Sign in with a GitHub account (create one first if needed).
+3. Let it install Git automatically if prompted.
+4. Make sure organisers have your GitHub username so you can be added to
+   your team's repository.
+
+## Get your team's repository
+
+Organisers create and share one repository per team, already set up from
+the starter template (@sec-starter-template) — you don't create anything.
+
+1. Get the repo link from organisers.
+2. Every team member: GitHub Desktop → **File → Clone Repository** → paste
+   the URL → **Clone**.
+3. Before the working session starts, confirm you can push: make a trivial
+   commit (e.g. add your name to the README) and push it.
+
+## Work session workflow
+
+1. Click **Fetch origin**, then **Pull origin** if you're behind — do this
+   *before* you edit anything.
+2. Edit your files as normal.
+3. Check the **Changes** tab — untick anything you didn't mean to include.
+4. Write a short summary → **Commit to main**.
+5. Click **Push origin**.
+6. Repeat: pull → work → commit → push.
+
+Commit often — every working chunk of progress, not just once at the end of
+the day.
+
+## Avoid stepping on your teammates
+
+- Split work by file/section so two people aren't editing the same lines at
+  once.
+- Pull before you start a session; push before you take a break.
+- Say out loud (or in chat) before editing a shared file, e.g. the report.
+
+## Fix a merge conflict
+
+1. Open the file GitHub Desktop flags as conflicted.
+2. Find the marked sections:
+   ```
+   <<<<<<< HEAD
+   your version
+   =======
+   their version
+   >>>>>>> branch-name
+   ```
+3. Edit the file to keep the correct content (or merge both).
+4. Delete the `<<<<<<<`, `=======`, `>>>>>>>` marker lines.
+5. Save, then commit the resolved file as usual.
+6. Stuck for more than a few minutes? Ask the help desk.
+
+## Never commit these
+
+- **Credentials** — MongoDB connection string, API keys, `.Renviron`
+  contents. Keep them in a local `.Renviron` file, listed in `.gitignore`.
+- **Large raw data dumps** — pull from the database at analysis time
+  instead.
+- **Cache/temp folders** — `.quarto/`, `*_cache/`. (`_docs/` is the
+  exception — see @sec-starter-template: that one *does* need to be pushed,
+  since it's your submitted report and slides.)
+
+If a credential is ever pushed by accident, rotate it immediately — deleting
+the file does not remove it from the repo's history.
+
+## Prefer the command line?
+
+```bash
+git clone <repo-url>
+git status
+git add <file>            # or `git add .`
+git commit -m "message"
+git pull
+git push
+```
+
+Same repository either way — teammates can mix GitHub Desktop and the
+terminal freely.
+
+## Before you submit (Day 2, 11:00 AM deadline)
+
+- [ ] The final commit is pushed — an unpushed commit does not count as
+      submitted
+- [ ] No credentials appear anywhere in the repo, including old commits
+- [ ] Both the rendered HTML and PDF reports open correctly from a fresh
+      clone
+- [ ] The presentation slides (@sec-quarto) are finished and rendered —
+      required from every team, not just finalists

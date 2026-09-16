@@ -5,15 +5,15 @@ pagetitle: "Getting Your Competition Data Out of MongoDB Atlas and Into R"
 # Getting Your Competition Data Out of MongoDB Atlas and Into R {#sec-mongodb-connect}
 
 ::: {.callout-note title="Why this matters"}
-You can't analyse the dataset until you can pull it out of Atlas and into a
-tidy data frame. Working through this before the event means the connection
-and package setup aren't things you're debugging on the day.
+You can't analyse the dataset until you can pull it out of Atlas and into a tidy
+data frame. Working through this before the event means the connection and
+package setup aren't things you're debugging on the day.
 :::
 
 ::: {.callout-tip}
 The starter template's `src/main.R` (@sec-starter-template) has an empty
-`connect_to_db()` function waiting for you — that's where the connection
-code below goes.
+`connect_to_db()` function waiting for you --- that's where the connection code
+below goes.
 :::
 
 This sheet walks you through connecting to the competition's MongoDB Atlas
@@ -30,11 +30,9 @@ less thing to debug on the day.
 
 - R (4.x) and RStudio (or Positron / VS Code with the R extension)
 - The connection string for your Atlas cluster (competition organisers will give
-  you this --- it looks like
-  `mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/`)
-- The database name (organisers will confirm this)
-- Your IP address allow-listed in Atlas (or "Allow access from anywhere" if the
-  organisers have set that up for the competition)
+  you this , it looks like
+  `mongodb+srv://<username>:<password>@ai-incident-database.ugkyb5n.mongodb.net/`)
+- The database name is 'aiidprod'
 
 Install the packages you'll need once, up front:
 
@@ -50,7 +48,7 @@ install.packages(c(
 ))
 ```
 
-`mongolite` is the key package here --- it's the simplest way to talk to MongoDB
+`mongolite` is the key package here, it's the simplest way to talk to MongoDB
 from R and it hands data back as a data frame, which is exactly the shape
 tidyverse tools expect.
 
@@ -117,7 +115,7 @@ usethis::edit_r_environ()
 Add a line like this, save, and restart R:
 
 ```
-MONGO_URI="mongodb+srv://myusername:mypassword@cluster0.abcde.mongodb.net/"
+MONGO_URI="mongodb+srv://myusername:mypassword@ai-incident-database.ugkyb5n.mongodb.net/"
 ```
 
 **Now connect from your script** --- one connection object per collection:
@@ -125,7 +123,7 @@ MONGO_URI="mongodb+srv://myusername:mypassword@cluster0.abcde.mongodb.net/"
 ```r
 library(mongolite)
 
-db_name <- "your_database_name"   # confirm with organisers
+db_name <- "aiidprod"   # confirm with organisers
 
 reports_conn <- mongo(collection = "reports", db = db_name,
                        url = Sys.getenv("MONGO_URI"))

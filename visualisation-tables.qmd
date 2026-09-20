@@ -1,0 +1,33 @@
+---
+pagetitle: "Good Visualisation & Tables"
+---
+
+# Good Visualisation & Tables {#sec-viz-tables}
+
+::: {.callout-note title="Why this matters"}
+Analysis & Evidence (35 points) and Report Clarity & Storytelling (20
+points) — more than half of your score comes from these elements, so it's
+worth looking over these materials to create good visualisation and
+tables. Even solid analysis loses marks if it's shown as raw R output or a
+cluttered default chart.
+:::
+
+Start from the message, not the chart: write the one-sentence finding
+first, then pick the plot or table that makes it obvious. A few things
+worth knowing regardless of which chart you pick, position and length
+(bar charts, scatter plots) are judged far more accurately than angle and
+area (pie charts), so prefer the former; sort categories by value instead
+of leaving them alphabetical; and for tables, don't paste a `summary()`
+printout into the report, `broom::tidy()` turns a fitted model into a data
+frame, and `gtsummary::tbl_regression()` turns that into a table you can
+actually trim down to what answers your question.
+
+For the full treatment, perception, colour palettes, a worked
+diagnose/redesign/evaluate example, and table-formatting details, go
+through the two Monash ETC5523 (Communicating with Data) lectures this is
+drawn from:
+
+- [Week 5 — from model outputs to communicative
+  tables](https://cwd.numbat.space/week5/#/etc5523-title)
+- [Week 6 — effective data
+  visualisation](https://cwd.numbat.space/week6/#/etc5523-title)

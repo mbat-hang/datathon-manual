@@ -31,6 +31,9 @@ and @sec-mongodb-connect for the full setup.
 - @sec-tidytext — further reading and techniques for text mining the
   (mostly free-text) dataset, beyond what's already worked through in the
   MongoDB chapter.
+- @sec-viz-tables — turning your analysis into a figure or table a judge
+  can actually read at a glance: choosing the right chart, designing for
+  perception, and building a communicative table from a fitted model.
 
 ## Before you arrive
 

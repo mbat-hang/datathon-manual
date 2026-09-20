@@ -1,0 +1,636 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MBAT Club Datathon 2026 — Participant Manual",
+    "section": "",
+    "text": "Welcome\nThis is the participant manual for the MBAt Club Datathon 2026 (Econometrics and Business Statistics), held Monday 21 – Tuesday 22 September at Learning and Teaching Building, Clayton campus.\nIt’s a reference to work through before the event and to keep open during the event — you’re not expected to read it cover to cover in one sitting, but every chapter should make sense as a standalone lookup when you’re stuck on something specific.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-manual",
+    "href": "index.html#how-to-use-this-manual",
+    "title": "MBAT Club Datathon 2026 — Participant Manual",
+    "section": "How to use this manual",
+    "text": "How to use this manual\n\n1  Git + GitHub Desktop — your team’s submission is a public GitHub repository, so this is the one chapter everyone on the team should be comfortable with before Day 1.\n2  Quarto — how to write and render the reproducible report and the presentation slides your submission requires — both are mandatory, not just for finalists.\n3  Using the Starter Template — the folder layout your team’s repository starts from, and how to fill in and render it.\n4  NoSQL and MongoDB: An Introduction for Statisticians and 5  Getting Your Competition Data Out of MongoDB Atlas and Into R — the competition dataset lives in a MongoDB Atlas cluster; these two chapters cover the concepts and the hands-on connection guide for pulling it into R.\n6  Resources for tidytext (Text Mining with R) — further reading and techniques for text mining the (mostly free-text) dataset, beyond what’s already worked through in the MongoDB chapter.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#before-you-arrive",
+    "href": "index.html#before-you-arrive",
+    "title": "MBAT Club Datathon 2026 — Participant Manual",
+    "section": "Before you arrive",
+    "text": "Before you arrive\n\nInstall R, RStudio (or Positron/VS Code with the R extension), Quarto, and GitHub Desktop.\nCreate a GitHub account if you don’t already have one, and share your username with organisers — they create and share your team’s repository, so you just need to clone it (1  Git + GitHub Desktop).\nSkim 1  Git + GitHub Desktop and 2  Quarto ahead of time — Day 1 morning is registration, opening remarks, and the dataset introduction, and the working session doesn’t start until 10:30 AM, so setup issues are much cheaper to fix beforehand than mid-competition.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#getting-help-on-the-day",
+    "href": "index.html#getting-help-on-the-day",
+    "title": "MBAT Club Datathon 2026 — Participant Manual",
+    "section": "Getting help on the day",
+    "text": "Getting help on the day\nA help desk is staffed for the full duration of both days. If you’re stuck on something in this manual for more than a few minutes, ask rather than losing working time to it.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "git-github.html",
+    "href": "git-github.html",
+    "title": "1  Git + GitHub Desktop",
+    "section": "",
+    "text": "1.1 The daily loop\nEverything below is a variation on this:",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#the-daily-loop",
+    "href": "git-github.html#the-daily-loop",
+    "title": "1  Git + GitHub Desktop",
+    "section": "",
+    "text": "Pull the latest changes.\nDo some work.\nCommit with a short message.\nPush so your team can see it.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#install-before-the-event",
+    "href": "git-github.html#install-before-the-event",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.2 Install (before the event)",
+    "text": "1.2 Install (before the event)\n\nInstall GitHub Desktop.\nSign in with a GitHub account (create one first if needed).\nLet it install Git automatically if prompted.\nMake sure organisers have your GitHub username so you can be added to your team’s repository.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#get-your-teams-repository",
+    "href": "git-github.html#get-your-teams-repository",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.3 Get your team’s repository",
+    "text": "1.3 Get your team’s repository\nOrganisers create and share one repository per team, already set up from the starter template (Chapter 3) — you don’t create anything.\n\nGet the repo link from organisers.\nEvery team member: GitHub Desktop → File → Clone Repository → paste the URL → Clone.\nBefore the working session starts, confirm you can push: make a trivial commit (e.g. add your name to the README) and push it.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#work-session-workflow",
+    "href": "git-github.html#work-session-workflow",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.4 Work session workflow",
+    "text": "1.4 Work session workflow\n\nClick Fetch origin, then Pull origin if you’re behind — do this before you edit anything.\nEdit your files as normal.\nCheck the Changes tab — untick anything you didn’t mean to include.\nWrite a short summary → Commit to main.\nClick Push origin.\nRepeat: pull → work → commit → push.\n\nCommit often — every working chunk of progress, not just once at the end of the day.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#avoid-stepping-on-your-teammates",
+    "href": "git-github.html#avoid-stepping-on-your-teammates",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.5 Avoid stepping on your teammates",
+    "text": "1.5 Avoid stepping on your teammates\n\nSplit work by file/section so two people aren’t editing the same lines at once.\nPull before you start a session; push before you take a break.\nSay out loud (or in chat) before editing a shared file, e.g. the report.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#fix-a-merge-conflict",
+    "href": "git-github.html#fix-a-merge-conflict",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.6 Fix a merge conflict",
+    "text": "1.6 Fix a merge conflict\n\nOpen the file GitHub Desktop flags as conflicted.\nFind the marked sections:\n&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nyour version\n=======\ntheir version\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name\nEdit the file to keep the correct content (or merge both).\nDelete the &lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt; marker lines.\nSave, then commit the resolved file as usual.\nStuck for more than a few minutes? Ask the help desk.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#never-commit-these",
+    "href": "git-github.html#never-commit-these",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.7 Never commit these",
+    "text": "1.7 Never commit these\n\nCredentials — MongoDB connection string, API keys, .Renviron contents. Keep them in a local .Renviron file, listed in .gitignore.\nLarge raw data dumps — pull from the database at analysis time instead.\nCache/temp folders — .quarto/, *_cache/. (_docs/ is the exception — see Chapter 3: that one does need to be pushed, since it’s your submitted report and slides.)\n\nIf a credential is ever pushed by accident, rotate it immediately — deleting the file does not remove it from the repo’s history.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#prefer-the-command-line",
+    "href": "git-github.html#prefer-the-command-line",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.8 Prefer the command line?",
+    "text": "1.8 Prefer the command line?\ngit clone &lt;repo-url&gt;\ngit status\ngit add &lt;file&gt;            # or `git add .`\ngit commit -m \"message\"\ngit pull\ngit push\nSame repository either way — teammates can mix GitHub Desktop and the terminal freely.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "git-github.html#before-you-submit-day-2-1100-am-deadline",
+    "href": "git-github.html#before-you-submit-day-2-1100-am-deadline",
+    "title": "1  Git + GitHub Desktop",
+    "section": "1.9 Before you submit (Day 2, 11:00 AM deadline)",
+    "text": "1.9 Before you submit (Day 2, 11:00 AM deadline)\n\nThe final commit is pushed — an unpushed commit does not count as submitted\nNo credentials appear anywhere in the repo, including old commits\nBoth the rendered HTML and PDF reports open correctly from a fresh clone\nThe presentation slides (Chapter 2) are finished and rendered — required from every team, not just finalists",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Git + GitHub Desktop</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html",
+    "href": "quarto-guide.html",
+    "title": "2  Quarto",
+    "section": "",
+    "text": "2.1 Anatomy of a .qmd file\nThe starter template (Chapter 3) already includes both: docs/report.qmd for the written report and docs/slides.qmd for presentation slides.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#anatomy-of-a-.qmd-file",
+    "href": "quarto-guide.html#anatomy-of-a-.qmd-file",
+    "title": "2  Quarto",
+    "section": "",
+    "text": "---\ntitle: \"Team Name — Datathon Submission\"\nauthor: \"Team Name\"\nformat: html\n---\n\n# Introduction\n\nWe analyse the AI Incident Database to answer...\n\n```{r}\nlibrary(tidyverse)\nsummary(cars)\n```\n\nText outside code chunks is normal Markdown.\nAnything inside ```{r} ``` blocks runs at render time.\nAdd #| echo: false inside a chunk to keep the output but hide the code — useful for staying within a word limit.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#render-your-report",
+    "href": "quarto-guide.html#render-your-report",
+    "title": "2  Quarto",
+    "section": "2.2 Render your report",
+    "text": "2.2 Render your report\n\nRStudio/Positron: click Render, or press Cmd/Ctrl+Shift+K.\nCommand line:\nquarto render report.qmd            # render using the format in the YAML\nquarto render report.qmd --to pdf   # force a specific format\nquarto preview report.qmd           # live preview, reloads on save\n\nUse quarto preview while you write — it catches broken chunks immediately instead of at the end.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#set-your-output-format",
+    "href": "quarto-guide.html#set-your-output-format",
+    "title": "2  Quarto",
+    "section": "2.3 Set your output format",
+    "text": "2.3 Set your output format\nBoth HTML and PDF are required for the report — list both formats in the YAML and Quarto renders one file for each:\nformat:\n  html:\n    toc: true\n    code-fold: true   # readers can expand/collapse code blocks\n  pdf:\n    documentclass: article\nquarto render report.qmd   # produces report.html and report.pdf\nThe report has a 3,000-word limit, excluding code, tables, figure captions, and references.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#build-presentation-slides-required-from-every-team",
+    "href": "quarto-guide.html#build-presentation-slides-required-from-every-team",
+    "title": "2  Quarto",
+    "section": "2.4 Build presentation slides (required from every team)",
+    "text": "2.4 Build presentation slides (required from every team)\nA finished slide deck is part of your submission, not an optional extra — every team builds one, even though only the 5 finalists actually present it live (2:15–3:30 PM, Day 2: 10 min talk + 5 min Q&A each). Treat it with the same care as the report: it’s judged on Professional Communication just like everything else you submit.\n---\ntitle: \"Team Name — Datathon Presentation\"\nformat: revealjs\n---\n\nStart each new slide with a ## heading.\nWrite R chunks exactly as you would in the report — plots and tables render live into the deck.\nRender the same way: Render button, Cmd/Ctrl+Shift+K, or quarto render slides.qmd.\nOpen the resulting .html in a browser; press f for fullscreen, use arrow keys or space to advance.\n\n## Introduction\n\nThe question we investigated...\n\n## Our Approach\n\n```{r}\nggplot(data, aes(x, y)) + geom_point()\n```\n\n## Results\n\nKey finding...",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#set-up-pdf-rendering-before-the-event",
+    "href": "quarto-guide.html#set-up-pdf-rendering-before-the-event",
+    "title": "2  Quarto",
+    "section": "2.5 Set up PDF rendering (before the event)",
+    "text": "2.5 Set up PDF rendering (before the event)\nSince PDF is a required output, don’t leave this until Day 2. PDF needs LaTeX — install it once, ahead of time:\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()\nRender both formats and open both files before the deadline — a report that renders fine to HTML can still fail on PDF (e.g. an image or table that doesn’t fit the page).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#keep-the-report-reproducible-and-inside-the-word-limit",
+    "href": "quarto-guide.html#keep-the-report-reproducible-and-inside-the-word-limit",
+    "title": "2  Quarto",
+    "section": "2.6 Keep the report reproducible and inside the word limit",
+    "text": "2.6 Keep the report reproducible and inside the word limit\n\nRender early and often — don’t wait until the deadline to find a broken chunk.\nDecide how much code you want visible in the final report — the echo, warning, and message options (set per chunk, or globally under execute: in the YAML) control this. There’s no required setup here; choose whatever makes your report read cleanly.\nCache slow steps (a MongoDB pull, a model fit) with #| cache: true on that chunk.\nUse knitr::kable() or gt for tables, and pipe large printed output through head() — raw tibble/model printouts can quietly blow out your word count.\nKeep the raw .qmd in your GitHub repo, not just the rendered file — the repo is what gets checked for reproducibility.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "quarto-guide.html#learn-more",
+    "href": "quarto-guide.html#learn-more",
+    "title": "2  Quarto",
+    "section": "2.7 Learn more",
+    "text": "2.7 Learn more\n\n&lt;startr.numbat.space&gt; — the club’s starting point for Quarto.\nhttps://quarto.org/docs/guide/ — official docs, every format and option.\nquarto --help on the command line, or ?quarto::quarto_render in R.\n\nStuck on a YAML typo for more than a few minutes? Ask the help desk.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Quarto</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html",
+    "href": "starter-template.html",
+    "title": "3  Using the Starter Template",
+    "section": "",
+    "text": "3.1 Folder structure\nFollowing this layout isn’t mandatory, but it’s what lets organisers find your work quickly — worth it for the Professional Communication judging pillar.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html#folder-structure",
+    "href": "starter-template.html#folder-structure",
+    "title": "3  Using the Starter Template",
+    "section": "",
+    "text": "src/ — your R script files. Ships with main.R, which stubs out a connect_to_db() function for you to implement.\ndata/ — intermediate computed datasets you save as you go.\ndocs/ — your Quarto files: report.qmd (written report) and slides.qmd (presentation) — see Chapter 2.\n_docs/ — generated automatically when you render (set as the output-dir in _quarto.yml). This holds your final rendered report and slides — commit and push it, since it’s what organisers see.\nmanual/ — reference material from organisers.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html#get-set-up",
+    "href": "starter-template.html#get-set-up",
+    "title": "3  Using the Starter Template",
+    "section": "3.2 Get set up",
+    "text": "3.2 Get set up\n\nClone your team’s repo (Chapter 1).\nOpen it in RStudio/Positron.\nInstall the packages the template uses: dplyr, mongolite, here.\nOpen src/main.R and implement connect_to_db() using your Atlas connection string (Chapter 5) — read it with Sys.getenv(), never hardcode it.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html#use-your-script-from-a-.qmd",
+    "href": "starter-template.html#use-your-script-from-a-.qmd",
+    "title": "3  Using the Starter Template",
+    "section": "3.3 Use your script from a .qmd",
+    "text": "3.3 Use your script from a .qmd\nDon’t copy-paste code between src/main.R and your .qmd files — source it instead. docs/report.qmd already does this at the top:\nsource(here::here(\"src/main.R\"))\nhere::here() keeps file paths working no matter which file you render from — always reference files this way rather than relative paths like \"../src/main.R\".\nFor more selective imports, box::use() is also available if you’re already familiar with it — optional, not required.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html#fill-in-the-report-and-slides",
+    "href": "starter-template.html#fill-in-the-report-and-slides",
+    "title": "3  Using the Starter Template",
+    "section": "3.4 Fill in the report and slides",
+    "text": "3.4 Fill in the report and slides\n\ndocs/report.qmd — starts as format: html only. Both HTML and PDF are required, so add a pdf: entry to the YAML before you submit (Chapter 2 shows the format block and PDF setup). Set your team name in the title too.\ndocs/slides.qmd — already set to format: revealjs. A finished deck is required from every team, not just finalists — only the 5 finalists present it live, but everyone submits one (Chapter 2 covers building slides).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html#render-everything",
+    "href": "starter-template.html#render-everything",
+    "title": "3  Using the Starter Template",
+    "section": "3.5 Render everything",
+    "text": "3.5 Render everything\nFrom the project root:\nquarto render\nThis renders every .qmd under docs/ and writes the output into _docs/.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "starter-template.html#submit",
+    "href": "starter-template.html#submit",
+    "title": "3  Using the Starter Template",
+    "section": "3.6 Submit",
+    "text": "3.6 Submit\nThere’s no file to zip or upload — organisers submit by cloning your repository directly.\n\nRun quarto render so _docs/ is up to date.\nCommit and push everything, including _docs/ (Chapter 1) — unlike a typical build folder, this one needs to be pushed, since it’s your actual submitted report and slides.\nConfirm the repo is public and the final push landed before the deadline.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using the Starter Template</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html",
+    "href": "sqlnosql.html",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "",
+    "text": "4.1 1. Why This Tutorial Exists\nAlready comfortable with SQL vs. NoSQL? Skip straight to Chapter 5 and test your connection before the event starts — see its “Common pitfalls” section on network/allow-listing issues.\nWritten for readers comfortable with R, data frames, and relational databases (SQL, normalized tables, joins).\nIf you’ve spent time with relational databases, your mental model of data storage is probably something like this:\nThis model maps naturally onto how you already think about data as a statistician: a rectangular data frame, one row per observation, one column per variable, merge() or dplyr::left_join() to combine data frames.\nNoSQL databases (of which MongoDB is the most popular example) relax or abandon several of these assumptions. Understanding why they do this, and what you gain and lose, is the goal of this tutorial.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#why-this-tutorial-exists",
+    "href": "sqlnosql.html#why-this-tutorial-exists",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "",
+    "text": "Data lives in tables with a fixed schema (columns defined in advance, with types).\nRows relate to each other through foreign keys, and you stitch related data back together with joins.\nYou enforce consistency using constraints (primary keys, foreign keys, NOT NULL, etc.).\nA single logical “thing” — like a customer with multiple orders — is normalized across several tables to avoid duplication.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#what-nosql-actually-means",
+    "href": "sqlnosql.html#what-nosql-actually-means",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.2 2. What “NoSQL” Actually Means",
+    "text": "4.2 2. What “NoSQL” Actually Means\n“NoSQL” is a loose umbrella term (sometimes glossed as “Not Only SQL”) covering several different data models that don’t follow the relational (table-and-join) paradigm. The major families are:\n\n\n\n\n\n\n\n\nType\nData model\nExample systems\n\n\n\n\nDocument\nSemi-structured documents (JSON-like)\nMongoDB, CouchDB\n\n\nKey-value\nSimple key → value lookups\nRedis, DynamoDB\n\n\nWide-column\nSparse, column-family tables\nCassandra, HBase\n\n\nGraph\nNodes and edges\nNeo4j, ArangoDB\n\n\n\nThis tutorial focuses on document stores, and specifically MongoDB, because they’re the most common entry point and the comparison to relational tables is the most direct.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#the-core-idea-documents-instead-of-rows",
+    "href": "sqlnosql.html#the-core-idea-documents-instead-of-rows",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.3 3. The Core Idea: Documents Instead of Rows",
+    "text": "4.3 3. The Core Idea: Documents Instead of Rows\n\n\n\n\n\n\nWarningThe data used in this example\n\n\n\nThe examples used in this page are not reflective of the actual data you will use in the competition! They are only presented to get an understanding of the functionalities.\n\n\nIn a relational database, a customer and their orders might be split across two tables:\n-- customers table\ncustomer_id | name    | email\n------------|---------|------------------\n1           | Alice   | alice@email.com\n\n-- orders table\norder_id | customer_id | item      | amount\n---------|-------------|-----------|-------\n101      | 1           | Widget    | 9.99\n102      | 1           | Gadget    | 19.99\nTo get “Alice and all her orders,” you JOIN on customer_id.\nIn MongoDB, you’d likely store this as a single document:\n{\n  \"_id\": \"1\",\n  \"name\": \"Alice\",\n  \"email\": \"alice@email.com\",\n  \"orders\": [\n    { \"item\": \"Widget\", \"amount\": 9.99 },\n    { \"item\": \"Gadget\", \"amount\": 19.99 }\n  ]\n}\nA “document” is essentially a JSON object (technically stored as BSON, a binary superset of JSON with extra types like dates and integers). Documents are grouped into collections, which are the loose analogue of tables — except a collection has no fixed schema. Two documents in the same collection can have completely different fields.\n\n4.3.1 A translation table for vocabulary\n\n\n\n\n\n\n\nRelational term\nMongoDB term\n\n\n\n\nDatabase\nDatabase\n\n\nTable\nCollection\n\n\nRow\nDocument\n\n\nColumn\nField\n\n\nPrimary key\n_id field\n\n\nJoin\nEmbedding, or $lookup (an actual join-like operation)\n\n\nSchema (rigid)\nSchema (optional / flexible)",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#why-embed-instead-of-normalize",
+    "href": "sqlnosql.html#why-embed-instead-of-normalize",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.4 4. Why Embed Instead of Normalize?",
+    "text": "4.4 4. Why Embed Instead of Normalize?\nThis is the conceptual heart of the difference, and it’s worth dwelling on because it inverts a habit that’s deeply ingrained if you’ve learned relational design.\nRelational design philosophy: normalize aggressively. Store each fact once. Avoid redundancy. Joins are cheap(-ish) and consistency matters more than read speed.\nDocument design philosophy: model around your access patterns. If you almost always fetch a customer along with their orders together, store them together, even if that means the word “Widget” is duplicated across many documents. Reads become a single lookup instead of a join across multiple tables — this matters a lot for web-application workloads with high read volume and simple, predictable query shapes.\nThe tradeoff: - Relational: harder to scale horizontally, but strong guarantees around consistency and no duplicated data to keep in sync. - Document: easier to scale horizontally and often faster for “fetch this one entity and everything about it” queries, but you may duplicate data and must manage the consequences (e.g., if Alice changes her email, and it’s embedded in old order documents, you may need to update it in multiple places, or decide you don’t care).\nThere’s no free lunch here — it’s an explicit modeling decision, not a strictly-better technology.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#schema-flexibility-a-blessing-and-a-curse",
+    "href": "sqlnosql.html#schema-flexibility-a-blessing-and-a-curse",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.5 5. Schema Flexibility: A Blessing and a Curse",
+    "text": "4.5 5. Schema Flexibility: A Blessing and a Curse\nIn a relational database, adding a column to a 10-million-row table requires an ALTER TABLE migration and some care. In MongoDB, you can insert a document with a new field at any time — the collection doesn’t complain.\nFor a statistician, the closest analogy is the difference between:\n\nAn R data.frame/tibble with fixed columns (relational table), versus\nA list of lists, where each element can have different named entries (MongoDB collection).\n\n# Relational-style: a data.frame, fixed columns\ndf &lt;- data.frame(id = 1:2, name = c(\"Alice\", \"Bob\"), age = c(30, NA))\n\n# Document-style: a list of lists, heterogeneous structure\ndocs &lt;- list(\n  list(id = 1, name = \"Alice\", age = 30, hobbies = c(\"chess\", \"running\")),\n  list(id = 2, name = \"Bob\") # no age, no hobbies — and that's fine\n)\nThis flexibility is genuinely useful when your data is naturally irregular (user-generated content, event logs with varying attributes, nested/hierarchical records). It’s a liability when you want the enforcement — e.g., you want the database itself to guarantee that age is always numeric, or that every document has an email. MongoDB does support optional schema validation rules, but they’re opt-in rather than the default posture of the system.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#querying-dplyrsql-habits-vs.-mongodbs-query-language",
+    "href": "sqlnosql.html#querying-dplyrsql-habits-vs.-mongodbs-query-language",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.6 6. Querying: dplyr/SQL Habits vs. MongoDB’s Query Language",
+    "text": "4.6 6. Querying: dplyr/SQL Habits vs. MongoDB’s Query Language\nMongoDB queries are expressed as documents themselves (essentially, nested lists/JSON), which feels unusual at first if you’re used to SQL’s SELECT ... WHERE ... syntax or dplyr::filter().\n\n4.6.1 Comparison table\n\n\n\n\n\n\n\n\n\nTask\nSQL\ndplyr\nMongoDB (shell syntax)\n\n\n\n\nFilter rows\nSELECT * FROM orders WHERE amount &gt; 10\nfilter(orders, amount &gt; 10)\ndb.orders.find({ amount: { $gt: 10 } })\n\n\nSelect columns\nSELECT item, amount FROM orders\nselect(orders, item, amount)\ndb.orders.find({}, { item: 1, amount: 1 })\n\n\nSort\nORDER BY amount DESC\narrange(desc(amount))\n.sort({ amount: -1 })\n\n\nGroup + aggregate\nGROUP BY customer_id\ngroup_by(customer_id) %&gt;% summarise(...)\n$group stage in an aggregation pipeline\n\n\n\nMongoDB’s analogue to a SQL query with GROUP BY/joins/multiple transformations is the aggregation pipeline — a sequence of stages, each transforming the documents flowing through it, conceptually similar to chaining dplyr verbs with %&gt;%:\ndb.orders.aggregate([\n  { $match: { amount: { $gt: 5 } } },       // like filter()\n  { $group: { _id: \"$customer_id\",\n              total: { $sum: \"$amount\" } } }, // like group_by() %&gt;% summarise()\n  { $sort: { total: -1 } }                   // like arrange(desc())\n])\nIf you’re comfortable reading a dplyr pipe, the aggregation pipeline will feel more familiar than it first appears — it’s a sequence of verbs applied in order, just expressed as JSON stage objects instead of R function calls.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#using-mongodb-from-r",
+    "href": "sqlnosql.html#using-mongodb-from-r",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.7 7. Using MongoDB from R",
+    "text": "4.7 7. Using MongoDB from R\nYou don’t have to leave R to work with MongoDB. The mongolite package provides a clean interface, and the workflow will feel close to what you already do with DBI.\ninstall.packages(\"mongolite\")\nlibrary(mongolite)\n\n# Connect to a collection (analogous to opening a DBI connection to a table)\norders &lt;- mongo(collection = \"orders\", db = \"shop\", url = \"mongodb://localhost\")\n\n# Insert documents (rows) — takes a data.frame directly\norders$insert(data.frame(item = \"Widget\", amount = 9.99, customer_id = 1))\n\n# Query and get a data.frame back — this is the key convenience\nresult &lt;- orders$find('{\"amount\": {\"$gt\": 5}}')\nhead(result)\n\n# Aggregation pipeline, expressed as a JSON string\npipeline &lt;- '[\n  {\"$group\": {\"_id\": \"$customer_id\", \"total\": {\"$sum\": \"$amount\"}}},\n  {\"$sort\": {\"total\": -1}}\n]'\nsummary_df &lt;- orders$aggregate(pipeline)\nCompare this to a typical relational workflow with DBI:\nlibrary(DBI)\nlibrary(RPostgres)\n\ncon &lt;- dbConnect(RPostgres::Postgres(), dbname = \"shop\")\nresult &lt;- dbGetQuery(con, \"SELECT * FROM orders WHERE amount &gt; 5\")\nThe big practical difference: mongolite queries and pipeline stages are written as JSON strings, not SQL strings — but the round trip (query in, tibble/data.frame out) is conceptually identical, which is good news for how much of your existing R workflow transfers.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#consistency-transactions-and-why-this-matters-to-you",
+    "href": "sqlnosql.html#consistency-transactions-and-why-this-matters-to-you",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.8 8. Consistency, Transactions, and Why This Matters to You",
+    "text": "4.8 8. Consistency, Transactions, and Why This Matters to You\nRelational databases are traditionally built around ACID guarantees (Atomicity, Consistency, Isolation, Durability) — a transaction either fully happens or fully doesn’t, and the database enforces referential integrity via constraints.\nHistorically, NoSQL document stores traded some of these guarantees for scalability, often described (loosely) via the CAP theorem: in the presence of a network partition across distributed servers, a system must choose between Consistency (every read gets the latest write) and Availability (every request gets a response, possibly stale). Many early NoSQL systems leaned toward availability and “eventual consistency.”\nModern MongoDB has narrowed this gap substantially — it now supports multi-document ACID transactions — but the default mode of use, and the ecosystem’s design instincts, still favor flexible, denormalized, single-document operations over enforced cross-table integrity. If your work involves financial ledgers or anything where “the numbers must always add up, no exceptions, ever,” that’s traditionally been relational-database territory, and it’s worth understanding that this is a design lineage question, not just a feature checkbox — you can bolt strong consistency onto MongoDB, but it’s swimming against the current of how the system is typically used.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#when-each-approach-tends-to-fit-better",
+    "href": "sqlnosql.html#when-each-approach-tends-to-fit-better",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.9 9. When Each Approach Tends to Fit Better",
+    "text": "4.9 9. When Each Approach Tends to Fit Better\n\n\n\n\n\n\n\nFavor relational (SQL) when…\nFavor document (MongoDB) when…\n\n\n\n\nYour data is naturally tabular and stable in structure\nYour data is nested, hierarchical, or has varying fields per record\n\n\nYou need complex multi-table joins and strong referential integrity\nYou mostly fetch one entity plus its closely related data together\n\n\nStrong consistency/transactions across entities is essential\nHigh write/read throughput and horizontal scaling matter more\n\n\nYour analysis workflow is fundamentally about tidy rectangular tables (which is common in statistics!)\nYour data is closer to logs, events, user profiles, or content with irregular shape\n\n\n\nFor a lot of statistical work — clean, rectangular datasets destined for modeling — relational databases (or just flat files/data frames) remain a very natural fit, and you’ll often find yourself flattening MongoDB documents back into rectangular data frames before doing any actual analysis, since most statistical methods assume tidy, rectangular input.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#a-worked-mini-example-same-data-both-ways",
+    "href": "sqlnosql.html#a-worked-mini-example-same-data-both-ways",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.10 10. A Worked Mini-Example: Same Data, Both Ways",
+    "text": "4.10 10. A Worked Mini-Example: Same Data, Both Ways\nRelational (two tables + a join):\nCREATE TABLE customers (customer_id INT PRIMARY KEY, name TEXT);\nCREATE TABLE orders (\n  order_id INT PRIMARY KEY,\n  customer_id INT REFERENCES customers(customer_id),\n  item TEXT,\n  amount NUMERIC\n);\n\nSELECT c.name, o.item, o.amount\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id;\nDocument (one collection, embedded):\nlibrary(mongolite)\ncustomers &lt;- mongo(\"customers\", db = \"shop\")\n\ncustomers$insert('{\n  \"_id\": 1,\n  \"name\": \"Alice\",\n  \"orders\": [\n    {\"item\": \"Widget\", \"amount\": 9.99},\n    {\"item\": \"Gadget\", \"amount\": 19.99}\n  ]\n}')\n\n# Pull it back out, then flatten to a data.frame for analysis\nraw &lt;- customers$find()\nflat &lt;- tidyr::unnest(raw, orders)\nNotice the last line: even when working with MongoDB, you often end up reaching for tidyr::unnest() to get back to the rectangular shape you actually want for modeling. This is a common and completely normal pattern — document stores are often optimized for how an application writes and reads data, not for how a statistician wants to analyze it, and translating between the two is a routine part of the workflow.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "sqlnosql.html#summary",
+    "href": "sqlnosql.html#summary",
+    "title": "4  NoSQL and MongoDB: An Introduction for Statisticians",
+    "section": "4.11 11. Summary",
+    "text": "4.11 11. Summary\n\nMongoDB stores flexible, JSON-like documents in collections, instead of enforcing rows-in-tables with a fixed schema.\nThe relational instinct to normalize is replaced by a document instinct to denormalize/embed, optimized around how the data will be read.\nQuerying feels different syntactically (JSON-shaped queries, aggregation pipelines) but maps conceptually onto SQL/dplyr verbs you already know.\nConsistency and transactional guarantees are available in modern MongoDB but aren’t the system’s traditional default posture the way they are in relational databases.\nFor statistical analysis specifically, you’ll frequently pull data out of MongoDB and flatten it back into rectangular form — so document databases are often best understood as an operational/application-layer tool, with relational-style rectangular data as the destination for actual modeling.\n\nIf you want to go deeper next, worthwhile follow-ups are: MongoDB’s aggregation pipeline in more depth, schema validation rules, and how sharding/replication work for horizontal scaling.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>NoSQL and MongoDB: An Introduction for Statisticians</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html",
+    "href": "mongodbcon.html",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "",
+    "text": "5.1 1. What you’ll need\nThis sheet walks you through connecting to the competition’s MongoDB Atlas cluster from R, pulling the data down into a tidy data frame, and doing text analysis on it with the tidyverse / tidytext ecosystem. It’s written against the actual schema you’ve been given (this is the AI Incident Database schema), so the field names below match what you’ll actually see. Work through it top to bottom before the competition starts so the connection and package setup is one less thing to debug on the day.\nInstall the packages you’ll need once, up front:\nmongolite is the key package here, it’s the simplest way to talk to MongoDB from R and it hands data back as a data frame, which is exactly the shape tidyverse tools expect.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#what-youll-need",
+    "href": "mongodbcon.html#what-youll-need",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "",
+    "text": "R (4.x) and RStudio (or Positron / VS Code with the R extension)\nThe connection string for your Atlas cluster (competition organisers will give you this , it looks like mongodb+srv://&lt;username&gt;:&lt;password&gt;@ai-incident-database.ugkyb5n.mongodb.net/)\nThe database name is ‘aiidprod’\n\n\ninstall.packages(c(\n  \"mongolite\",   # connect to MongoDB and pull data into R\n  \"tidyverse\",   # dplyr, purrr, ggplot2, tidyr, etc.\n  \"tidytext\",    # tokenisation, sentiment lexicons, tf-idf\n  \"jsonlite\",    # handling nested JSON/BSON fields\n  \"textclean\",   # cleaning up messy text (contractions, HTML, etc.)\n  \"wordcloud2\",  # optional, for word cloud visuals\n  \"widyr\"        # optional, for word-pair / correlation analysis\n))",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#know-your-collections-before-you-connect",
+    "href": "mongodbcon.html#know-your-collections-before-you-connect",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.2 2. Know your collections before you connect",
+    "text": "5.2 2. Know your collections before you connect\nThe schema you were given defines several collections. The two you’ll care about for text analysis are:\n\nreports — the actual documents/articles. This is where the free text lives. Key fields:\n\n_id (objectId), report_number (number) — report_number is the human-friendly key used to link a report to the incident(s) it belongs to\ntitle, text, plain_text — text may retain markdown/HTML formatting from the original source; plain_text is the cleaned version and is almost always what you want for tokenising/sentiment work\ndescription — a short editor-written summary, separate from the report body\nauthors, submitters — arrays of strings\ntags — array of free-text tags\nlanguage, source_domain, url\ndate_published, date_submitted, date_downloaded, date_modified\nembedding — a precomputed vector embedding of the text (nested object with a vector field); you generally won’t need to touch this unless you’re doing similarity/clustering work directly on the provided vectors\nis_incident_report (boolean)\n\nincidents — the higher-level “event” that one or more reports are describing. Key fields:\n\n_id (objectId), incident_id (number)\ntitle, description, date\nreports — an array of report_number values (not full documents) pointing back into the reports collection — this is how you join the two collections\nAlleged deployer of AI system, Alleged developer of AI system, Alleged harmed or nearly harmed parties — arrays of entity-name strings\nimplicated_systems — array of strings\neditors, editor_notes\n\nclassifications — tagging/label data (an attributes field) that links back to incidents/reports by their IDs — useful if you want to bring in categorical labels alongside the report text.\nentities — a lookup table of named entities (entity_id, name) referenced by the “alleged deployer/developer/harmed parties” fields above.\n\nFor most text-analysis tasks, you’ll mainly work with reports.plain_text, optionally joined to incidents for grouping/labels.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#connect-to-the-cluster",
+    "href": "mongodbcon.html#connect-to-the-cluster",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.3 3. Connect to the cluster",
+    "text": "5.3 3. Connect to the cluster\nNever hard-code your username and password directly into a script you might commit to GitHub or share with teammates. Use an .Renviron file instead.\nCreate/edit your .Renviron file (run this once):\nusethis::edit_r_environ()\nAdd a line like this, save, and restart R:\nMONGO_URI=\"mongodb+srv://myusername:mypassword@ai-incident-database.ugkyb5n.mongodb.net/\"\nNow connect from your script — one connection object per collection:\nlibrary(mongolite)\n\ndb_name &lt;- \"aiidprod\"  \n\nreports_conn &lt;- mongo(collection = \"reports\", db = db_name,\n                       url = Sys.getenv(\"MONGO_URI\"))\n\nincidents_conn &lt;- mongo(collection = \"incidents\", db = db_name,\n                         url = Sys.getenv(\"MONGO_URI\"))\n\n# quick sanity check\nreports_conn$count()\nincidents_conn$count()\nIf $count() returns a number rather than an error, you’re connected.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#pulling-data-out",
+    "href": "mongodbcon.html#pulling-data-out",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.4 4. Pulling data out",
+    "text": "5.4 4. Pulling data out\n\n5.4.1 4.1 Grab the fields you actually need\nDon’t pull every field (especially not embedding, which is a large numeric vector per document) if you don’t need it. Use the fields argument to project server-side:\nlibrary(tidyverse)\n\nreport_cols &lt;- '{\n    \"_id\": 1, \"report_number\": 1, \"title\": 1, \"plain_text\": 1,\n    \"description\": 1, \"tags\": 1, \"authors\": 1, \"language\": 1,\n    \"source_domain\": 1, \"date_published\": 1\n  }'\n\n\nreports &lt;- reports_conn$find(\n  fields = report_cols) |&gt; as_tibble()\n\nglimpse(reports)\n\n\n5.4.2 4.2 Filter server-side\nmongolite accepts standard MongoDB query syntax as a JSON string, e.g. to grab only English-language reports:\nreports_en &lt;- reports_conn$find(\n  query  = '{\"language\": \"en\"}',\n  fields = '{\"_id\": 1, \"report_number\": 1, \"title\": 1, \"plain_text\": 1}'\n) |&gt; as_tibble()\nFor more information on the query syntax visit, https://jeroen.github.io/mongolite/query-data.html#query-syntax\n\n\n5.4.3 4.3 Pull the incidents and join on report_number\nincidents$reports is an array of report_numbers, not embedded report documents, so joining means unnesting that array and matching it up:\nincidents &lt;- incidents_conn$find(\n  fields = '{\n    \"_id\": 1, \"incident_id\": 1, \"title\": 1, \"description\": 1, \"date\": 1,\n    \"reports\": 1, \"Alleged deployer of AI system\": 1,\n    \"Alleged developer of AI system\": 1,\n    \"Alleged harmed or nearly harmed parties\": 1\n  }'\n) |&gt; as_tibble()\n\n# one row per (incident_id, report_number) pair\nincident_report_map &lt;- incidents |&gt;\n  select(incident_id, reports) |&gt;\n  unnest_longer(reports) |&gt;\n  rename(report_number = reports)\n\n# now every report row can carry its incident's metadata\nreports_with_incident &lt;- reports |&gt;\n  left_join(incident_report_map, by = \"report_number\") |&gt;\n  left_join(\n    incidents |&gt; select(incident_id, incident_title = title, date),\n    by = \"incident_id\"\n  )\n\n\n5.4.4 4.4 Aggregation pipelines (optional, for heavier lifting)\nFor grouping/counting server-side before pulling data down:\nreports_per_year &lt;- reports_conn$aggregate('[\n  { \"$group\": {\n      \"_id\": { \"$substr\": [\"$date_published\", 0, 4] },\n      \"n\": { \"$sum\": 1 }\n  }},\n  { \"$sort\": { \"_id\": 1 } }\n]') |&gt; as_tibble()\n\n\n5.4.5 4.5 Other nested/array fields\nSeveral fields come back from mongolite as list-columns: authors, submitters, tags (on reports); the “alleged deployer/developer/harmed parties” fields (on incidents). Each of these is a simple array of strings per document, so unnest_longer() is usually what you want (not unnest_wider(), which is for nested objects):\nreports_authors &lt;- reports |&gt;\n  select(report_number, authors) |&gt;\n  unnest_longer(authors)   # one row per (report_number, author)\n\nincidents_parties &lt;- incidents |&gt;\n  select(incident_id, `Alleged harmed or nearly harmed parties`) |&gt;\n  unnest_longer(`Alleged harmed or nearly harmed parties`) |&gt;\n  rename(harmed_party = `Alleged harmed or nearly harmed parties`)\nGuard against missing/empty text before tokenising:\nreports &lt;- reports |&gt;\n  mutate(plain_text = replace_na(plain_text, \"\"))",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#cleaning-the-text",
+    "href": "mongodbcon.html#cleaning-the-text",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.5 5. Cleaning the text",
+    "text": "5.5 5. Cleaning the text\nplain_text is already stripped of most markup, but scraped news text still tends to carry boilerplate (bylines, “read more” links, share-button text). Do a light cleaning pass and keep the original column in case later analysis needs it:\n\n\n\n\n\n\nWarning\n\n\n\nThe following is only a suggestion and is not guaranteed to produce fully cleaned text ready for analysis.\n\n\nlibrary(textclean)\n\nreports &lt;- reports |&gt;\n  mutate(\n    text_clean = plain_text |&gt;\n      replace_contraction() |&gt;          # \"don't\" -&gt; \"do not\"\n      replace_url() |&gt;\n      replace_html() |&gt;\n      str_squish()                       # trim/collapse whitespace\n  )",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#tokenising-with-tidytext",
+    "href": "mongodbcon.html#tokenising-with-tidytext",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.6 6. Tokenising with tidytext",
+    "text": "5.6 6. Tokenising with tidytext\ntidytext works on the “one-token-per-row” principle, which plugs directly into dplyr/ggplot2.\nlibrary(tidytext)\n\ntokens &lt;- reports |&gt;\n  select(report_number, text_clean) |&gt;\n  unnest_tokens(word, text_clean)\n\n# remove stop words\ntokens_clean &lt;- tokens |&gt;\n  anti_join(stop_words, by = \"word\")\n\n5.6.1 6.1 Word frequencies\ntop_words &lt;- tokens_clean |&gt;\n  count(word, sort = TRUE)\n\ntop_words |&gt;\n  slice_max(n, n = 20) |&gt;\n  ggplot(aes(x = reorder(word, n), y = n)) +\n  geom_col() +\n  coord_flip() +\n  labs(x = NULL, y = \"count\", title = \"Most frequent words across reports\")\n\n\n5.6.2 6.2 TF-IDF (which words distinguish one incident/domain from another)\nThis is a natural fit here: use incident_id or source_domain as the grouping variable to see what language is distinctive to a given incident or outlet.\ntfidf &lt;- reports_with_incident |&gt;\n  select(report_number, incident_id, text_clean) |&gt;\n  unnest_tokens(word, text_clean) |&gt;\n  anti_join(stop_words, by = \"word\") |&gt;\n  count(incident_id, word, sort = TRUE) |&gt;\n  bind_tf_idf(word, incident_id, n)\n\ntfidf |&gt;\n  group_by(incident_id) |&gt;\n  slice_max(tf_idf, n = 10) |&gt;\n  ungroup()\n\n\n5.6.3 6.3 N-grams\nFor phrase-level patterns rather than single words:\nbigrams &lt;- reports |&gt;\n  unnest_tokens(bigram, text_clean, token = \"ngrams\", n = 2) |&gt;\n  separate(bigram, into = c(\"word1\", \"word2\"), sep = \" \") |&gt;\n  filter(!word1 %in% stop_words$word, !word2 %in% stop_words$word) |&gt;\n  count(word1, word2, sort = TRUE)",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#sentiment-analysis",
+    "href": "mongodbcon.html#sentiment-analysis",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.7 7. Sentiment analysis",
+    "text": "5.7 7. Sentiment analysis\ntidytext bundles several sentiment lexicons (bing, afinn, nrc, loughran). Join tokens to a lexicon the same way you joined stop words. loughran is worth knowing about here specifically — it was built for financial/news text and includes categories like “uncertainty” and “litigious”, which can be more informative than generic positive/negative for news-style incident reports.\nsentiment_scores &lt;- tokens_clean |&gt;\n  inner_join(get_sentiments(\"bing\"), by = \"word\") |&gt;\n  count(report_number, sentiment) |&gt;\n  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) |&gt;\n  mutate(net_sentiment = positive - negative)\nFor a numeric score per word (rather than positive/negative labels), use afinn:\nafinn_scores &lt;- tokens_clean |&gt;\n  inner_join(get_sentiments(\"afinn\"), by = \"word\") |&gt;\n  group_by(report_number) |&gt;\n  summarise(sentiment_score = sum(value), .groups = \"drop\")\nget_sentiments() will prompt a one-time download/license confirmation the first time you use a given lexicon — do this well before the competition starts, not on the day, in case you don’t have internet access at the venue.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#word-co-occurrence-correlation-optional-widyr",
+    "href": "mongodbcon.html#word-co-occurrence-correlation-optional-widyr",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.8 8. Word co-occurrence / correlation (optional, widyr)",
+    "text": "5.8 8. Word co-occurrence / correlation (optional, widyr)\nUseful for exploring which words tend to appear together within the same report:\nlibrary(widyr)\n\nword_pairs &lt;- tokens_clean |&gt;\n  pairwise_count(word, report_number, sort = TRUE)\n\nword_cors &lt;- tokens_clean |&gt;\n  group_by(word) |&gt;\n  filter(n() &gt;= 20) |&gt;          # drop very rare words first\n  pairwise_cor(word, report_number, sort = TRUE)",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#putting-it-together-a-minimal-end-to-end-script",
+    "href": "mongodbcon.html#putting-it-together-a-minimal-end-to-end-script",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.9 9. Putting it together: a minimal end-to-end script",
+    "text": "5.9 9. Putting it together: a minimal end-to-end script\nlibrary(mongolite)\nlibrary(tidyverse)\nlibrary(tidytext)\nlibrary(textclean)\n\ndb_name &lt;- \"your_database_name\"\nreports_conn &lt;- mongo(collection = \"reports\", db = db_name,\n                       url = Sys.getenv(\"MONGO_URI\"))\n\nreports &lt;- reports_conn$find(\n  fields = '{\"_id\": 1, \"report_number\": 1, \"title\": 1, \"plain_text\": 1, \"tags\": 1}'\n) |&gt;\n  as_tibble() |&gt;\n  mutate(\n    plain_text = replace_na(plain_text, \"\"),\n    text_clean = str_squish(replace_contraction(replace_url(plain_text, \"\")))\n  )\n\nword_counts &lt;- reports |&gt;\n  unnest_tokens(word, text_clean) |&gt;\n  anti_join(stop_words, by = \"word\") |&gt;\n  count(word, sort = TRUE)\n\nword_counts |&gt; slice_max(n, n = 15)",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#common-pitfalls",
+    "href": "mongodbcon.html#common-pitfalls",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.10 10. Common pitfalls",
+    "text": "5.10 10. Common pitfalls\n\nConnection refused / timeout — your IP isn’t allow-listed in Atlas Network Access, or you’re on a network (uni wifi, VPN) that blocks the MongoDB port. Test the connection before the competition.\nPulling embedding by accident — it’s a full numeric vector per document; leave it out of your fields projection unless you specifically need it, or your find() calls will be slow and memory-heavy.\nUsing text instead of plain_text — text can retain markdown/HTML from the original source, which will pollute your tokens (&lt;, ##, href=, etc.). Prefer plain_text for tokenising.\nunnest_wider() on the wrong field — authors, tags, and the “alleged parties” fields are arrays of strings, so they need unnest_longer(). unnest_wider() is for fields that are nested objects (there aren’t many of those in reports/incidents).\nJoining incidents to reports on the wrong key — incidents.reports holds report_number values, not _id (objectId) values. Join on report_number, not _id.\nEncoding issues (garbled characters) — check Encoding() on your text column and re-encode with iconv() if you see mojibake.\nCredentials in scripts — always use Sys.getenv() against an .Renviron file, never paste the connection string directly into a script you’ll share or commit.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "mongodbcon.html#quick-reference-package-cheat-sheet",
+    "href": "mongodbcon.html#quick-reference-package-cheat-sheet",
+    "title": "5  Getting Your Competition Data Out of MongoDB Atlas and Into R",
+    "section": "5.11 11. Quick reference: package cheat sheet",
+    "text": "5.11 11. Quick reference: package cheat sheet\n\n\n\n\n\n\n\n\nTask\nPackage\nKey function(s)\n\n\n\n\nConnect to MongoDB\nmongolite\nmongo(), $find(), $aggregate(), $count()\n\n\nWrangle data\ndplyr / tidyr\nmutate(), filter(), unnest_longer(), left_join()\n\n\nClean text\ntextclean\nreplace_contraction(), replace_url(), replace_html()\n\n\nTokenise\ntidytext\nunnest_tokens()\n\n\nFrequency / TF-IDF\ntidytext\ncount(), bind_tf_idf()\n\n\nSentiment\ntidytext\nget_sentiments(), inner_join()\n\n\nWord pairs/correlation\nwidyr\npairwise_count(), pairwise_cor()\n\n\nPlotting\nggplot2\ngeom_col(), geom_point()\n\n\n\nGood luck with the competition.",
+    "crumbs": [
+      "Databases + MongoDB",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Your Competition Data Out of MongoDB Atlas and Into R</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html",
+    "href": "tidytext.html",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "",
+    "text": "6.1 The core reference",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#the-core-reference",
+    "href": "tidytext.html#the-core-reference",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "",
+    "text": "Text Mining with R by Julia Silge and David Robinson (free, by the tidytext package authors). Relevant chapters:\n\nCh. 1 — the tidy text format (unnest_tokens())\nCh. 2 — sentiment analysis\nCh. 3 — word/document frequency (tf-idf)\nCh. 4 — n-grams and word correlations\nCh. 6 — topic modeling\n\n?tidytext::unnest_tokens, ?tidytext::bind_tf_idf, or vignette(package = \"tidytext\") for the function reference.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#if-you-want-to-find-latent-themes-topic-modeling-lda",
+    "href": "tidytext.html#if-you-want-to-find-latent-themes-topic-modeling-lda",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "6.2 If you want to find latent themes: topic modeling (LDA)",
+    "text": "6.2 If you want to find latent themes: topic modeling (LDA)\nlibrary(topicmodels)\n\ndtm &lt;- tokens_clean |&gt;\n  count(report_number, word) |&gt;\n  cast_dtm(report_number, word, n)\n\nlda_model &lt;- LDA(dtm, k = 5, control = list(seed = 1234))\n\ntidy(lda_model, matrix = \"beta\") |&gt;   # word probabilities per topic\n  group_by(topic) |&gt;\n  slice_max(beta, n = 10)\ntidy() converts the model back into a tidy data frame so the rest of your dplyr/ggplot2 pipeline still applies. See Text Mining with R, Ch. 6.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#if-word-variants-are-diluting-your-counts-stemming",
+    "href": "tidytext.html#if-word-variants-are-diluting-your-counts-stemming",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "6.3 If word variants are diluting your counts: stemming",
+    "text": "6.3 If word variants are diluting your counts: stemming\nlibrary(SnowballC)\n\ntokens_clean &lt;- tokens_clean |&gt;\n  mutate(word_stem = wordStem(word))\nUse deliberately, not automatically — stemming can hurt readability in a report meant for human judges.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#if-you-want-more-corpus-linguistics-tooling-quanteda",
+    "href": "tidytext.html#if-you-want-more-corpus-linguistics-tooling-quanteda",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "6.4 If you want more corpus-linguistics tooling: quanteda",
+    "text": "6.4 If you want more corpus-linguistics tooling: quanteda\nquanteda is an alternative to tidytext, with built-in keyword-in-context (kwic()) and document-feature matrix tools. Pick one framework and stay consistent through your analysis.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#visualizing-results",
+    "href": "tidytext.html#visualizing-results",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "6.5 Visualizing results",
+    "text": "6.5 Visualizing results\n\nggplot2::geom_col() / geom_point() for frequency and tf-idf charts.\nwordcloud2 for a quick visual summary — pair with an actual frequency table, since word clouds are weak for precise comparisons.\nggraph + igraph on widyr::pairwise_cor() output for word-correlation networks.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#cheat-sheet",
+    "href": "tidytext.html#cheat-sheet",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "6.6 Cheat sheet",
+    "text": "6.6 Cheat sheet\nPosit’s tidytext cheat sheet — one page, covers tokenisation, sentiment, tf-idf. Keep it open during the event.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  },
+  {
+    "objectID": "tidytext.html#keep-it-in-scope",
+    "href": "tidytext.html#keep-it-in-scope",
+    "title": "6  Resources for tidytext (Text Mining with R)",
+    "section": "6.7 Keep it in scope",
+    "text": "6.7 Keep it in scope\nText mining is a means to an analytical insight, not the insight itself. A clear tf-idf or sentiment analysis tied to a specific question scores better than a kitchen-sink pipeline with no narrative tying it together.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Resources for tidytext (Text Mining with R)</span>"
+    ]
+  }
+]

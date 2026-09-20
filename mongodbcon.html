@@ -239,8 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#let-group-summarize-before-it-ever-reaches-r" id="toc-let-group-summarize-before-it-ever-reaches-r" class="nav-link" data-scroll-target="#let-group-summarize-before-it-ever-reaches-r"><span class="header-section-number">6.5.2</span> Let <code>$group</code> summarize before it ever reaches R</a></li>
   <li><a href="#count-before-you-fetch" id="toc-count-before-you-fetch" class="nav-link" data-scroll-target="#count-before-you-fetch"><span class="header-section-number">6.5.3</span> Count before you fetch</a></li>
   <li><a href="#limit-skip-and-sample-for-peeking-or-paging" id="toc-limit-skip-and-sample-for-peeking-or-paging" class="nav-link" data-scroll-target="#limit-skip-and-sample-for-peeking-or-paging"><span class="header-section-number">6.5.4</span> <code>limit</code>, <code>skip</code>, and <code>$sample</code> for peeking or paging</a></li>
-  <li><a href="#stream-through-a-large-result-with-iterate" id="toc-stream-through-a-large-result-with-iterate" class="nav-link" data-scroll-target="#stream-through-a-large-result-with-iterate"><span class="header-section-number">6.5.5</span> Stream through a large result with <code>$iterate()</code></a></li>
-  <li><a href="#a-decision-guide" id="toc-a-decision-guide" class="nav-link" data-scroll-target="#a-decision-guide"><span class="header-section-number">6.5.6</span> A decision guide</a></li>
+  <li><a href="#a-decision-guide" id="toc-a-decision-guide" class="nav-link" data-scroll-target="#a-decision-guide"><span class="header-section-number">6.5.5</span> A decision guide</a></li>
   </ul></li>
   <li><a href="#a-worked-pipeline-stage-by-stage-joining-reports-to-incidents" id="toc-a-worked-pipeline-stage-by-stage-joining-reports-to-incidents" class="nav-link" data-scroll-target="#a-worked-pipeline-stage-by-stage-joining-reports-to-incidents"><span class="header-section-number">6.6</span> A worked pipeline, stage by stage: joining reports to incidents</a>
   <ul class="collapse">
@@ -260,19 +259,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tf-idf-which-words-distinguish-one-incidentdomain-from-another" id="toc-tf-idf-which-words-distinguish-one-incidentdomain-from-another" class="nav-link" data-scroll-target="#tf-idf-which-words-distinguish-one-incidentdomain-from-another"><span class="header-section-number">6.10.2</span> TF-IDF (which words distinguish one incident/domain from another)</a></li>
   <li><a href="#n-grams" id="toc-n-grams" class="nav-link" data-scroll-target="#n-grams"><span class="header-section-number">6.10.3</span> N-grams</a></li>
   <li><a href="#summarize-text-metrics-server-side-instead-of-tokenizing-in-r" id="toc-summarize-text-metrics-server-side-instead-of-tokenizing-in-r" class="nav-link" data-scroll-target="#summarize-text-metrics-server-side-instead-of-tokenizing-in-r"><span class="header-section-number">6.10.4</span> Summarize text metrics server-side instead of tokenizing in R</a></li>
-  <li><a href="#process-the-full-corpus-in-chunks-when-you-must" id="toc-process-the-full-corpus-in-chunks-when-you-must" class="nav-link" data-scroll-target="#process-the-full-corpus-in-chunks-when-you-must"><span class="header-section-number">6.10.5</span> Process the full corpus in chunks, when you must</a></li>
   </ul></li>
-  <li><a href="#sentiment-analysis" id="toc-sentiment-analysis" class="nav-link" data-scroll-target="#sentiment-analysis"><span class="header-section-number">6.11</span> Sentiment analysis</a></li>
-  <li><a href="#word-co-occurrence-correlation-optional-widyr" id="toc-word-co-occurrence-correlation-optional-widyr" class="nav-link" data-scroll-target="#word-co-occurrence-correlation-optional-widyr"><span class="header-section-number">6.12</span> Word co-occurrence / correlation (optional, <code>widyr</code>)</a></li>
-  <li><a href="#debugging-and-building-pipelines-incrementally" id="toc-debugging-and-building-pipelines-incrementally" class="nav-link" data-scroll-target="#debugging-and-building-pipelines-incrementally"><span class="header-section-number">6.13</span> Debugging and building pipelines incrementally</a></li>
-  <li><a href="#putting-it-together-a-minimal-end-to-end-script" id="toc-putting-it-together-a-minimal-end-to-end-script" class="nav-link" data-scroll-target="#putting-it-together-a-minimal-end-to-end-script"><span class="header-section-number">6.14</span> Putting it together: a minimal end-to-end script</a></li>
-  <li><a href="#common-pitfalls" id="toc-common-pitfalls" class="nav-link" data-scroll-target="#common-pitfalls"><span class="header-section-number">6.15</span> Common pitfalls</a></li>
-  <li><a href="#quick-reference" id="toc-quick-reference" class="nav-link" data-scroll-target="#quick-reference"><span class="header-section-number">6.16</span> Quick reference</a>
+  <li><a href="#combine-only-the-small-already-summarized-per-batch-counts" id="toc-combine-only-the-small-already-summarized-per-batch-counts" class="nav-link" data-scroll-target="#combine-only-the-small-already-summarized-per-batch-counts"><span class="header-section-number">7</span> Combine only the small, already-summarized per-batch counts</a>
   <ul class="collapse">
-  <li><a href="#pipeline-stages" id="toc-pipeline-stages" class="nav-link" data-scroll-target="#pipeline-stages"><span class="header-section-number">6.16.1</span> Pipeline stages</a></li>
-  <li><a href="#package-cheat-sheet" id="toc-package-cheat-sheet" class="nav-link" data-scroll-target="#package-cheat-sheet"><span class="header-section-number">6.16.2</span> Package cheat sheet</a></li>
+  <li><a href="#sentiment-analysis" id="toc-sentiment-analysis" class="nav-link" data-scroll-target="#sentiment-analysis"><span class="header-section-number">7.1</span> Sentiment analysis</a></li>
+  <li><a href="#word-co-occurrence-correlation-optional-widyr" id="toc-word-co-occurrence-correlation-optional-widyr" class="nav-link" data-scroll-target="#word-co-occurrence-correlation-optional-widyr"><span class="header-section-number">7.2</span> Word co-occurrence / correlation (optional, <code>widyr</code>)</a></li>
+  <li><a href="#debugging-and-building-pipelines-incrementally" id="toc-debugging-and-building-pipelines-incrementally" class="nav-link" data-scroll-target="#debugging-and-building-pipelines-incrementally"><span class="header-section-number">7.3</span> Debugging and building pipelines incrementally</a></li>
+  <li><a href="#putting-it-together-a-minimal-end-to-end-script" id="toc-putting-it-together-a-minimal-end-to-end-script" class="nav-link" data-scroll-target="#putting-it-together-a-minimal-end-to-end-script"><span class="header-section-number">7.4</span> Putting it together: a minimal end-to-end script</a></li>
+  <li><a href="#common-pitfalls" id="toc-common-pitfalls" class="nav-link" data-scroll-target="#common-pitfalls"><span class="header-section-number">7.5</span> Common pitfalls</a></li>
+  <li><a href="#quick-reference" id="toc-quick-reference" class="nav-link" data-scroll-target="#quick-reference"><span class="header-section-number">7.6</span> Quick reference</a>
+  <ul class="collapse">
+  <li><a href="#pipeline-stages" id="toc-pipeline-stages" class="nav-link" data-scroll-target="#pipeline-stages"><span class="header-section-number">7.6.1</span> Pipeline stages</a></li>
+  <li><a href="#package-cheat-sheet" id="toc-package-cheat-sheet" class="nav-link" data-scroll-target="#package-cheat-sheet"><span class="header-section-number">7.6.2</span> Package cheat sheet</a></li>
   </ul></li>
-  <li><a href="#summary-checklists" id="toc-summary-checklists" class="nav-link" data-scroll-target="#summary-checklists"><span class="header-section-number">6.17</span> Summary checklists</a></li>
+  <li><a href="#summary-checklists" id="toc-summary-checklists" class="nav-link" data-scroll-target="#summary-checklists"><span class="header-section-number">7.7</span> Summary checklists</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -488,23 +489,8 @@ Tip
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[ { "$sample": { "size": 500 } } ]'</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>random_sample <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="stream-through-a-large-result-with-iterate" class="level3" data-number="6.5.5">
-<h3 data-number="6.5.5" class="anchored" data-anchor-id="stream-through-a-large-result-with-iterate"><span class="header-section-number">6.5.5</span> Stream through a large result with <code>$iterate()</code></h3>
-<p>If you truly need to touch every document (e.g.&nbsp;something that can’t be expressed as an aggregation stage), avoid loading the entire result into a tibble at once. <code>mongolite</code> lets you get a cursor and pull batches:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cursor <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">iterate</span>(<span class="at">query =</span> query, <span class="at">fields =</span> report_cols)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  batch <span class="ot">&lt;-</span> cursor<span class="sc">$</span><span class="fu">batch</span>(<span class="at">size =</span> <span class="dv">1000</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(batch)) <span class="cf">break</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># process this chunk only — e.g. write to disk, accumulate a summary,</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># or append to a growing file rather than a growing in-memory object</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  batch <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="fu">process_batch</span>()</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This keeps memory usage bounded to one batch at a time, regardless of how large the underlying collection is.</p>
-</section>
-<section id="a-decision-guide" class="level3" data-number="6.5.6">
-<h3 data-number="6.5.6" class="anchored" data-anchor-id="a-decision-guide"><span class="header-section-number">6.5.6</span> A decision guide</h3>
+<section id="a-decision-guide" class="level3" data-number="6.5.5">
+<h3 data-number="6.5.5" class="anchored" data-anchor-id="a-decision-guide"><span class="header-section-number">6.5.5</span> A decision guide</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 35%">
@@ -549,43 +535,43 @@ Tip
 <section id="a-worked-pipeline-stage-by-stage-joining-reports-to-incidents" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="a-worked-pipeline-stage-by-stage-joining-reports-to-incidents"><span class="header-section-number">6.6</span> A worked pipeline, stage by stage: joining reports to incidents</h2>
 <p>This is the actual join you’ll want for this schema — reports linked to the incident(s) that reference them by <code>report_number</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "$lookup": {</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">      "from": "incidents",</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">      "localField": "report_number",</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">      "foreignField": "reports",</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">      "as": "incident"</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="st">    "$unwind": {</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="st">      "path": "$incident",</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="st">      "preserveNullAndEmptyArrays": true</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="st">    "$project": {</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="st">      "_id": 1,</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="st">      "report_number": 1,</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="st">      "title": 1,</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="st">      "plain_text": 1,</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="st">      "description": 1,</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="st">      "tags": 1,</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="st">      "authors": 1,</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="st">      "language": 1,</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="st">      "source_domain": 1,</span></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="st">      "date_published": 1,</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="st">      "incident_id": "$incident.incident_id",</span></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="st">      "incident_title": "$incident.title",</span></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="st">      "date": "$incident.date"</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="st">]'</span></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>reports_with_incident <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span></span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "$lookup": {</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">      "from": "incidents",</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="st">      "localField": "report_number",</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">      "foreignField": "reports",</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="st">      "as": "incident"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="st">    "$unwind": {</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="st">      "path": "$incident",</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="st">      "preserveNullAndEmptyArrays": true</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="st">    "$project": {</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="st">      "_id": 1,</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="st">      "report_number": 1,</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="st">      "title": 1,</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="st">      "plain_text": 1,</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="st">      "description": 1,</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="st">      "tags": 1,</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="st">      "authors": 1,</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="st">      "language": 1,</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="st">      "source_domain": 1,</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="st">      "date_published": 1,</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="st">      "incident_id": "$incident.incident_id",</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="st">      "incident_title": "$incident.title",</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="st">      "date": "$incident.date"</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="st">]'</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>reports_with_incident <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="stage-1-lookup-a-sql-style-join" class="level3" data-number="6.6.1">
 <h3 data-number="6.6.1" class="anchored" data-anchor-id="stage-1-lookup-a-sql-style-join"><span class="header-section-number">6.6.1</span> Stage 1 — <code>$lookup</code> (a SQL-style JOIN)</h3>
 <p>For every document in <code>reports</code>, MongoDB looks in the <code>incidents</code> collection for documents where <code>incidents.reports</code> matches this document’s <code>report_number</code>. All matches are attached as an <strong>array</strong> under a new field called <code>incident</code>.</p>
@@ -705,53 +691,66 @@ Tip
 <li>Desired output row: one row per <code>source_domain</code>, with a count.</li>
 <li>Transformation: filter by date, then group by domain and count.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "$match": {</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">      "date_published": { "$gte": { "$date": "2020-01-01T00:00:00Z" } }</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">    "$group": {</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">      "_id": "$source_domain",</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">      "n_reports": { "$sum": 1 }</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="st">    "$sort": { "n_reports": -1 }</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="st">]'</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>report_counts <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "$match": {</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">      "date_published": { "$gte": { "$date": "2020-01-01T00:00:00Z" } }</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">    "$group": {</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="st">      "_id": "$source_domain",</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="st">      "n_reports": { "$sum": 1 }</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="st">    "$sort": { "n_reports": -1 }</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="st">]'</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>report_counts <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notice the pattern repeats: <strong>filter/join stages first, reshape stages last.</strong> <code>$match</code> should almost always come as early as possible (it reduces the document count before any expensive work), and <code>$project</code>/<code>$group</code>/<code>$sort</code> come afterward to shape the final result.</p>
 <hr>
 </section>
 </section>
 <section id="two-ways-to-join-reports-to-incidents-pipeline-vs.-r-side" class="level2" data-number="6.8">
 <h2 data-number="6.8" class="anchored" data-anchor-id="two-ways-to-join-reports-to-incidents-pipeline-vs.-r-side"><span class="header-section-number">6.8</span> Two ways to join <code>reports</code> to <code>incidents</code> — pipeline vs.&nbsp;R-side</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Just a demonstration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The following code piece is only a demonstration and is not recommended for use</p>
+</div>
+</div>
 <p>The example earlier does the join <em>inside MongoDB</em> with <code>$lookup</code>. You can also pull both collections separately and join them in R with <code>dplyr</code>, using <code>incidents$reports</code> (an array of <code>report_number</code>s):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>incidents <span class="ot">&lt;-</span> incidents_conn<span class="sc">$</span><span class="fu">find</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fields =</span> <span class="st">'{</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "_id": 1, "incident_id": 1, "title": 1, "description": 1, "date": 1,</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "reports": 1, "Alleged deployer of AI system": 1,</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "Alleged developer of AI system": 1,</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">    "Alleged harmed or nearly harmed parties": 1</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># one row per (incident_id, report_number) pair</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>incident_report_map <span class="ot">&lt;-</span> incidents <span class="sc">|&gt;</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(incident_id, reports) <span class="sc">|&gt;</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(reports) <span class="sc">|&gt;</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">report_number =</span> reports)</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># now every report row can carry its incident's metadata</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>reports_with_incident <span class="ot">&lt;-</span> reports <span class="sc">|&gt;</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(incident_report_map, <span class="at">by =</span> <span class="st">"report_number"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    incidents <span class="sc">|&gt;</span> <span class="fu">select</span>(incident_id, <span class="at">incident_title =</span> title, date),</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"incident_id"</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>incidents <span class="ot">&lt;-</span> incidents_conn<span class="sc">$</span><span class="fu">find</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fields =</span> <span class="st">'{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "_id": 1, "incident_id": 1, "title": 1, "description": 1, "date": 1,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "reports": 1, "Alleged deployer of AI system": 1,</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "Alleged developer of AI system": 1,</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">    "Alleged harmed or nearly harmed parties": 1</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># one row per (incident_id, report_number) pair</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>incident_report_map <span class="ot">&lt;-</span> incidents <span class="sc">|&gt;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(incident_id, reports) <span class="sc">|&gt;</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(reports) <span class="sc">|&gt;</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">report_number =</span> reports)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># now every report row can carry its incident's metadata</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>reports_with_incident <span class="ot">&lt;-</span> reports <span class="sc">|&gt;</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(incident_report_map, <span class="at">by =</span> <span class="st">"report_number"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    incidents <span class="sc">|&gt;</span> <span class="fu">select</span>(incident_id, <span class="at">incident_title =</span> title, date),</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"incident_id"</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Both approaches produce the same shape. Which one to reach for:</p>
 <ul>
 <li><strong><code>$lookup</code>/<code>$unwind</code> in a pipeline</strong> — join happens on the server, and only the already-joined, already-projected result crosses the network. Preferred when <code>reports</code> is large, or when you only need a subset of the joined result (combine with an early <code>$match</code>).</li>
@@ -775,164 +774,141 @@ Warning
 <p>The following is only a suggestion and is not guaranteed to produce fully cleaned text ready for analysis.</p>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">find</span>(<span class="at">fields =</span> report_cols, <span class="at">limit =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>)) <span class="sc">|&gt;</span>   <span class="co"># guard against NA before cleaning</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_clean =</span> plain_text <span class="sc">|&gt;</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_contraction</span>() <span class="sc">|&gt;</span>          <span class="co"># "don't" -&gt; "do not"</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_url</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_html</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>()                       <span class="co"># trim/collapse whitespace</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">find</span>(<span class="at">fields =</span> report_cols, <span class="at">limit =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>)) <span class="sc">|&gt;</span>   <span class="co"># guard against NA before cleaning</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_clean =</span> plain_text <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_contraction</span>() <span class="sc">|&gt;</span>          <span class="co"># "don't" -&gt; "do not"</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_url</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_html</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>()                       <span class="co"># trim/collapse whitespace</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="tokenising-and-analysing-with-tidytext-size-consciously" class="level2" data-number="6.10">
 <h2 data-number="6.10" class="anchored" data-anchor-id="tokenising-and-analysing-with-tidytext-size-consciously"><span class="header-section-number">6.10</span> Tokenising and analysing with tidytext — size-consciously</h2>
 <p><code>tidytext</code> works on the “one-token-per-row” principle, which plugs directly into <code>dplyr</code>/<code>ggplot2</code>. Tokenizing multiplies your row count — one document becomes one row per word — so this is often where memory pressure actually shows up, even when the initial <code>find()</code>/<code>aggregate()</code> was fine. Narrow the input <em>before</em> tokenizing.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Bad: tokenize the entire collection at once</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># reports |&gt; unnest_tokens(word, plain_text)</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Better: filter server-side to what the analysis actually needs, and</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># project away fields (like description, embedding) you don't need here</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">'{ "language": "en", "date_published": { "$gte": { "$date": "2024-01-01T00:00:00Z" } } }'</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>subset_cols <span class="ot">&lt;-</span> <span class="st">'{ "_id": 1, "report_number": 1, "plain_text": 1 }'</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>reports_subset <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">find</span>(<span class="at">query =</span> query, <span class="at">fields =</span> subset_cols) <span class="sc">|&gt;</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>))</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>tokens <span class="ot">&lt;-</span> reports_subset <span class="sc">|&gt;</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(report_number, plain_text) <span class="sc">|&gt;</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, plain_text) <span class="sc">|&gt;</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Bad: tokenize the entire collection at once</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># reports |&gt; unnest_tokens(word, plain_text)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Better: filter server-side to what the analysis actually needs, and</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># project away fields (like description, embedding) you don't need here</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">'{ "language": "en", "date_published": { "$gte": { "$date": "2024-01-01T00:00:00Z" } } }'</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>subset_cols <span class="ot">&lt;-</span> <span class="st">'{ "_id": 1, "report_number": 1, "plain_text": 1 }'</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>reports_subset <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">find</span>(<span class="at">query =</span> query, <span class="at">fields =</span> subset_cols) <span class="sc">|&gt;</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>tokens <span class="ot">&lt;-</span> reports_subset <span class="sc">|&gt;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(report_number, plain_text) <span class="sc">|&gt;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, plain_text) <span class="sc">|&gt;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For exploratory work (trying out a TF-IDF approach, testing a topic model), work on a <code>$sample</code> subset first, and only run the full-size version once the approach is validated, the same instinct as testing a pipeline stage-by-stage.</p>
 <section id="word-frequencies" class="level3" data-number="6.10.1">
 <h3 data-number="6.10.1" class="anchored" data-anchor-id="word-frequencies"><span class="header-section-number">6.10.1</span> Word frequencies</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>top_words <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>top_words <span class="sc">|&gt;</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word, n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"count"</span>, <span class="at">title =</span> <span class="st">"Most frequent words across reports"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>top_words <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>top_words <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(word, n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"count"</span>, <span class="at">title =</span> <span class="st">"Most frequent words across reports"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="tf-idf-which-words-distinguish-one-incidentdomain-from-another" class="level3" data-number="6.10.2">
 <h3 data-number="6.10.2" class="anchored" data-anchor-id="tf-idf-which-words-distinguish-one-incidentdomain-from-another"><span class="header-section-number">6.10.2</span> TF-IDF (which words distinguish one incident/domain from another)</h3>
 <p>Use <code>incident_id</code> or <code>source_domain</code> as the grouping variable to see what language is distinctive to a given incident or outlet:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tfidf <span class="ot">&lt;-</span> reports_with_incident <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(report_number, incident_id, text_clean) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text_clean) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(incident_id, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, incident_id, n)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>tfidf <span class="sc">|&gt;</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(incident_id) <span class="sc">|&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tf_idf, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tfidf <span class="ot">&lt;-</span> reports_with_incident <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(report_number, incident_id, text_clean) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text_clean) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(incident_id, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_tf_idf</span>(word, incident_id, n)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>tfidf <span class="sc">|&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(incident_id) <span class="sc">|&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tf_idf, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="n-grams" class="level3" data-number="6.10.3">
 <h3 data-number="6.10.3" class="anchored" data-anchor-id="n-grams"><span class="header-section-number">6.10.3</span> N-grams</h3>
 <p>For phrase-level patterns rather than single words:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bigrams <span class="ot">&lt;-</span> reports <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigram, text_clean, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word, <span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">|&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word1, word2, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bigrams <span class="ot">&lt;-</span> reports <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(bigram, text_clean, <span class="at">token =</span> <span class="st">"ngrams"</span>, <span class="at">n =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bigram, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"word1"</span>, <span class="st">"word2"</span>), <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word1 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word, <span class="sc">!</span>word2 <span class="sc">%in%</span> stop_words<span class="sc">$</span>word) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word1, word2, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="summarize-text-metrics-server-side-instead-of-tokenizing-in-r" class="level3" data-number="6.10.4">
 <h3 data-number="6.10.4" class="anchored" data-anchor-id="summarize-text-metrics-server-side-instead-of-tokenizing-in-r"><span class="header-section-number">6.10.4</span> Summarize text metrics server-side instead of tokenizing in R</h3>
 <p>If the <em>final</em> thing you want is a summary statistic derived from text — not the text content itself — MongoDB’s own operators can sometimes get you there without tokenizing in R at all. For example, a rough word count per document with <code>$size</code> and <code>$split</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "$addFields": {</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="st">      "word_count": { "$size": { "$split": ["$plain_text", " "] } }</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="st">  { "$project": { "report_number": 1, "word_count": 1 } }</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="st">]'</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>word_counts <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> <span class="st">'[</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="st">  {</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="st">    "$addFields": {</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="st">      "word_count": { "$size": { "$split": ["$plain_text", " "] } }</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="st">  },</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="st">  { "$project": { "report_number": 1, "word_count": 1 } }</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="st">]'</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>word_counts <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">aggregate</span>(pipeline) <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This computes a number per document server-side and returns one row per document — never the text itself.</p>
 </section>
-<section id="process-the-full-corpus-in-chunks-when-you-must" class="level3" data-number="6.10.5">
-<h3 data-number="6.10.5" class="anchored" data-anchor-id="process-the-full-corpus-in-chunks-when-you-must"><span class="header-section-number">6.10.5</span> Process the full corpus in chunks, when you must</h3>
-<p>If a text-mining task genuinely needs the whole corpus (e.g.&nbsp;a full-collection document-term matrix), combine <code>$iterate()</code> batching with incremental summarizing instead of binding every batch into one giant tibble:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cursor <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">iterate</span>(<span class="at">query =</span> query, <span class="at">fields =</span> subset_cols)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>word_freq <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  batch <span class="ot">&lt;-</span> cursor<span class="sc">$</span><span class="fu">batch</span>(<span class="at">size =</span> <span class="dv">500</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(batch)) <span class="cf">break</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  batch_freq <span class="ot">&lt;-</span> batch <span class="sc">|&gt;</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_tokens</span>(word, plain_text) <span class="sc">|&gt;</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(word)</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  word_freq[[<span class="fu">length</span>(word_freq) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> batch_freq</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine only the small, already-summarized per-batch counts</span></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>total_word_freq <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(word_freq) <span class="sc">|&gt;</span></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">sum</span>(n), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="combine-only-the-small-already-summarized-per-batch-counts" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Combine only the small, already-summarized per-batch counts</h1>
+<p>total_word_freq &lt;- bind_rows(word_freq) |&gt; group_by(word) |&gt; summarize(n = sum(n), .groups = “drop”) |&gt; arrange(desc(n)) ```</p>
 <p>The corpus itself is never fully resident in memory — only one batch, plus a running (and much smaller) frequency table.</p>
 <hr>
-</section>
-</section>
-<section id="sentiment-analysis" class="level2" data-number="6.11">
-<h2 data-number="6.11" class="anchored" data-anchor-id="sentiment-analysis"><span class="header-section-number">6.11</span> Sentiment analysis</h2>
+<section id="sentiment-analysis" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sentiment-analysis"><span class="header-section-number">7.1</span> Sentiment analysis</h2>
 <p><code>tidytext</code> bundles several sentiment lexicons (<code>bing</code>, <code>afinn</code>, <code>nrc</code>, <code>loughran</code>). Join tokens to a lexicon the same way you joined stop words. <code>loughran</code> is worth knowing about specifically — it was built for financial/news text and includes categories like “uncertainty” and “litigious”, which can be more informative than generic positive/negative for news-style incident reports.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sentiment_scores <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"bing"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(report_number, sentiment) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sentiment, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_sentiment =</span> positive <span class="sc">-</span> negative)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sentiment_scores <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"bing"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(report_number, sentiment) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sentiment, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_sentiment =</span> positive <span class="sc">-</span> negative)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For a numeric score per word (rather than positive/negative labels), use <code>afinn</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>afinn_scores <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"afinn"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(report_number) <span class="sc">|&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sentiment_score =</span> <span class="fu">sum</span>(value), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>afinn_scores <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">get_sentiments</span>(<span class="st">"afinn"</span>), <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(report_number) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sentiment_score =</span> <span class="fu">sum</span>(value), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>get_sentiments()</code> will prompt a one-time download/license confirmation the first time you use a given lexicon — do this well before you need it, in case you don’t have internet access when it matters (e.g.&nbsp;at a competition venue).</p>
 <hr>
 </section>
-<section id="word-co-occurrence-correlation-optional-widyr" class="level2" data-number="6.12">
-<h2 data-number="6.12" class="anchored" data-anchor-id="word-co-occurrence-correlation-optional-widyr"><span class="header-section-number">6.12</span> Word co-occurrence / correlation (optional, <code>widyr</code>)</h2>
+<section id="word-co-occurrence-correlation-optional-widyr" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="word-co-occurrence-correlation-optional-widyr"><span class="header-section-number">7.2</span> Word co-occurrence / correlation (optional, <code>widyr</code>)</h2>
 <p>Useful for exploring which words tend to appear together within the same report — do this on a <code>count()</code>-reduced or sampled set of tokens, not the raw full-corpus token table, since pairwise operations grow fast:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(widyr)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>word_pairs <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(word, report_number, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>word_cors <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;=</span> <span class="dv">20</span>) <span class="sc">|&gt;</span>          <span class="co"># drop very rare words first</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_cor</span>(word, report_number, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(widyr)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>word_pairs <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_count</span>(word, report_number, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>word_cors <span class="ot">&lt;-</span> tokens <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(word) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;=</span> <span class="dv">20</span>) <span class="sc">|&gt;</span>          <span class="co"># drop very rare words first</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise_cor</span>(word, report_number, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="debugging-and-building-pipelines-incrementally" class="level2" data-number="6.13">
-<h2 data-number="6.13" class="anchored" data-anchor-id="debugging-and-building-pipelines-incrementally"><span class="header-section-number">6.13</span> Debugging and building pipelines incrementally</h2>
+<section id="debugging-and-building-pipelines-incrementally" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="debugging-and-building-pipelines-incrementally"><span class="header-section-number">7.3</span> Debugging and building pipelines incrementally</h2>
 <ul>
 <li><p><strong>Build incrementally.</strong> Write one stage, run <code>$aggregate()</code>, inspect the output, <em>then</em> add the next stage. Debugging a 5-stage pipeline all at once is much harder than debugging it one stage at a time.</p></li>
 <li><p><strong>Comment out stages by truncating the array.</strong> Since the pipeline is just a string, you can test <code>'[ stage1 ]'</code>, then <code>'[ stage1, stage2 ]'</code>, and so on.</p></li>
 <li><p><strong>Watch for the array-vs-object trap.</strong> After <code>$lookup</code>, a field is an array. After <code>$unwind</code>, that same field is a single object. Referencing <code>$incident.title</code> only works <em>after</em> unwinding (or if you know there’s exactly one match and use <code>$arrayElemAt</code>).</p></li>
 <li><p><strong>Use <code>jsonlite::toJSON()</code>/<code>fromJSON()</code> to build pipelines as R lists</strong> instead of raw strings, if you find quoting JSON by hand error-prone:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pipeline_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">`</span><span class="at">$match</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">date_published =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">$gte</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"2020-01-01"</span>))),</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">`</span><span class="at">$group</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">_id</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"$source_domain"</span>, <span class="at">n_reports =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">$sum</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>)))</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(pipeline_list, <span class="at">auto_unbox =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pipeline_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">`</span><span class="at">$match</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="at">date_published =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">$gte</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"2020-01-01"</span>))),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="st">`</span><span class="at">$group</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">_id</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"$source_domain"</span>, <span class="at">n_reports =</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">$sum</span><span class="st">`</span> <span class="ot">=</span> <span class="dv">1</span>)))</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>pipeline <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(pipeline_list, <span class="at">auto_unbox =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This trades JSON-string fiddliness for R’s backtick-quoted-name syntax (<code>`$match`</code>) — pick whichever you find less error-prone. Many R/Mongo users stick with raw JSON strings for anything beyond 2–3 stages, since MongoDB’s own documentation and the shell both use JSON, so the translation from “docs example” to “your pipeline” stays literal.</p></li>
 <li><p><strong><code>preserveNullAndEmptyArrays</code> is a decision, not a default.</strong> Always ask explicitly: do I want to drop documents with no match, or keep them with <code>null</code>?</p></li>
 <li><p><strong>Field order in <code>$project</code> doesn’t matter to Mongo</strong>, but keeping it consistent with your intended output column order makes the resulting tibble easier to read.</p></li>
@@ -940,36 +916,36 @@ Warning
 </ul>
 <hr>
 </section>
-<section id="putting-it-together-a-minimal-end-to-end-script" class="level2" data-number="6.14">
-<h2 data-number="6.14" class="anchored" data-anchor-id="putting-it-together-a-minimal-end-to-end-script"><span class="header-section-number">6.14</span> Putting it together: a minimal end-to-end script</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mongolite)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>db_name <span class="ot">&lt;-</span> <span class="st">"aiidprod"</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>reports_conn <span class="ot">&lt;-</span> <span class="fu">mongo</span>(<span class="at">collection =</span> <span class="st">"reports"</span>, <span class="at">db =</span> db_name,</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">url =</span> <span class="fu">Sys.getenv</span>(<span class="st">"MONGO_URI"</span>))</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">find</span>(</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fields =</span> <span class="st">'{"_id": 1, "report_number": 1, "title": 1, "plain_text": 1, "tags": 1}'</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>),</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_clean =</span> <span class="fu">str_squish</span>(<span class="fu">replace_contraction</span>(<span class="fu">replace_url</span>(plain_text, <span class="st">""</span>)))</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>word_counts <span class="ot">&lt;-</span> reports <span class="sc">|&gt;</span></span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text_clean) <span class="sc">|&gt;</span></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>word_counts <span class="sc">|&gt;</span> <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="putting-it-together-a-minimal-end-to-end-script" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="putting-it-together-a-minimal-end-to-end-script"><span class="header-section-number">7.4</span> Putting it together: a minimal end-to-end script</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mongolite)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(textclean)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>db_name <span class="ot">&lt;-</span> <span class="st">"aiidprod"</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>reports_conn <span class="ot">&lt;-</span> <span class="fu">mongo</span>(<span class="at">collection =</span> <span class="st">"reports"</span>, <span class="at">db =</span> db_name,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">url =</span> <span class="fu">Sys.getenv</span>(<span class="st">"MONGO_URI"</span>))</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>reports <span class="ot">&lt;-</span> reports_conn<span class="sc">$</span><span class="fu">find</span>(</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fields =</span> <span class="st">'{"_id": 1, "report_number": 1, "title": 1, "plain_text": 1, "tags": 1}'</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">plain_text =</span> <span class="fu">replace_na</span>(plain_text, <span class="st">""</span>),</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_clean =</span> <span class="fu">str_squish</span>(<span class="fu">replace_contraction</span>(<span class="fu">replace_url</span>(plain_text, <span class="st">""</span>)))</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>word_counts <span class="ot">&lt;-</span> reports <span class="sc">|&gt;</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text_clean) <span class="sc">|&gt;</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>word_counts <span class="sc">|&gt;</span> <span class="fu">slice_max</span>(n, <span class="at">n =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-<section id="common-pitfalls" class="level2" data-number="6.15">
-<h2 data-number="6.15" class="anchored" data-anchor-id="common-pitfalls"><span class="header-section-number">6.15</span> Common pitfalls</h2>
+<section id="common-pitfalls" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="common-pitfalls"><span class="header-section-number">7.5</span> Common pitfalls</h2>
 <ul>
 <li><strong>Connection refused / timeout</strong> — your IP isn’t allow-listed in Atlas Network Access, or you’re on a network (uni wifi, VPN) that blocks the MongoDB port. Test the connection <em>before</em> you need it.</li>
 <li><strong>Pulling <code>embedding</code> by accident</strong> — it’s a full numeric vector per document; leave it out of your <code>fields</code> projection unless you specifically need it, or your <code>find()</code> calls will be slow and memory-heavy.</li>
@@ -982,14 +958,14 @@ Warning
 </ul>
 <hr>
 </section>
-<section id="quick-reference" class="level2" data-number="6.16">
-<h2 data-number="6.16" class="anchored" data-anchor-id="quick-reference"><span class="header-section-number">6.16</span> Quick reference</h2>
-<section id="pipeline-stages" class="level3" data-number="6.16.1">
-<h3 data-number="6.16.1" class="anchored" data-anchor-id="pipeline-stages"><span class="header-section-number">6.16.1</span> Pipeline stages</h3>
+<section id="quick-reference" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="quick-reference"><span class="header-section-number">7.6</span> Quick reference</h2>
+<section id="pipeline-stages" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="pipeline-stages"><span class="header-section-number">7.6.1</span> Pipeline stages</h3>
 <p>The short version: <code>$match</code>/<code>$lookup</code> early, <code>$project</code>/<code>$group</code>/<code>$sort</code>/<code>$limit</code> late.</p>
 </section>
-<section id="package-cheat-sheet" class="level3" data-number="6.16.2">
-<h3 data-number="6.16.2" class="anchored" data-anchor-id="package-cheat-sheet"><span class="header-section-number">6.16.2</span> Package cheat sheet</h3>
+<section id="package-cheat-sheet" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="package-cheat-sheet"><span class="header-section-number">7.6.2</span> Package cheat sheet</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 22%">
@@ -1049,8 +1025,8 @@ Warning
 <hr>
 </section>
 </section>
-<section id="summary-checklists" class="level2" data-number="6.17">
-<h2 data-number="6.17" class="anchored" data-anchor-id="summary-checklists"><span class="header-section-number">6.17</span> Summary checklists</h2>
+<section id="summary-checklists" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="summary-checklists"><span class="header-section-number">7.7</span> Summary checklists</h2>
 <p><strong>Writing any new pipeline</strong></p>
 <ol type="1">
 <li>State in one sentence what one output row should represent.</li>
@@ -1072,6 +1048,7 @@ Warning
 <p>Good luck with the competition.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

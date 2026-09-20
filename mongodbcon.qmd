@@ -1,13 +1,17 @@
 ---
-pagetitle: "Getting Your Competition Data Out of MongoDB Atlas and Into R"
+pagetitle: "MongoDB Atlas to R: Connecting, Pipelines, and Text Analysis"
 ---
 
-# Getting Your Competition Data Out of MongoDB Atlas and Into R {#sec-mongodb-connect}
+# MongoDB Atlas to R: Connecting, Pipelines, and Text Analysis {#sec-mongodb-connect}
 
 ::: {.callout-note title="Why this matters"}
-You can't analyse the dataset until you can pull it out of Atlas and into a tidy
-data frame. Working through this before the event means the connection and
-package setup aren't things you're debugging on the day.
+You can't analyse a dataset until you can pull it out of Atlas and into a tidy
+data frame --- and once you can, the next skill is knowing how to shape and
+summarize it *before* it crosses the network, so a few hundred thousand
+documents don't turn a five-minute script into a fight with your machine's
+memory. This sheet covers both: connecting and querying, writing and reasoning
+about aggregation pipelines, and doing tidyverse/text-mining work in a
+size-conscious way.
 :::
 
 ::: {.callout-tip}
@@ -16,23 +20,20 @@ The starter template's `src/main.R` (@sec-starter-template) has an empty
 below goes.
 :::
 
-This sheet walks you through connecting to the competition's MongoDB Atlas
-cluster from R, pulling the data down into a tidy data frame, and doing text
-analysis on it with the tidyverse / tidytext ecosystem. It's written against the
-actual schema you've been given (this is the AI Incident Database schema), so
-the field names below match what you'll actually see. Work through it top to
-bottom before the competition starts so the connection and package setup is one
-less thing to debug on the day.
+It's written against the AI Incident Database schema, so the field names below
+match what you'll actually see, but the *thinking process*, how to read a
+pipeline, how to build a new one from scratch, how to avoid downloading more
+than you need, carries over to any MongoDB collection you work with.
 
 --------------------------------------------------------------------------------
 
-## 1. What you'll need
+## What you'll need
 
 - R (4.x) and RStudio (or Positron / VS Code with the R extension)
 - The connection string for your Atlas cluster (competition organisers will give
-  you this , it looks like
+  you this; it looks like
   `mongodb+srv://<username>:<password>@ai-incident-database.ugkyb5n.mongodb.net/`)
-- The database name is 'aiidprod'
+- The database name is `aiidprod`
 
 Install the packages you'll need once, up front:
 
@@ -41,23 +42,24 @@ install.packages(c(
   "mongolite",   # connect to MongoDB and pull data into R
   "tidyverse",   # dplyr, purrr, ggplot2, tidyr, etc.
   "tidytext",    # tokenisation, sentiment lexicons, tf-idf
-  "jsonlite",    # handling nested JSON/BSON fields
+  "jsonlite",    # handling nested JSON/BSON fields, building pipelines as lists
   "textclean",   # cleaning up messy text (contractions, HTML, etc.)
   "wordcloud2",  # optional, for word cloud visuals
   "widyr"        # optional, for word-pair / correlation analysis
 ))
 ```
 
-`mongolite` is the key package here, it's the simplest way to talk to MongoDB
-from R and it hands data back as a data frame, which is exactly the shape
-tidyverse tools expect.
+`mongolite` is the simplest way to talk to MongoDB from R, and it hands data
+back as a data frame, which is exactly the shape tidyverse tools expect. Both
+`$find()` (simple queries) and `$aggregate()` (multi-stage pipelines) live on
+the connection object it gives you.
 
 --------------------------------------------------------------------------------
 
-## 2. Know your collections before you connect
+## Know your collections before you query
 
-The schema you were given defines several collections. The two you'll care about
-for text analysis are:
+The schema you've been given defines several collections. The two you'll care
+about most are:
 
 - **`reports`** --- the actual documents/articles. This is where the free text
   lives. Key fields:
@@ -73,7 +75,7 @@ for text analysis are:
   - `language`, `source_domain`, `url`
   - `date_published`, `date_submitted`, `date_downloaded`, `date_modified`
   - `embedding` --- a precomputed vector embedding of the text (nested object
-    with a `vector` field); you generally won't need to touch this unless you're
+    with a `vector` field); large, and you generally won't need it unless you're
     doing similarity/clustering work directly on the provided vectors
   - `is_incident_report` (boolean)
 
@@ -97,11 +99,12 @@ for text analysis are:
   referenced by the "alleged deployer/developer/harmed parties" fields above.
 
 For most text-analysis tasks, you'll mainly work with `reports.plain_text`,
-optionally joined to `incidents` for grouping/labels.
+optionally joined to `incidents` for grouping/labels --- which is exactly the
+join used as the worked example throughout this sheet.
 
 --------------------------------------------------------------------------------
 
-## 3. Connect to the cluster
+## Connecting to the cluster
 
 Never hard-code your username and password directly into a script you might
 commit to GitHub or share with teammates. Use an `.Renviron` file instead.
@@ -123,7 +126,7 @@ MONGO_URI="mongodb+srv://myusername:mypassword@ai-incident-database.ugkyb5n.mong
 ```r
 library(mongolite)
 
-db_name <- "aiidprod"  
+db_name <- "aiidprod"
 
 reports_conn <- mongo(collection = "reports", db = db_name,
                        url = Sys.getenv("MONGO_URI"))
@@ -136,17 +139,40 @@ reports_conn$count()
 incidents_conn$count()
 ```
 
-If `$count()` returns a number rather than an error, you're connected.
+If `$count()` returns a number rather than an error, you're connected. This
+number is also your first data-volume signal.
 
 --------------------------------------------------------------------------------
 
-## 4. Pulling data out
+## The core mental model: pipelines are JSON, R is the courier
 
-### 4.1 Grab the fields you actually need
+`$aggregate()` sends a pipeline to MongoDB's aggregation engine and gets back a
+data frame. The key thing to internalize: **the pipeline itself is not R code ---
+it's JSON**. You're writing MongoDB's own query language as a string, and R is
+just the courier. That means:
 
-Don't pull every field (especially not `embedding`, which is a large numeric
-vector per document) if you don't need it. Use the `fields` argument to project
-server-side:
+- Field names are quoted strings (`"report_number"`), not R symbols.
+- `$` in front of a name (`"$incident"`) means "the value of this field," not an
+  R accessor.
+- The whole thing is an *array* (`[ ... ]`) of *stage objects* (`{ ... }`),
+  executed top to bottom.
+
+Think of a pipeline as an assembly line: each stage receives the documents from
+the stage before it, transforms them, and passes the result to the next stage.
+Nothing is "queried" all at once --- it's a sequence of transformations.
+
+```r
+pipeline <- '[ ... ]'   # a JSON array, written as an R string
+
+reports_with_incident <- reports_conn$aggregate(pipeline) |>
+  tibble::as_tibble()
+```
+
+--------------------------------------------------------------------------------
+
+## Don't download the whole collection
+
+It's easy to fall into this pattern:
 
 ```r
 library(tidyverse)
@@ -157,32 +183,307 @@ report_cols <- '{
     "source_domain": 1, "date_published": 1
   }'
 
-
-reports <- reports_conn$find(
-  fields = report_cols) |> as_tibble()
+reports <- reports_conn$find(fields = report_cols) |> as_tibble()
 
 glimpse(reports)
 ```
 
-### 4.2 Filter server-side
+Notice what this does: `$find()` with no `query` argument means *"give me every
+document in the collection."* `fields` trims the columns, but it does nothing to
+trim the **rows** --- you're still pulling every document over the network and
+materializing it in R's memory before you've filtered, grouped, or summarized
+anything. On a small collection this is harmless. On a collection with hundreds
+of thousands of documents (especially ones with a `plain_text` field, which
+tends to be large --- or an `embedding` field, which is a full numeric vector
+per document), it's the single most common source of slow, memory-hungry R/Mongo
+scripts.
 
-`mongolite` accepts standard MongoDB query syntax as a JSON string, e.g. to grab
-only English-language reports:
+The general rule: **MongoDB is a database with its own query and aggregation
+engine --- use it as one.** Only bring rows into R once they're already
+filtered, grouped, or reduced to roughly the size you actually need for the next
+step.
+
+### Filter rows on the server with `query`
+
+`$find()` takes a `query` argument (the same JSON `$match`-style filter used in
+aggregation):
 
 ```r
+# Downloads everything, then filters in R — avoid this
+reports <- reports_conn$find(fields = report_cols) |> as_tibble()
+recent  <- reports |> filter(date_published >= as.Date("2023-01-01"))
+
+# Filters on the server, only recent documents cross the network
+query <- '{ "date_published": { "$gte": { "$date": "2023-01-01T00:00:00Z" } } }'
+recent <- reports_conn$find(query = query, fields = report_cols) |> as_tibble()
+
+# Also useful: language filter, straight from mongolite's query syntax
 reports_en <- reports_conn$find(
   query  = '{"language": "en"}',
   fields = '{"_id": 1, "report_number": 1, "title": 1, "plain_text": 1}'
 ) |> as_tibble()
 ```
 
-For more information on the query syntax visit,
-<https://jeroen.github.io/mongolite/query-data.html#query-syntax>
+For the full query syntax `mongolite` supports, see
+<https://jeroen.github.io/mongolite/query-data.html#query-syntax>.
 
-### 4.3 Pull the incidents and join on `report_number`
+### Let `$group` summarize before it ever reaches R
 
-`incidents$reports` is an array of `report_number`s, not embedded report
-documents, so joining means unnesting that array and matching it up:
+If your end goal is a summary (counts, averages, distinct values), don't pull
+raw rows into `dplyr::group_by() |> summarize()`. Do the equivalent with
+`$group` in an aggregation pipeline, so only the *summary* --- not the
+underlying documents --- travels over the wire:
+
+```r
+pipeline <- '[
+  { "$match":   { "language": "en" } },
+  { "$group":   { "_id": "$source_domain", "n": { "$sum": 1 } } },
+  { "$sort":    { "n": -1 } },
+  { "$limit":   20 }
+]'
+
+top_domains <- reports_conn$aggregate(pipeline) |> as_tibble()
+```
+
+This never materializes the full `reports` collection anywhere --- Mongo does
+the counting, and R receives 20 rows. The `date_published` year-grouping example
+below follows the same idea:
+
+```r
+reports_per_year <- reports_conn$aggregate('[
+  { "$group": {
+      "_id": { "$substr": ["$date_published", 0, 4] },
+      "n": { "$sum": 1 }
+  }},
+  { "$sort": { "_id": 1 } }
+]') |> as_tibble()
+```
+
+### Count before you fetch
+
+Before running any `$find()`/`$aggregate()` without a filter, get a sense of
+scale first:
+
+```r
+reports_conn$count()                             # whole collection
+reports_conn$count('{ "language": "en" }')        # a filtered subset
+```
+
+If that number is larger than you're comfortable holding in memory (as a rough
+guide: tens of thousands of documents with large text fields), that's your
+signal to filter further, project fewer fields, or move to the batching approach
+in 8.5.
+
+### `limit`, `skip`, and `$sample` for peeking or paging
+
+```r
+# Peek at a handful of documents without downloading the rest
+sample_reports <- reports_conn$find(fields = report_cols, limit = 100) |> as_tibble()
+
+# Manual pagination
+page <- reports_conn$find(fields = report_cols, limit = 500, skip = 1000) |> as_tibble()
+```
+
+For a genuinely random sample (not just "the first N"), use `$sample` in an
+aggregation pipeline instead of `limit`, since `find(limit = ...)` returns
+documents in storage order, not a random subset:
+
+```r
+pipeline <- '[ { "$sample": { "size": 500 } } ]'
+random_sample <- reports_conn$aggregate(pipeline) |> as_tibble()
+```
+
+### Stream through a large result with `$iterate()`
+
+If you truly need to touch every document (e.g. something that can't be
+expressed as an aggregation stage), avoid loading the entire result into a
+tibble at once. `mongolite` lets you get a cursor and pull batches:
+
+```r
+cursor <- reports_conn$iterate(query = query, fields = report_cols)
+
+repeat {
+  batch <- cursor$batch(size = 1000)
+  if (is.null(batch)) break
+
+  # process this chunk only — e.g. write to disk, accumulate a summary,
+  # or append to a growing file rather than a growing in-memory object
+  batch |> as_tibble() |> process_batch()
+}
+```
+
+This keeps memory usage bounded to one batch at a time, regardless of how large
+the underlying collection is.
+
+### A decision guide
+
+  | Your goal                                    | Reach for                                                                        |
+  | -------------------------------------------- | -------------------------------------------------------------------------------- |
+  | A quick look at the data's shape             | `find(limit = ...)` or `$sample`                                                 |
+  | Rows matching a condition                    | `find(query = ...)` or an aggregation `$match`                                   |
+  | A summary/aggregate statistic                | An aggregation pipeline with `$group` — never raw rows into `dplyr::summarize()` |
+  | A join across collections, summarized        | `$lookup` → `$unwind` → `$group` inside one pipeline                             |
+  | Every document, but too many to hold at once | `$iterate()` with batching                                                       |
+  | "How big is this even going to be?"          | `$count()` first, always, before an unfiltered `$find()`/`$aggregate()`          |
+
+--------------------------------------------------------------------------------
+
+## A worked pipeline, stage by stage: joining reports to incidents
+
+This is the actual join you'll want for this schema --- reports linked to the
+incident(s) that reference them by `report_number`.
+
+```r
+pipeline <- '[
+  {
+    "$lookup": {
+      "from": "incidents",
+      "localField": "report_number",
+      "foreignField": "reports",
+      "as": "incident"
+    }
+  },
+  {
+    "$unwind": {
+      "path": "$incident",
+      "preserveNullAndEmptyArrays": true
+    }
+  },
+  {
+    "$project": {
+      "_id": 1,
+      "report_number": 1,
+      "title": 1,
+      "plain_text": 1,
+      "description": 1,
+      "tags": 1,
+      "authors": 1,
+      "language": 1,
+      "source_domain": 1,
+      "date_published": 1,
+
+      "incident_id": "$incident.incident_id",
+      "incident_title": "$incident.title",
+      "date": "$incident.date"
+    }
+  }
+]'
+
+reports_with_incident <- reports_conn$aggregate(pipeline) |>
+  tibble::as_tibble()
+```
+
+### Stage 1 --- `$lookup` (a SQL-style JOIN)
+
+For every document in `reports`, MongoDB looks in the `incidents` collection for
+documents where `incidents.reports` matches this document's `report_number`. All
+matches are attached as an **array** under a new field called `incident`.
+
+Mental model: *"For each report, go fetch related incidents and staple them on
+as a list."*
+
+### Stage 2 --- `$unwind` (flatten the array)
+
+`$lookup` always produces an array, even if there's exactly one match. `$unwind`
+explodes that array so each matched element becomes its own document (one report
++ one incident, instead of one report + an array of incidents). If a report
+matched 3 incidents, `$unwind` turns 1 document into 3.
+
+`preserveNullAndEmptyArrays: true` is important --- without it, reports with
+**no** matching incident would be silently dropped from the results. With it,
+they're kept, with `incident` set to `null`. Whether you want this depends on
+whether you're doing an inner join (drop unmatched) or a left join (keep
+unmatched) mentally.
+
+### Stage 3 --- `$project` (reshape the output)
+
+- `"field": 1` means "keep this field, unchanged."
+- `"new_name": "$path.to.value"` means "create a field called `new_name`,
+  populated from this path." Since `$unwind` turned `incident` into a single
+  embedded object (not an array), you can reach into it with dot notation
+  (`$incident.incident_id`).
+
+This last step is why the whole pipeline exists: `$lookup` + `$unwind` get the
+related data attached, and `$project` flattens it into a clean, tibble-friendly
+shape --- no nested lists left for R to deal with.
+
+--------------------------------------------------------------------------------
+
+## The general thinking process for writing a new pipeline
+
+Before writing any JSON, answer these in plain English:
+
+1. **What's my starting collection, and what's the shape of one document in
+   it?**
+2. **What do I want one row of my final output to represent?** (One report? One
+   report-incident pair? One tag with a count?)
+3. **What has to happen to get from (1) to (2)?** --- usually some combination
+   of: bring in related data, filter out documents, reshape/rename fields,
+   flatten arrays, or summarize groups.
+
+Each of those verbs maps to a specific stage. Once you can state the
+transformation in English, the JSON is just translation:
+
+  | You want to...                                    | Stage                           | Notes                                                                        |
+  | ------------------------------------------------- | ------------------------------- | ---------------------------------------------------------------------------- |
+  | Join in data from another collection              | `$lookup`                       | Always produces an array field                                               |
+  | Flatten an array field (incl. `$lookup` results)  | `$unwind`                       | Use `preserveNullAndEmptyArrays` deliberately                                |
+  | Filter documents (like SQL `WHERE`)               | `$match`                        | Put this as *early* as possible for performance                              |
+  | Choose/rename/compute output fields               | `$project`                      | `1` keeps, `0` excludes, `"$field"` copies/renames                           |
+  | Add new fields without dropping others            | `$addFields` / `$set`           | Like `$project` but additive — you don't have to relist every field          |
+  | Group and summarize (SQL `GROUP BY`)              | `$group`                        | `_id` is the grouping key; use `$sum`, `$avg`, `$push`, etc. as accumulators |
+  | Sort results                                      | `$sort`                         | `1` ascending, `-1` descending                                               |
+  | Limit / skip (pagination)                         | `$limit`, `$skip`               | Cheapest late in the pipeline, after filtering                               |
+  | Count documents                                   | `$count`                        | Collapses everything into `{ "count": N }`                                   |
+  | Random sample of documents                        | `$sample`                       | Use instead of `limit` when you want a true random subset                    |
+  | Run several sub-pipelines and combine             | `$facet`                        | Useful for "give me totals AND a filtered list" in one round trip            |
+  | Reshape a document to become one of its subfields | `$replaceRoot` / `$replaceWith` | Common after `$unwind` when you only want the nested object                  |
+  | Traverse a hierarchy/graph (e.g. org charts)      | `$graphLookup`                  | Recursive `$lookup`                                                          |
+
+### Worked example: `$match` + `$group` from scratch
+
+Say you want: *"For each `source_domain`, how many reports were published,
+restricted to reports published after 2020?"*
+
+Walk through the three questions:
+
+1. Starting collection: `reports`, each document is one report.
+2. Desired output row: one row per `source_domain`, with a count.
+3. Transformation: filter by date, then group by domain and count.
+
+```r
+pipeline <- '[
+  {
+    "$match": {
+      "date_published": { "$gte": { "$date": "2020-01-01T00:00:00Z" } }
+    }
+  },
+  {
+    "$group": {
+      "_id": "$source_domain",
+      "n_reports": { "$sum": 1 }
+    }
+  },
+  {
+    "$sort": { "n_reports": -1 }
+  }
+]'
+
+report_counts <- reports_conn$aggregate(pipeline) |> tibble::as_tibble()
+```
+
+Notice the pattern repeats: **filter/join stages first, reshape stages last.**
+`$match` should almost always come as early as possible (it reduces the document
+count before any expensive work), and `$project`/`$group`/`$sort` come afterward
+to shape the final result.
+
+--------------------------------------------------------------------------------
+
+## Two ways to join `reports` to `incidents` --- pipeline vs. R-side
+
+The example earlier does the join *inside MongoDB* with `$lookup`. You can also
+pull both collections separately and join them in R with `dplyr`, using
+`incidents$reports` (an array of `report_number`s):
 
 ```r
 incidents <- incidents_conn$find(
@@ -209,54 +510,25 @@ reports_with_incident <- reports |>
   )
 ```
 
-### 4.4 Aggregation pipelines (optional, for heavier lifting)
+Both approaches produce the same shape. Which one to reach for:
 
-For grouping/counting server-side before pulling data down:
-
-```r
-reports_per_year <- reports_conn$aggregate('[
-  { "$group": {
-      "_id": { "$substr": ["$date_published", 0, 4] },
-      "n": { "$sum": 1 }
-  }},
-  { "$sort": { "_id": 1 } }
-]') |> as_tibble()
-```
-
-### 4.5 Other nested/array fields
-
-Several fields come back from `mongolite` as **list-columns**: `authors`,
-`submitters`, `tags` (on `reports`); the "alleged deployer/developer/harmed
-parties" fields (on `incidents`). Each of these is a simple *array of strings
-per document*, so `unnest_longer()` is usually what you want (not
-`unnest_wider()`, which is for nested *objects*):
-
-```r
-reports_authors <- reports |>
-  select(report_number, authors) |>
-  unnest_longer(authors)   # one row per (report_number, author)
-
-incidents_parties <- incidents |>
-  select(incident_id, `Alleged harmed or nearly harmed parties`) |>
-  unnest_longer(`Alleged harmed or nearly harmed parties`) |>
-  rename(harmed_party = `Alleged harmed or nearly harmed parties`)
-```
-
-Guard against missing/empty text before tokenising:
-
-```r
-reports <- reports |>
-  mutate(plain_text = replace_na(plain_text, ""))
-```
+- **`$lookup`/`$unwind` in a pipeline** --- join happens on the server, and only
+  the already-joined, already-projected result crosses the network. Preferred
+  when `reports` is large, or when you only need a subset of the joined result
+  (combine with an early `$match`).
+- **Pull + `unnest_longer()` + `left_join()` in R** --- simpler to read and
+  debug, **but as the data gets larger with tokenization** (creating a row for
+  each token in plain text) handling all the data in memory is going to be
+  costly.
 
 --------------------------------------------------------------------------------
 
-## 5. Cleaning the text
+## Cleaning the text
 
 `plain_text` is already stripped of most markup, but scraped news text still
 tends to carry boilerplate (bylines, "read more" links, share-button text). Do a
 light cleaning pass and keep the original column in case later analysis needs
-it:
+it.
 
 ::: {.callout-warning}
 The following is only a suggestion and is not guaranteed to produce fully
@@ -266,7 +538,9 @@ cleaned text ready for analysis.
 ```r
 library(textclean)
 
-reports <- reports |>
+reports <- reports_conn$find(fields = report_cols, limit = 100) |> 
+  as_tibble() |>
+  mutate(plain_text = replace_na(plain_text, "")) |>   # guard against NA before cleaning
   mutate(
     text_clean = plain_text |>
       replace_contraction() |>          # "don't" -> "do not"
@@ -278,27 +552,43 @@ reports <- reports |>
 
 --------------------------------------------------------------------------------
 
-## 6. Tokenising with tidytext
+## Tokenising and analysing with tidytext --- size-consciously
 
 `tidytext` works on the "one-token-per-row" principle, which plugs directly into
-`dplyr`/`ggplot2`.
+`dplyr`/`ggplot2`. Tokenizing multiplies your row count --- one document becomes
+one row per word --- so this is often where memory pressure actually shows up,
+even when the initial `find()`/`aggregate()` was fine. Narrow the input *before*
+tokenizing.
 
 ```r
 library(tidytext)
 
-tokens <- reports |>
-  select(report_number, text_clean) |>
-  unnest_tokens(word, text_clean)
+# Bad: tokenize the entire collection at once
+# reports |> unnest_tokens(word, plain_text)
 
-# remove stop words
-tokens_clean <- tokens |>
+# Better: filter server-side to what the analysis actually needs, and
+# project away fields (like description, embedding) you don't need here
+query <- '{ "language": "en", "date_published": { "$gte": { "$date": "2024-01-01T00:00:00Z" } } }'
+subset_cols <- '{ "_id": 1, "report_number": 1, "plain_text": 1 }'
+
+reports_subset <- reports_conn$find(query = query, fields = subset_cols) |>
+  as_tibble() |>
+  mutate(plain_text = replace_na(plain_text, ""))
+
+tokens <- reports_subset |>
+  select(report_number, plain_text) |>
+  unnest_tokens(word, plain_text) |>
   anti_join(stop_words, by = "word")
 ```
 
-### 6.1 Word frequencies
+For exploratory work (trying out a TF-IDF approach, testing a topic model), work
+on a `$sample` subset first, and only run the full-size version once the
+approach is validated, the same instinct as testing a pipeline stage-by-stage.
+
+### Word frequencies
 
 ```r
-top_words <- tokens_clean |>
+top_words <- tokens |>
   count(word, sort = TRUE)
 
 top_words |>
@@ -309,10 +599,10 @@ top_words |>
   labs(x = NULL, y = "count", title = "Most frequent words across reports")
 ```
 
-### 6.2 TF-IDF (which words distinguish one incident/domain from another)
+### TF-IDF (which words distinguish one incident/domain from another)
 
-This is a natural fit here: use `incident_id` or `source_domain` as the grouping
-variable to see what language is distinctive to a given incident or outlet.
+Use `incident_id` or `source_domain` as the grouping variable to see what
+language is distinctive to a given incident or outlet:
 
 ```r
 tfidf <- reports_with_incident |>
@@ -328,7 +618,7 @@ tfidf |>
   ungroup()
 ```
 
-### 6.3 N-grams
+### N-grams
 
 For phrase-level patterns rather than single words:
 
@@ -340,19 +630,76 @@ bigrams <- reports |>
   count(word1, word2, sort = TRUE)
 ```
 
+### Summarize text metrics server-side instead of tokenizing in R
+
+If the *final* thing you want is a summary statistic derived from text --- not
+the text content itself --- MongoDB's own operators can sometimes get you there
+without tokenizing in R at all. For example, a rough word count per document
+with `$size` and `$split`:
+
+```r
+pipeline <- '[
+  {
+    "$addFields": {
+      "word_count": { "$size": { "$split": ["$plain_text", " "] } }
+    }
+  },
+  { "$project": { "report_number": 1, "word_count": 1 } }
+]'
+
+word_counts <- reports_conn$aggregate(pipeline) |> as_tibble()
+```
+
+This computes a number per document server-side and returns one row per document ---
+never the text itself.
+
+### Process the full corpus in chunks, when you must
+
+If a text-mining task genuinely needs the whole corpus (e.g. a full-collection
+document-term matrix), combine `$iterate()` batching with incremental
+summarizing instead of binding every batch into one giant tibble:
+
+```r
+cursor <- reports_conn$iterate(query = query, fields = subset_cols)
+word_freq <- list()
+
+repeat {
+  batch <- cursor$batch(size = 500)
+  if (is.null(batch)) break
+
+  batch_freq <- batch |>
+    as_tibble() |>
+    mutate(plain_text = replace_na(plain_text, "")) |>
+    unnest_tokens(word, plain_text) |>
+    anti_join(stop_words, by = "word") |>
+    count(word)
+
+  word_freq[[length(word_freq) + 1]] <- batch_freq
+}
+
+# Combine only the small, already-summarized per-batch counts
+total_word_freq <- bind_rows(word_freq) |>
+  group_by(word) |>
+  summarize(n = sum(n), .groups = "drop") |>
+  arrange(desc(n))
+```
+
+The corpus itself is never fully resident in memory --- only one batch, plus a
+running (and much smaller) frequency table.
+
 --------------------------------------------------------------------------------
 
-## 7. Sentiment analysis
+## Sentiment analysis
 
 `tidytext` bundles several sentiment lexicons (`bing`, `afinn`, `nrc`,
 `loughran`). Join tokens to a lexicon the same way you joined stop words.
-`loughran` is worth knowing about here specifically --- it was built for
+`loughran` is worth knowing about specifically --- it was built for
 financial/news text and includes categories like "uncertainty" and "litigious",
 which can be more informative than generic positive/negative for news-style
 incident reports.
 
 ```r
-sentiment_scores <- tokens_clean |>
+sentiment_scores <- tokens |>
   inner_join(get_sentiments("bing"), by = "word") |>
   count(report_number, sentiment) |>
   pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) |>
@@ -363,29 +710,31 @@ For a numeric score per word (rather than positive/negative labels), use
 `afinn`:
 
 ```r
-afinn_scores <- tokens_clean |>
+afinn_scores <- tokens |>
   inner_join(get_sentiments("afinn"), by = "word") |>
   group_by(report_number) |>
   summarise(sentiment_score = sum(value), .groups = "drop")
 ```
 
 `get_sentiments()` will prompt a one-time download/license confirmation the
-first time you use a given lexicon --- do this well before the competition
-starts, not on the day, in case you don't have internet access at the venue.
+first time you use a given lexicon --- do this well before you need it, in case
+you don't have internet access when it matters (e.g. at a competition venue).
 
 --------------------------------------------------------------------------------
 
-## 8. Word co-occurrence / correlation (optional, `widyr`)
+## Word co-occurrence / correlation (optional, `widyr`)
 
-Useful for exploring which words tend to appear together within the same report:
+Useful for exploring which words tend to appear together within the same report ---
+do this on a `count()`-reduced or sampled set of tokens, not the raw full-corpus
+token table, since pairwise operations grow fast:
 
 ```r
 library(widyr)
 
-word_pairs <- tokens_clean |>
+word_pairs <- tokens |>
   pairwise_count(word, report_number, sort = TRUE)
 
-word_cors <- tokens_clean |>
+word_cors <- tokens |>
   group_by(word) |>
   filter(n() >= 20) |>          # drop very rare words first
   pairwise_cor(word, report_number, sort = TRUE)
@@ -393,7 +742,52 @@ word_cors <- tokens_clean |>
 
 --------------------------------------------------------------------------------
 
-## 9. Putting it together: a minimal end-to-end script
+## Debugging and building pipelines incrementally
+
+- **Build incrementally.** Write one stage, run `$aggregate()`, inspect the
+  output, *then* add the next stage. Debugging a 5-stage pipeline all at once is
+  much harder than debugging it one stage at a time.
+
+- **Comment out stages by truncating the array.** Since the pipeline is just a
+  string, you can test `'[ stage1 ]'`, then `'[ stage1, stage2 ]'`, and so on.
+
+- **Watch for the array-vs-object trap.** After `$lookup`, a field is an array.
+  After `$unwind`, that same field is a single object. Referencing
+  `$incident.title` only works *after* unwinding (or if you know there's exactly
+  one match and use `$arrayElemAt`).
+
+- **Use `jsonlite::toJSON()`/`fromJSON()` to build pipelines as R lists**
+  instead of raw strings, if you find quoting JSON by hand error-prone:
+
+  ```r
+  pipeline_list <- list(
+    list(`$match` = list(date_published = list(`$gte` = "2020-01-01"))),
+    list(`$group` = list(`_id` = "$source_domain", n_reports = list(`$sum` = 1)))
+  )
+  pipeline <- jsonlite::toJSON(pipeline_list, auto_unbox = TRUE)
+  ```
+
+  This trades JSON-string fiddliness for R's backtick-quoted-name syntax
+  (`` `$match` ``) --- pick whichever you find less error-prone. Many R/Mongo
+  users stick with raw JSON strings for anything beyond 2--3 stages, since
+  MongoDB's own documentation and the shell both use JSON, so the translation
+  from "docs example" to "your pipeline" stays literal.
+
+- **`preserveNullAndEmptyArrays` is a decision, not a default.** Always ask
+  explicitly: do I want to drop documents with no match, or keep them with
+  `null`?
+
+- **Field order in `$project` doesn't matter to Mongo**, but keeping it
+  consistent with your intended output column order makes the resulting tibble
+  easier to read.
+
+- **Test aggregations in MongoDB Compass or `mongosh` first**, if you have
+  access --- it's faster to iterate there and then paste the finished JSON into
+  your R string than to round-trip through R for every tweak.
+
+--------------------------------------------------------------------------------
+
+## Putting it together: a minimal end-to-end script
 
 ```r
 library(mongolite)
@@ -401,7 +795,7 @@ library(tidyverse)
 library(tidytext)
 library(textclean)
 
-db_name <- "your_database_name"
+db_name <- "aiidprod"
 reports_conn <- mongo(collection = "reports", db = db_name,
                        url = Sys.getenv("MONGO_URI"))
 
@@ -424,11 +818,11 @@ word_counts |> slice_max(n, n = 15)
 
 --------------------------------------------------------------------------------
 
-## 10. Common pitfalls
+## Common pitfalls
 
 - **Connection refused / timeout** --- your IP isn't allow-listed in Atlas
   Network Access, or you're on a network (uni wifi, VPN) that blocks the MongoDB
-  port. Test the connection *before* the competition.
+  port. Test the connection *before* you need it.
 - **Pulling `embedding` by accident** --- it's a full numeric vector per
   document; leave it out of your `fields` projection unless you specifically
   need it, or your `find()` calls will be slow and memory-heavy.
@@ -447,20 +841,61 @@ word_counts |> slice_max(n, n = 15)
 - **Credentials in scripts** --- always use `Sys.getenv()` against an
   `.Renviron` file, never paste the connection string directly into a script
   you'll share or commit.
+- **Downloading before filtering/summarizing** --- the most common source of
+  slow, memory-heavy scripts against this collection specifically; before
+  writing an unfiltered `find()`/`aggregate()`.
 
 --------------------------------------------------------------------------------
 
-## 11. Quick reference: package cheat sheet
+## Quick reference
 
-  | Task                   | Package       | Key function(s)                                            |
-  | ---------------------- | ------------- | ---------------------------------------------------------- |
-  | Connect to MongoDB     | mongolite     | `mongo()`, `$find()`, `$aggregate()`, `$count()`           |
-  | Wrangle data           | dplyr / tidyr | `mutate()`, `filter()`, `unnest_longer()`, `left_join()`   |
-  | Clean text             | textclean     | `replace_contraction()`, `replace_url()`, `replace_html()` |
-  | Tokenise               | tidytext      | `unnest_tokens()`                                          |
-  | Frequency / TF-IDF     | tidytext      | `count()`, `bind_tf_idf()`                                 |
-  | Sentiment              | tidytext      | `get_sentiments()`, `inner_join()`                         |
-  | Word pairs/correlation | widyr         | `pairwise_count()`, `pairwise_cor()`                       |
-  | Plotting               | ggplot2       | `geom_col()`, `geom_point()`                               |
+### Pipeline stages
+
+The short version: `$match`/`$lookup` early,
+`$project`/`$group`/`$sort`/`$limit` late.
+
+### Package cheat sheet
+
+  | Task                   | Package       | Key function(s)                                                |
+  | ---------------------- | ------------- | -------------------------------------------------------------- |
+  | Connect to MongoDB     | mongolite     | `mongo()`, `$find()`, `$aggregate()`, `$count()`, `$iterate()` |
+  | Wrangle data           | dplyr / tidyr | `mutate()`, `filter()`, `unnest_longer()`, `left_join()`       |
+  | Clean text             | textclean     | `replace_contraction()`, `replace_url()`, `replace_html()`     |
+  | Tokenise               | tidytext      | `unnest_tokens()`                                              |
+  | Frequency / TF-IDF     | tidytext      | `count()`, `bind_tf_idf()`                                     |
+  | Sentiment              | tidytext      | `get_sentiments()`, `inner_join()`                             |
+  | Word pairs/correlation | widyr         | `pairwise_count()`, `pairwise_cor()`                           |
+  | Plotting               | ggplot2       | `geom_col()`, `geom_point()`                                   |
+
+--------------------------------------------------------------------------------
+
+## Summary checklists
+
+**Writing any new pipeline**
+
+1. State in one sentence what one output row should represent.
+2. List the stages needed to get there, in order (join → filter → flatten →
+   reshape → group → sort → limit).
+3. Write and test one stage at a time.
+4. Put `$match` as early as possible; put `$sort`/`$limit` as late as possible.
+5. After any `$lookup`, decide immediately whether you need `$unwind`, and
+   whether unmatched documents should be kept.
+6. Finish with `$project` (or `$set`) so the shape handed to
+   `tibble::as_tibble()` is already flat and clean.
+7. Before any unfiltered `find()`/`aggregate()`, run `$count()` first.
+
+**Size-conscious tidyverse/text-mining work**
+
+1. Ask what the *smallest* result is that answers your question --- a count? a
+   top-20 list? --- and try to get MongoDB to produce that directly.
+2. Exclude large fields (`plain_text`, `description`, `embedding`) from
+   `fields`/`$project` unless this specific step needs them.
+3. Filter (`query`/`$match`) and, for exploration, sample (`$sample`) before
+   tokenizing.
+4. Prefer `$group`/`$addFields` for summaries over pulling raw rows into
+   `dplyr::summarize()` or `unnest_tokens()`.
+5. If you must touch the full corpus, batch with `$iterate()` and combine only
+   small, already-summarized pieces --- never accumulate raw batches into one
+   growing tibble.
 
 Good luck with the competition.

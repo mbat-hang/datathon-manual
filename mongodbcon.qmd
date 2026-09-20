@@ -293,28 +293,6 @@ pipeline <- '[ { "$sample": { "size": 500 } } ]'
 random_sample <- reports_conn$aggregate(pipeline) |> as_tibble()
 ```
 
-### Stream through a large result with `$iterate()`
-
-If you truly need to touch every document (e.g. something that can't be
-expressed as an aggregation stage), avoid loading the entire result into a
-tibble at once. `mongolite` lets you get a cursor and pull batches:
-
-```r
-cursor <- reports_conn$iterate(query = query, fields = report_cols)
-
-repeat {
-  batch <- cursor$batch(size = 1000)
-  if (is.null(batch)) break
-
-  # process this chunk only — e.g. write to disk, accumulate a summary,
-  # or append to a growing file rather than a growing in-memory object
-  batch |> as_tibble() |> process_batch()
-}
-```
-
-This keeps memory usage bounded to one batch at a time, regardless of how large
-the underlying collection is.
-
 ### A decision guide
 
   | Your goal                                    | Reach for                                                                        |
@@ -480,6 +458,12 @@ to shape the final result.
 --------------------------------------------------------------------------------
 
 ## Two ways to join `reports` to `incidents` --- pipeline vs. R-side
+
+::: {.callout-warning}
+## Just a demonstration
+
+The following code piece is only a demonstration and is not recommended for use
+:::
 
 The example earlier does the join *inside MongoDB* with `$lookup`. You can also
 pull both collections separately and join them in R with `dplyr`, using
@@ -653,36 +637,10 @@ word_counts <- reports_conn$aggregate(pipeline) |> as_tibble()
 This computes a number per document server-side and returns one row per document ---
 never the text itself.
 
-### Process the full corpus in chunks, when you must
-
-If a text-mining task genuinely needs the whole corpus (e.g. a full-collection
-document-term matrix), combine `$iterate()` batching with incremental
-summarizing instead of binding every batch into one giant tibble:
-
-```r
-cursor <- reports_conn$iterate(query = query, fields = subset_cols)
-word_freq <- list()
-
-repeat {
-  batch <- cursor$batch(size = 500)
-  if (is.null(batch)) break
-
-  batch_freq <- batch |>
-    as_tibble() |>
-    mutate(plain_text = replace_na(plain_text, "")) |>
-    unnest_tokens(word, plain_text) |>
-    anti_join(stop_words, by = "word") |>
-    count(word)
-
-  word_freq[[length(word_freq) + 1]] <- batch_freq
-}
-
 # Combine only the small, already-summarized per-batch counts
-total_word_freq <- bind_rows(word_freq) |>
-  group_by(word) |>
-  summarize(n = sum(n), .groups = "drop") |>
-  arrange(desc(n))
-```
+
+total_word_freq <- bind_rows(word_freq) \|> group_by(word) \|> summarize(n =
+sum(n), .groups = "drop") \|> arrange(desc(n)) \`\`\`
 
 The corpus itself is never fully resident in memory --- only one batch, plus a
 running (and much smaller) frequency table.

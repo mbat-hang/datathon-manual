@@ -1,0 +1,354 @@
+---
+pagetitle: "Data dictionary for AI Incident Database"
+---
+
+# Data dictionary for AI Incident Database
+
+::: {.callout-warning}
+## Accuracy of data dictionary
+
+This is not an official data dictionary provided by the AI Incident Database.
+There might be conflicts or issues with the actual database schema with online
+resources.
+:::
+
+## Overview
+
+At a high level, the collections fall into three groups:
+
+- **Core record collections**: `incidents`, `reports`, `entities`,
+  `entity_relationships` are the canonical, published data users browse in the
+  "Discover" app.
+- **Classification collections**: `taxa`, `classifications` are the flexible,
+  namespaced taxonomy system used to tag incidents/reports (e.g. the CSET
+  taxonomy).
+- **Workflow / pipeline collections**: `submissions`, `candidates` `quickadd`,
+  `duplicates`, `entity_duplicates`, `incident_links`, `checklists`,
+  `migrations` are there to support the editorial pipeline that turns a scraped
+  news article into a published incident, plus ancillary tools.
+
+Each collection section below lists field name, inferred type, and a
+description. Types marked `array<T>` denote an array whose elements are of type
+`T`; a bare `array` means an empty array was observed and no element type could
+be inferred. `object{...}` denotes an embedded sub-document, with its own fields
+described inline or in a nested table.
+
+## Core record collections
+
+### `incidents`
+
+The canonical, published incident records which are the primary entity of the
+database. Each incident aggregates one or more `reports`.
+
+  | Field                                                                            | Type                                 | Description                                                                                                                                                                                                                                                                                                    |
+  | -------------------------------------------------------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `_id`                                                                            | objectId                             | MongoDB primary key.                                                                                                                                                                                                                                                                                           |
+  | `incident_id`                                                                    | number                               | Public, human-facing incident number (used in URLs like `/cite/123`).                                                                                                                                                                                                                                          |
+  | `title`                                                                          | string                               | Short incident title shown in listings.                                                                                                                                                                                                                                                                        |
+  | `description`                                                                    | string                               | Editor-written summary of the incident.                                                                                                                                                                                                                                                                        |
+  | `date`                                                                           | string                               | Date the incident occurred (`YYYY-MM-DD`).                                                                                                                                                                                                                                                                     |
+  | `reports`                                                                        | array\<number\>                      | `report_number`s of the reports that make up this incident.                                                                                                                                                                                                                                                    |
+  | `editors`                                                                        | array\<string\>                      | Identifiers/usernames of editors who have contributed to the record.                                                                                                                                                                                                                                           |
+  | `editor_notes`                                                                   | string                               | Free-text internal notes for editors.                                                                                                                                                                                                                                                                          |
+  | `implicated_systems`                                                             | array\<string\>                      | `entity_id`s of the AI system(s) implicated.                                                                                                                                                                                                                                                                   |
+  | `Alleged deployer of AI system` / `AllegedDeployerOfAISystem`                    | array\<string\>                      | `entity_id`s of the party alleged to have deployed the system. Both the legacy space-separated key and a camelCase duplicate are present; the camelCase versions were added because MongoDB Atlas App Services/Realm (`_id__baas_transaction`, see below) cannot use field names containing spaces in GraphQL. |
+  | `Alleged developer of AI system` / `AllegedDeveloperOfAISystem`                  | array\<string\>                      | `entity_id`s of the party alleged to have developed the system (same legacy/camelCase pairing as above).                                                                                                                                                                                                       |
+  | `Alleged harmed or nearly harmed parties` / `AllegedHarmedOrNearlyHarmedParties` | array\<string\>                      | `entity_id`s of parties alleged to have been harmed or nearly harmed.                                                                                                                                                                                                                                          |
+  | `nlp_similar_incidents`                                                          | array\<object\>                      | NLP-generated recommendations of related incidents: `{incident_id, similarity}`.                                                                                                                                                                                                                               |
+  | `editor_similar_incidents`                                                       | array\<number\>                      | Incident IDs an editor has manually confirmed as similar.                                                                                                                                                                                                                                                      |
+  | `editor_dissimilar_incidents`                                                    | array\<number\>                      | Incident IDs an editor has manually marked as *not* similar (overrides NLP suggestions).                                                                                                                                                                                                                       |
+  | `flagged_dissimilar_incidents`                                                   | array\<number\>                      | Incident IDs flagged by users/editors for review as likely-incorrect similarity matches.                                                                                                                                                                                                                       |
+  | `embedding`                                                                      | object\<br\>`{vector, from_reports}` | Text embedding vector representing the incident, plus the `report_number`s it was derived from. Powers similarity search and the spatial view.                                                                                                                                                                 |
+  | `tsne`                                                                           | object `{x, y}`                      | 2-D t-SNE projection of the embedding, used to plot the incident in the "Spatial View" visualization.                                                                                                                                                                                                          |
+  | `created_at`                                                                     | date                                 | Record creation timestamp.                                                                                                                                                                                                                                                                                     |
+  | `date_modified`                                                                  | date                                 | Last-modified timestamp.                                                                                                                                                                                                                                                                                       |
+  | `epoch_date_modified`                                                            | number                               | `date_modified` as a Unix epoch, kept for fast sorting/filtering.                                                                                                                                                                                                                                              |
+  | `_id__baas_transaction`                                                          | objectId                             | Legacy transaction identifier from MongoDB Atlas App Services (formerly "Realm", internally "baas"), used by trigger functions; not part of the incident's semantic data.                                                                                                                                      |
+
+### `reports`
+
+Individual news articles / source documents. A report can be linked to zero
+(candidate), one, or more incidents via `incidents.reports`.
+
+  | Field                    | Type                              | Description                                                                                                                         |
+  | ------------------------ | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+  | `_id`                    | objectId                          | MongoDB primary key.                                                                                                                |
+  | `report_number`          | number                            | Public, human-facing report number.                                                                                                 |
+  | `title`                  | string                            | Article/report title.                                                                                                               |
+  | `text`                   | string                            | Full report text (may include markdown/HTML from ingestion).                                                                        |
+  | `plain_text`             | string                            | Plain-text version of `text`, stripped of markup.                                                                                   |
+  | `description`            | string                            | Short editor- or auto-generated summary.                                                                                            |
+  | `url`                    | string                            | Source URL of the report.                                                                                                           |
+  | `source_domain`          | string                            | Domain the report was published on (e.g. `nytimes.com`).                                                                            |
+  | `image_url`              | string                            | URL of a representative image for the report.                                                                                       |
+  | `cloudinary_id`          | string                            | Identifier of the image as hosted on Cloudinary.                                                                                    |
+  | `authors`                | array\<string\>                   | Byline authors of the source article.                                                                                               |
+  | `submitters`             | array\<string\>                   | AIID users who submitted this report.                                                                                               |
+  | `language`               | string                            | ISO language code of the report text.                                                                                               |
+  | `tags`                   | array                             | Free-form tags applied to the report.                                                                                               |
+  | `date_published`         | date                              | Date the source article was published.                                                                                              |
+  | `date_submitted`         | date                              | Date the report was submitted to AIID.                                                                                              |
+  | `date_downloaded`        | date                              | Date the report content was scraped/archived.                                                                                       |
+  | `date_modified`          | date                              | Last-modified timestamp.                                                                                                            |
+  | `epoch_date_published`   | number                            | `date_published` as a Unix epoch.                                                                                                   |
+  | `epoch_date_submitted`   | number                            | `date_submitted` as a Unix epoch.                                                                                                   |
+  | `embedding`              | object `{vector, from_text_hash}` | Text embedding vector plus a hash of the source text it was computed from (used to detect when re-embedding is needed after edits). |
+  | `is_incident_report`     | boolean                           | Whether the report is attached to a published incident (`false` for background/context articles).                                   |
+  | `flag`                   | boolean                           | Whether the report has been flagged for editorial review.                                                                           |
+  | `snippet_max_characters` | number                            | Display truncation length used when rendering a snippet/preview of this report.                                                     |
+  | `editor_notes`           | string                            | Free-text internal editor notes.                                                                                                    |
+  | `created_at`             | date                              | Record creation timestamp.                                                                                                          |
+  | `inputs_outputs`         | —                                 | Reserved/unused in this export (always null).                                                                                       |
+  | `quiet`                  | —                                 | Reserved/unused in this export (always null); elsewhere used to suppress notification side-effects on save.                         |
+
+### `entities`
+
+The controlled list of named parties (developers, deployers, harmed parties, AI
+systems) referenced across incidents.
+
+  | Field           | Type     | Description                                                                             |
+  | --------------- | -------- | --------------------------------------------------------------------------------------- |
+  | `_id`           | objectId | MongoDB primary key.                                                                    |
+  | `entity_id`     | string   | Slug used as the stable reference key (e.g. in `incidents.implicated_systems`).         |
+  | `name`          | string   | Display name of the entity.                                                             |
+  | `created_at`    | date     | Record creation timestamp (null for entities created before this field was introduced). |
+  | `date_modified` | date     | Last-modified timestamp.                                                                |
+
+### `entity_relationships`
+
+Subject--predicate--object triples linking entities (e.g. "Company A" *is a
+subsidiary of* "Company B").
+
+  | Field          | Type     | Description                                                                                                   |
+  | -------------- | -------- | ------------------------------------------------------------------------------------------------------------- |
+  | `_id`          | objectId | MongoDB primary key.                                                                                          |
+  | `sub`          | string   | `entity_id` of the subject.                                                                                   |
+  | `pred`         | string   | Relationship/predicate name.                                                                                  |
+  | `obj`          | string   | `entity_id` of the object.                                                                                    |
+  | `is_symmetric` | boolean  | Whether the relationship applies equally in both directions (so a single row implies the reverse triple too). |
+
+## Classification (taxonomy) collections
+
+### `taxa`
+
+Defines each classification taxonomy/namespace (e.g. the CSET taxonomy) and the
+schema of its fields --- effectively metadata describing the "columns" available
+in `classifications.attributes` for that namespace.
+
+  | Field                      | Type            | Description                                                                                                                   |
+  | -------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+  | `_id`                      | objectId        | MongoDB primary key.                                                                                                          |
+  | `namespace`                | string          | Unique taxonomy identifier (referenced by `classifications.namespace`).                                                       |
+  | `description`              | string          | Description of the taxonomy shown to users.                                                                                   |
+  | `weight`                   | number          | Sort order among taxonomies.                                                                                                  |
+  | `complete_entities`        | boolean         | Whether classifiers must fully specify implicated entities for this taxonomy.                                                 |
+  | `automatedClassifications` | boolean         | Whether classifications for this taxonomy can be generated automatically (e.g. by a model) rather than only by human editors. |
+  | `field_list`               | array\<object\> | The taxonomy's field definitions — one entry per classifiable attribute. See below.                                           |
+  | `dummy_fields`             | array\<object\> | Template/placeholder field definitions used as a starting point when authoring a new taxonomy field.                          |
+
+**`field_list` / `dummy_fields` element schema** (each entry describes one
+attribute of the taxonomy):
+
+  | Sub-field                                | Type    | Description                                                                    |
+  | ---------------------------------------- | ------- | ------------------------------------------------------------------------------ |
+  | `field_number`                           | string  | Stable identifier for the field within the taxonomy.                           |
+  | `short_name`                             | string  | Machine-friendly key, referenced by `classifications.attributes[].short_name`. |
+  | `long_name`                              | string  | Human-readable label.                                                          |
+  | `short_description` / `long_description` | string  | Help text of varying length shown to classifiers.                              |
+  | `display_type`                           | string  | UI widget used to capture the value (e.g. text, select, multi-select).         |
+  | `mongo_type`                             | string  | Underlying MongoDB type the value is stored as.                                |
+  | `default`                                | string  | Default value when a new classification is created.                            |
+  | `placeholder`                            | string  | Placeholder text shown in the input widget.                                    |
+  | `permitted_values`                       | array   | Allowed values, for enumerated/select fields.                                  |
+  | `weight`                                 | number  | Sort order among fields within the taxonomy.                                   |
+  | `instant_facet`                          | boolean | Whether the field is exposed as an instant-search facet in Discover.           |
+  | `required`                               | boolean | Whether a value must be supplied.                                              |
+  | `public`                                 | boolean | Whether the field is visible to non-editor users.                              |
+  | `hide_search`                            | boolean | Whether the field is excluded from search indexing.                            |
+  | `notes`                                  | string  | Internal notes about the field.                                                |
+
+### `classifications`
+
+The actual tag/attribute values applied to one or more incidents and reports
+under a given taxonomy namespace.
+
+  | Field        | Type            | Description                                                                                                                                                                |
+  | ------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `_id`        | objectId        | MongoDB primary key.                                                                                                                                                       |
+  | `namespace`  | string          | Taxonomy this classification belongs to (references `taxa.namespace`).                                                                                                     |
+  | `incidents`  | array\<number\> | `incident_id`s this classification applies to.                                                                                                                             |
+  | `reports`    | array           | Report(s) used as evidence for the classification.                                                                                                                         |
+  | `attributes` | array\<object\> | The tagged values: `{short_name, value_json}`, where `short_name` matches a `taxa.field_list[].short_name` and `value_json` holds the (JSON-encoded) value for that field. |
+  | `publish`    | boolean         | Whether the classification is publicly visible.                                                                                                                            |
+  | `notes`      | string          | Free-text notes about the classification.                                                                                                                                  |
+  | `created_at` | date            | Record creation timestamp.                                                                                                                                                 |
+
+## Editorial pipeline & workflow collections
+
+### `submissions`
+
+User-submitted candidate reports/incidents awaiting editorial review before
+being promoted into `reports`/`incidents`.
+
+  | Field                                                                     | Type                              | Description                                                                           |
+  | ------------------------------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------- |
+  | `_id`                                                                     | objectId                          | MongoDB primary key.                                                                  |
+  | `status`                                                                  | string                            | Workflow status of the submission (e.g. pending review).                              |
+  | `user`                                                                    | string                            | Identifier of the submitting user.                                                    |
+  | `title`                                                                   | string                            | Proposed report title.                                                                |
+  | `text` / `plain_text`                                                     | string                            | Report body (raw and stripped).                                                       |
+  | `description`                                                             | string                            | Proposed summary.                                                                     |
+  | `url`                                                                     | string                            | Source URL.                                                                           |
+  | `source_domain`                                                           | string                            | Domain of the source URL.                                                             |
+  | `image_url` / `cloudinary_id`                                             | string                            | Representative image and its Cloudinary asset id.                                     |
+  | `language`                                                                | string                            | ISO language code.                                                                    |
+  | `authors` / `submitters`                                                  | array\<string\>                   | Byline authors / AIID users who submitted.                                            |
+  | `tags`                                                                    | array                             | Free-form tags.                                                                       |
+  | `date_published` / `date_submitted` / `date_downloaded` / `date_modified` | string                            | Lifecycle dates, stored as strings pending promotion to typed `date`s in `reports`.   |
+  | `incident_date`                                                           | string                            | Proposed date of the incident itself.                                                 |
+  | `incident_title`                                                          | —                                 | Proposed incident title, if creating a new incident (null until set).                 |
+  | `incident_ids`                                                            | array\<number\>                   | Existing incident(s) the submitter believes this report belongs to.                   |
+  | `deployers` / `developers` / `harmed_parties`                             | array\<string\>                   | Proposed alleged deployer/developer/harmed-party entities.                            |
+  | `implicated_systems`                                                      | array\<string\>                   | Proposed implicated AI system entities.                                               |
+  | `incident_editors`                                                        | array\<string\>                   | Proposed editors for the resulting incident.                                          |
+  | `nlp_similar_incidents`                                                   | array\<object\>                   | NLP-suggested similar incidents: `{incident_id, similarity}`.                         |
+  | `editor_similar_incidents` / `editor_dissimilar_incidents`                | —                                 | Editor overrides of the NLP suggestion (null until an editor acts on the submission). |
+  | `embedding`                                                               | object `{vector, from_text_hash}` | Text embedding and source-text hash, as in `reports`.                                 |
+  | `snippet_max_characters`                                                  | number                            | Snippet truncation length for preview.                                                |
+  | `editor_notes`                                                            | string                            | Internal notes.                                                                       |
+  | `quiet`                                                                   | boolean                           | Whether to suppress notifications when the submission is saved/updated.               |
+  | `created_at`                                                              | date                              | Record creation timestamp.                                                            |
+
+### `candidates`
+
+Articles discovered automatically (e.g. via scraping/NLP monitoring) that *may*
+describe an AI incident, awaiting triage before becoming a `submission`.
+Distinct from `submissions`, which are user-initiated.
+
+  | Field                           | Type                              | Description                                                                    |
+  | ------------------------------- | --------------------------------- | ------------------------------------------------------------------------------ |
+  | `_id`                           | objectId                          | MongoDB primary key.                                                           |
+  | `title` / `text` / `plain_text` | string                            | Article content, as scraped.                                                   |
+  | `url`                           | string                            | Source URL.                                                                    |
+  | `date_published`                | string                            | Publish date as extracted from the source.                                     |
+  | `date_scraped`                  | string                            | Date the scraper collected the article.                                        |
+  | `matching_keywords`             | array\<string\>                   | Keywords that caused the scraper to surface this article.                      |
+  | `matching_harm_keywords`        | array\<string\>                   | Harm-specific keywords matched.                                                |
+  | `matching_entities`             | array\<string\>                   | Known AIID entities detected in the text.                                      |
+  | `embedding`                     | object `{vector, from_text_hash}` | Text embedding and source-text hash.                                           |
+  | `similarity`                    | number                            | Similarity score to existing incidents, used to rank candidates.               |
+  | `classification_similarity`     | array\<object\>                   | Per-taxonomy match likelihoods: `{classification, similarity}`.                |
+  | `match`                         | boolean                           | Whether the candidate has been confirmed as a genuine (likely) incident match. |
+
+### `quickadd`
+
+Lightweight bookmarks of a URL for later review --- the fastest path for a user
+to flag a link without filling out a full submission.
+
+  | Field            | Type     | Description                                         |
+  | ---------------- | -------- | --------------------------------------------------- |
+  | `_id`            | objectId | MongoDB primary key.                                |
+  | `url`            | string   | Bookmarked URL.                                     |
+  | `source_domain`  | string   | Domain of the URL.                                  |
+  | `incident_id`    | number   | Incident the link is proposed to relate to, if any. |
+  | `date_submitted` | string   | Date the link was quick-added.                      |
+  | `created_at`     | date     | Record creation timestamp.                          |
+
+### `duplicates`
+
+Maps an incident record that was identified as a duplicate onto the canonical
+incident it was merged into.
+
+  | Field                       | Type     | Description                                            |
+  | --------------------------- | -------- | ------------------------------------------------------ |
+  | `_id`                       | objectId | MongoDB primary key.                                   |
+  | `duplicate_incident_number` | number   | The incident number that is a duplicate.               |
+  | `true_incident_number`      | number   | The canonical incident number it should be treated as. |
+  | `created_at`                | date     | Record creation timestamp.                             |
+
+### `entity_duplicates`
+
+Same merge pattern as `duplicates`, for entities.
+
+  | Field                 | Type     | Description                                  |
+  | --------------------- | -------- | -------------------------------------------- |
+  | `_id`                 | objectId | MongoDB primary key.                         |
+  | `duplicate_entity_id` | string   | Entity id that is a duplicate.               |
+  | `true_entity_id`      | string   | Canonical entity id it should be treated as. |
+
+### `incident_links`
+
+Cross-references between an AIID incident and the same event as recorded in
+another external database (e.g. the OECD AI Incidents Monitor).
+
+  | Field              | Type     | Description                                                         |
+  | ------------------ | -------- | ------------------------------------------------------------------- |
+  | `_id`              | objectId | MongoDB primary key.                                                |
+  | `incident_id`      | number   | AIID incident number.                                               |
+  | `source_namespace` | string   | Identifier of the external database/source.                         |
+  | `sameAs`           | string   | URI or identifier of the equivalent record in that external source. |
+
+### `checklists`
+
+User-authored AI risk-assessment checklists, built against the incident taxonomy
+to help teams evaluate a system they are building or deploying. Independent of
+any single incident.
+
+  | Field                                          | Type            | Description                                                                       |
+  | ---------------------------------------------- | --------------- | --------------------------------------------------------------------------------- |
+  | `_id`                                          | objectId        | MongoDB primary key.                                                              |
+  | `id`                                           | string          | Checklist identifier.                                                             |
+  | `owner_id`                                     | string          | User who owns the checklist.                                                      |
+  | `name`                                         | string          | Checklist title.                                                                  |
+  | `about`                                        | string          | Description of the system/project being assessed.                                 |
+  | `tags_goals` / `tags_methods` / `tags_other`   | array\<string\> | Free-form tags describing the goals, methods, and other attributes of the system. |
+  | `risks`                                        | array\<object\> | The individual risk entries; see below.                                           |
+  | `date_created` / `date_updated` / `created_at` | date            | Lifecycle timestamps.                                                             |
+
+**`risks` element schema:**
+
+  | Sub-field     | Type          | Description                                                                |
+  | ------------- | ------------- | -------------------------------------------------------------------------- |
+  | `id`          | string        | Risk entry identifier.                                                     |
+  | `title`       | string        | Short label for the risk.                                                  |
+  | `tags`        | array         | Taxonomy tags the risk was derived from.                                   |
+  | `precedents`  | array         | Related past incidents cited as precedent for the risk.                    |
+  | `likelihood`  | string/number | Assessed likelihood of the risk occurring.                                 |
+  | `severity`    | string/number | Assessed severity if it occurs.                                            |
+  | `risk_status` | string        | Current mitigation/review status.                                          |
+  | `risk_notes`  | string        | Free-text notes.                                                           |
+  | `generated`   | boolean       | Whether the entry was auto-generated from the taxonomy vs. added manually. |
+  | `touched`     | boolean       | Whether the user has reviewed/edited the auto-generated entry.             |
+
+### `migrations`
+
+Internal bookkeeping of applied database schema migrations; not part of the
+domain model.
+
+  | Field                      | Type     | Description                                                                             |
+  | -------------------------- | -------- | --------------------------------------------------------------------------------------- |
+  | `_id`                      | objectId | MongoDB primary key.                                                                    |
+  | `migrationName`            | string   | Name/identifier of the migration script.                                                |
+  | `createdAt` / `created_at` | date     | When the migration was applied (both a legacy and current timestamp field are present). |
+
+## Notes on schema conventions
+
+- **Legacy/camelCase field pairs.** A few `incidents` fields exist twice ---
+  once with spaces (e.g. `Alleged deployer of AI system`) and once in camelCase
+  (`AllegedDeployerOfAISystem`). The camelCase versions exist because MongoDB
+  Atlas App Services' GraphQL layer cannot expose field names containing spaces;
+  both are kept in sync for backward compatibility.
+- **`array` with no element type.** Where the scan reports a bare `array`
+  alongside a more specific `array<T>` for the same field, it simply means some
+  documents had an empty array for that field, so no element type could be
+  inferred from them.
+- **Embeddings.** `embedding.vector` fields store dense vector representations
+  of text (incident/report/candidate content) used for nearest-neighbor
+  similarity search and clustering (e.g. `tsne` for 2-D visualization).
+  `from_text_hash` / `from_reports` record what the embedding was computed from,
+  so it can be invalidated and recomputed when the source text changes.
+- **Namespacing.** The taxonomy system (`taxa` + `classifications`) is
+  deliberately pluralistic: multiple organizations can define their own
+  `namespace` (e.g. a general taxonomy alongside domain-specific ones) and apply
+  independent classifications to the same incidents, rather than the database
+  enforcing one canonical taxonomy.

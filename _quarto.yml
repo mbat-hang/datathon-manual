@@ -14,6 +14,7 @@ book:
       chapters:
         - sqlnosql.qmd
         - mongodbcon.qmd
+    - data-dict.qmd
     - tidytext.qmd
     - visualisation-tables.qmd
 

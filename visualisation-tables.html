@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Git + GitHub Desktop – MBAT Club Datathon 2026 — Participant Manual</title>
+<title>Good Visualisation &amp; Tables – MBAT Club Datathon 2026 — Participant Manual</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -71,8 +36,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./quarto-guide.html" rel="next">
-<link href="./code-of-conduct.html" rel="prev">
+<link href="./tidytext.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -123,7 +87,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./git-github.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./visualisation-tables.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Good Visualisation &amp; Tables</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -162,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./git-github.html" class="sidebar-item-text sidebar-link active">
+  <a href="./git-github.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span></a>
   </div>
 </li>
@@ -215,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./visualisation-tables.html" class="sidebar-item-text sidebar-link">
+  <a href="./visualisation-tables.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Good Visualisation &amp; Tables</span></span></a>
   </div>
 </li>
@@ -224,29 +188,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-daily-loop" id="toc-the-daily-loop" class="nav-link active" data-scroll-target="#the-daily-loop"><span class="header-section-number">2.1</span> The daily loop</a></li>
-  <li><a href="#install-before-the-event" id="toc-install-before-the-event" class="nav-link" data-scroll-target="#install-before-the-event"><span class="header-section-number">2.2</span> Install (before the event)</a></li>
-  <li><a href="#get-your-teams-repository" id="toc-get-your-teams-repository" class="nav-link" data-scroll-target="#get-your-teams-repository"><span class="header-section-number">2.3</span> Get your team’s repository</a></li>
-  <li><a href="#work-session-workflow" id="toc-work-session-workflow" class="nav-link" data-scroll-target="#work-session-workflow"><span class="header-section-number">2.4</span> Work session workflow</a></li>
-  <li><a href="#avoid-stepping-on-your-teammates" id="toc-avoid-stepping-on-your-teammates" class="nav-link" data-scroll-target="#avoid-stepping-on-your-teammates"><span class="header-section-number">2.5</span> Avoid stepping on your teammates</a></li>
-  <li><a href="#fix-a-merge-conflict" id="toc-fix-a-merge-conflict" class="nav-link" data-scroll-target="#fix-a-merge-conflict"><span class="header-section-number">2.6</span> Fix a merge conflict</a></li>
-  <li><a href="#never-commit-these" id="toc-never-commit-these" class="nav-link" data-scroll-target="#never-commit-these"><span class="header-section-number">2.7</span> Never commit these</a></li>
-  <li><a href="#prefer-the-command-line" id="toc-prefer-the-command-line" class="nav-link" data-scroll-target="#prefer-the-command-line"><span class="header-section-number">2.8</span> Prefer the command line?</a></li>
-  <li><a href="#before-you-submit-day-2-1100-am-deadline" id="toc-before-you-submit-day-2-1100-am-deadline" class="nav-link" data-scroll-target="#before-you-submit-day-2-1100-am-deadline"><span class="header-section-number">2.9</span> Before you submit (Day 2, 11:00 AM deadline)</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-git-github" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span></h1>
+<h1 class="title"><span id="sec-viz-tables" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Good Visualisation &amp; Tables</span></span></h1>
 </div>
 
 
@@ -273,103 +223,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Your submission is a public GitHub repository. A team that can’t reliably commit and push loses time to lost work, overwritten files, or a repo that isn’t actually up to date at the deadline.</p>
+<p>Analysis &amp; Evidence (35 points) and Report Clarity &amp; Storytelling (20 points) — more than half of your score comes from these elements, so it’s worth looking over these materials to create good visualisation and tables. Even solid analysis loses marks if it’s shown as raw R output or a cluttered default chart.</p>
 </div>
 </div>
-<section id="the-daily-loop" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="the-daily-loop"><span class="header-section-number">2.1</span> The daily loop</h2>
-<p>Everything below is a variation on this:</p>
-<ol type="1">
-<li><strong>Pull</strong> the latest changes.</li>
-<li>Do some work.</li>
-<li><strong>Commit</strong> with a short message.</li>
-<li><strong>Push</strong> so your team can see it.</li>
-</ol>
-</section>
-<section id="install-before-the-event" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="install-before-the-event"><span class="header-section-number">2.2</span> Install (before the event)</h2>
-<ol type="1">
-<li>Install <a href="https://desktop.github.com/">GitHub Desktop</a>.</li>
-<li>Sign in with a GitHub account (create one first if needed).</li>
-<li>Let it install Git automatically if prompted.</li>
-<li>Make sure organisers have your GitHub username so you can be added to your team’s repository.</li>
-</ol>
-</section>
-<section id="get-your-teams-repository" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="get-your-teams-repository"><span class="header-section-number">2.3</span> Get your team’s repository</h2>
-<p>Organisers create and share one repository per team, already set up from the starter template (<a href="starter-template.html" class="quarto-xref"><span>Chapter 4</span></a>) — you don’t create anything.</p>
-<ol type="1">
-<li>Get the repo link from organisers.</li>
-<li>Every team member: GitHub Desktop → <strong>File → Clone Repository</strong> → paste the URL → <strong>Clone</strong>.</li>
-<li>Before the working session starts, confirm you can push: make a trivial commit (e.g.&nbsp;add your name to the README) and push it.</li>
-</ol>
-</section>
-<section id="work-session-workflow" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="work-session-workflow"><span class="header-section-number">2.4</span> Work session workflow</h2>
-<ol type="1">
-<li>Click <strong>Fetch origin</strong>, then <strong>Pull origin</strong> if you’re behind — do this <em>before</em> you edit anything.</li>
-<li>Edit your files as normal.</li>
-<li>Check the <strong>Changes</strong> tab — untick anything you didn’t mean to include.</li>
-<li>Write a short summary → <strong>Commit to main</strong>.</li>
-<li>Click <strong>Push origin</strong>.</li>
-<li>Repeat: pull → work → commit → push.</li>
-</ol>
-<p>Commit often — every working chunk of progress, not just once at the end of the day.</p>
-</section>
-<section id="avoid-stepping-on-your-teammates" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="avoid-stepping-on-your-teammates"><span class="header-section-number">2.5</span> Avoid stepping on your teammates</h2>
+<p>Start from the message, not the chart: write the one-sentence finding first, then pick the plot or table that makes it obvious. A few things worth knowing regardless of which chart you pick, position and length (bar charts, scatter plots) are judged far more accurately than angle and area (pie charts), so prefer the former; sort categories by value instead of leaving them alphabetical; and for tables, don’t paste a <code>summary()</code> printout into the report, <code>broom::tidy()</code> turns a fitted model into a data frame, and <code>gtsummary::tbl_regression()</code> turns that into a table you can actually trim down to what answers your question.</p>
+<p>For the full treatment, perception, colour palettes, a worked diagnose/redesign/evaluate example, and table-formatting details, go through the two Monash ETC5523 (Communicating with Data) lectures this is drawn from:</p>
 <ul>
-<li>Split work by file/section so two people aren’t editing the same lines at once.</li>
-<li>Pull before you start a session; push before you take a break.</li>
-<li>Say out loud (or in chat) before editing a shared file, e.g.&nbsp;the report.</li>
-</ul>
-</section>
-<section id="fix-a-merge-conflict" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="fix-a-merge-conflict"><span class="header-section-number">2.6</span> Fix a merge conflict</h2>
-<ol type="1">
-<li><p>Open the file GitHub Desktop flags as conflicted.</p></li>
-<li><p>Find the marked sections:</p>
-<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-your version
-=======
-their version
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</code></pre></li>
-<li><p>Edit the file to keep the correct content (or merge both).</p></li>
-<li><p>Delete the <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> marker lines.</p></li>
-<li><p>Save, then commit the resolved file as usual.</p></li>
-<li><p>Stuck for more than a few minutes? Ask the help desk.</p></li>
-</ol>
-</section>
-<section id="never-commit-these" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="never-commit-these"><span class="header-section-number">2.7</span> Never commit these</h2>
-<ul>
-<li><strong>Credentials</strong> — MongoDB connection string, API keys, <code>.Renviron</code> contents. Keep them in a local <code>.Renviron</code> file, listed in <code>.gitignore</code>.</li>
-<li><strong>Large raw data dumps</strong> — pull from the database at analysis time instead.</li>
-<li><strong>Cache/temp folders</strong> — <code>.quarto/</code>, <code>*_cache/</code>. (<code>_docs/</code> is the exception — see <a href="starter-template.html" class="quarto-xref"><span>Chapter 4</span></a>: that one <em>does</em> need to be pushed, since it’s your submitted report and slides.)</li>
-</ul>
-<p>If a credential is ever pushed by accident, rotate it immediately — deleting the file does not remove it from the repo’s history.</p>
-</section>
-<section id="prefer-the-command-line" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="prefer-the-command-line"><span class="header-section-number">2.8</span> Prefer the command line?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="op">&lt;</span>repo-url<span class="op">&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file<span class="op">&gt;</span>            <span class="co"># or `git add .`</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"message"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Same repository either way — teammates can mix GitHub Desktop and the terminal freely.</p>
-</section>
-<section id="before-you-submit-day-2-1100-am-deadline" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="before-you-submit-day-2-1100-am-deadline"><span class="header-section-number">2.9</span> Before you submit (Day 2, 11:00 AM deadline)</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">The final commit is pushed — an unpushed commit does not count as submitted</label></li>
-<li><label><input type="checkbox">No credentials appear anywhere in the repo, including old commits</label></li>
-<li><label><input type="checkbox">Both the rendered HTML and PDF reports open correctly from a fresh clone</label></li>
-<li><label><input type="checkbox">The presentation slides (<a href="quarto-guide.html" class="quarto-xref"><span>Chapter 3</span></a>) are finished and rendered — required from every team, not just finalists</label></li>
+<li><a href="https://cwd.numbat.space/week5/#/etc5523-title">Week 5 — from model outputs to communicative tables</a></li>
+<li><a href="https://cwd.numbat.space/week6/#/etc5523-title">Week 6 — effective data visualisation</a></li>
 </ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -774,14 +638,11 @@ their version
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./code-of-conduct.html" class="pagination-link" aria-label="Code of Conduct">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span>
+      <a href="./tidytext.html" class="pagination-link" aria-label="Resources for tidytext (Text Mining with R)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Resources for tidytext (Text Mining with R)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quarto-guide.html" class="pagination-link" aria-label="Quarto">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

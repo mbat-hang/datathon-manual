@@ -123,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sqlnosql.html">Databases + MongoDB</a></li><li class="breadcrumb-item"><a href="./sqlnosql.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sqlnosql.html">Databases + MongoDB</a></li><li class="breadcrumb-item"><a href="./sqlnosql.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -156,20 +156,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./code-of-conduct.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./git-github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto-guide.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./starter-template.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -184,21 +190,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sqlnosql.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mongodbcon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Getting Your Competition Data Out of MongoDB Atlas and Into R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MongoDB Atlas to R: Connecting, Pipelines, and Text Analysis</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data-dict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data dictionary for AI Incident Database</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./tidytext.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resources for tidytext (Text Mining with R)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Resources for tidytext (Text Mining with R)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./visualisation-tables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Good Visualisation &amp; Tables</span></span></a>
   </div>
 </li>
     </ul>
@@ -211,32 +229,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-this-tutorial-exists" id="toc-why-this-tutorial-exists" class="nav-link active" data-scroll-target="#why-this-tutorial-exists"><span class="header-section-number">4.1</span> 1. Why This Tutorial Exists</a></li>
-  <li><a href="#what-nosql-actually-means" id="toc-what-nosql-actually-means" class="nav-link" data-scroll-target="#what-nosql-actually-means"><span class="header-section-number">4.2</span> 2. What “NoSQL” Actually Means</a></li>
-  <li><a href="#the-core-idea-documents-instead-of-rows" id="toc-the-core-idea-documents-instead-of-rows" class="nav-link" data-scroll-target="#the-core-idea-documents-instead-of-rows"><span class="header-section-number">4.3</span> 3. The Core Idea: Documents Instead of Rows</a>
+  <li><a href="#why-this-tutorial-exists" id="toc-why-this-tutorial-exists" class="nav-link active" data-scroll-target="#why-this-tutorial-exists"><span class="header-section-number">5.1</span> 1. Why This Tutorial Exists</a></li>
+  <li><a href="#what-nosql-actually-means" id="toc-what-nosql-actually-means" class="nav-link" data-scroll-target="#what-nosql-actually-means"><span class="header-section-number">5.2</span> 2. What “NoSQL” Actually Means</a></li>
+  <li><a href="#the-core-idea-documents-instead-of-rows" id="toc-the-core-idea-documents-instead-of-rows" class="nav-link" data-scroll-target="#the-core-idea-documents-instead-of-rows"><span class="header-section-number">5.3</span> 3. The Core Idea: Documents Instead of Rows</a>
   <ul class="collapse">
-  <li><a href="#a-translation-table-for-vocabulary" id="toc-a-translation-table-for-vocabulary" class="nav-link" data-scroll-target="#a-translation-table-for-vocabulary"><span class="header-section-number">4.3.1</span> A translation table for vocabulary</a></li>
+  <li><a href="#a-translation-table-for-vocabulary" id="toc-a-translation-table-for-vocabulary" class="nav-link" data-scroll-target="#a-translation-table-for-vocabulary"><span class="header-section-number">5.3.1</span> A translation table for vocabulary</a></li>
   </ul></li>
-  <li><a href="#why-embed-instead-of-normalize" id="toc-why-embed-instead-of-normalize" class="nav-link" data-scroll-target="#why-embed-instead-of-normalize"><span class="header-section-number">4.4</span> 4. Why Embed Instead of Normalize?</a></li>
-  <li><a href="#schema-flexibility-a-blessing-and-a-curse" id="toc-schema-flexibility-a-blessing-and-a-curse" class="nav-link" data-scroll-target="#schema-flexibility-a-blessing-and-a-curse"><span class="header-section-number">4.5</span> 5. Schema Flexibility: A Blessing and a Curse</a></li>
-  <li><a href="#querying-dplyrsql-habits-vs.-mongodbs-query-language" id="toc-querying-dplyrsql-habits-vs.-mongodbs-query-language" class="nav-link" data-scroll-target="#querying-dplyrsql-habits-vs.-mongodbs-query-language"><span class="header-section-number">4.6</span> 6. Querying: <code>dplyr</code>/SQL Habits vs.&nbsp;MongoDB’s Query Language</a>
+  <li><a href="#why-embed-instead-of-normalize" id="toc-why-embed-instead-of-normalize" class="nav-link" data-scroll-target="#why-embed-instead-of-normalize"><span class="header-section-number">5.4</span> 4. Why Embed Instead of Normalize?</a></li>
+  <li><a href="#schema-flexibility-a-blessing-and-a-curse" id="toc-schema-flexibility-a-blessing-and-a-curse" class="nav-link" data-scroll-target="#schema-flexibility-a-blessing-and-a-curse"><span class="header-section-number">5.5</span> 5. Schema Flexibility: A Blessing and a Curse</a></li>
+  <li><a href="#querying-dplyrsql-habits-vs.-mongodbs-query-language" id="toc-querying-dplyrsql-habits-vs.-mongodbs-query-language" class="nav-link" data-scroll-target="#querying-dplyrsql-habits-vs.-mongodbs-query-language"><span class="header-section-number">5.6</span> 6. Querying: <code>dplyr</code>/SQL Habits vs.&nbsp;MongoDB’s Query Language</a>
   <ul class="collapse">
-  <li><a href="#comparison-table" id="toc-comparison-table" class="nav-link" data-scroll-target="#comparison-table"><span class="header-section-number">4.6.1</span> Comparison table</a></li>
+  <li><a href="#comparison-table" id="toc-comparison-table" class="nav-link" data-scroll-target="#comparison-table"><span class="header-section-number">5.6.1</span> Comparison table</a></li>
   </ul></li>
-  <li><a href="#using-mongodb-from-r" id="toc-using-mongodb-from-r" class="nav-link" data-scroll-target="#using-mongodb-from-r"><span class="header-section-number">4.7</span> 7. Using MongoDB from R</a></li>
-  <li><a href="#consistency-transactions-and-why-this-matters-to-you" id="toc-consistency-transactions-and-why-this-matters-to-you" class="nav-link" data-scroll-target="#consistency-transactions-and-why-this-matters-to-you"><span class="header-section-number">4.8</span> 8. Consistency, Transactions, and Why This Matters to You</a></li>
-  <li><a href="#when-each-approach-tends-to-fit-better" id="toc-when-each-approach-tends-to-fit-better" class="nav-link" data-scroll-target="#when-each-approach-tends-to-fit-better"><span class="header-section-number">4.9</span> 9. When Each Approach Tends to Fit Better</a></li>
-  <li><a href="#a-worked-mini-example-same-data-both-ways" id="toc-a-worked-mini-example-same-data-both-ways" class="nav-link" data-scroll-target="#a-worked-mini-example-same-data-both-ways"><span class="header-section-number">4.10</span> 10. A Worked Mini-Example: Same Data, Both Ways</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.11</span> 11. Summary</a></li>
+  <li><a href="#using-mongodb-from-r" id="toc-using-mongodb-from-r" class="nav-link" data-scroll-target="#using-mongodb-from-r"><span class="header-section-number">5.7</span> 7. Using MongoDB from R</a></li>
+  <li><a href="#consistency-transactions-and-why-this-matters-to-you" id="toc-consistency-transactions-and-why-this-matters-to-you" class="nav-link" data-scroll-target="#consistency-transactions-and-why-this-matters-to-you"><span class="header-section-number">5.8</span> 8. Consistency, Transactions, and Why This Matters to You</a></li>
+  <li><a href="#when-each-approach-tends-to-fit-better" id="toc-when-each-approach-tends-to-fit-better" class="nav-link" data-scroll-target="#when-each-approach-tends-to-fit-better"><span class="header-section-number">5.9</span> 9. When Each Approach Tends to Fit Better</a></li>
+  <li><a href="#a-worked-mini-example-same-data-both-ways" id="toc-a-worked-mini-example-same-data-both-ways" class="nav-link" data-scroll-target="#a-worked-mini-example-same-data-both-ways"><span class="header-section-number">5.10</span> 10. A Worked Mini-Example: Same Data, Both Ways</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.11</span> 11. Summary</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sqlnosql.html">Databases + MongoDB</a></li><li class="breadcrumb-item"><a href="./sqlnosql.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sqlnosql.html">Databases + MongoDB</a></li><li class="breadcrumb-item"><a href="./sqlnosql.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-sql-nosql" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></span></h1>
+<h1 class="title"><span id="sec-sql-nosql" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></span></h1>
 </div>
 
 
@@ -263,14 +281,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The competition data lives in MongoDB, not tables. If your mental model is still “rows and joins,” a few of MongoDB’s habits will trip you up — this chapter re-orients that model before you touch the real connection in <a href="mongodbcon.html" class="quarto-xref"><span>Chapter 5</span></a>.</p>
+<p>The competition data lives in MongoDB, not tables. If your mental model is still “rows and joins,” a few of MongoDB’s habits will trip you up — this chapter re-orients that model before you touch the real connection in <a href="mongodbcon.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
 </div>
 </div>
-<p>Already comfortable with SQL vs.&nbsp;NoSQL? Skip straight to <a href="mongodbcon.html" class="quarto-xref"><span>Chapter 5</span></a> and test your connection before the event starts — see its “Common pitfalls” section on network/allow-listing issues.</p>
+<p>Already comfortable with SQL vs.&nbsp;NoSQL? Skip straight to <a href="mongodbcon.html" class="quarto-xref"><span>Chapter 6</span></a> and test your connection before the event starts — see its “Common pitfalls” section on network/allow-listing issues.</p>
 <p><em>Written for readers comfortable with R, data frames, and relational databases (SQL, normalized tables, joins).</em></p>
 <hr>
-<section id="why-this-tutorial-exists" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="why-this-tutorial-exists"><span class="header-section-number">4.1</span> 1. Why This Tutorial Exists</h2>
+<section id="why-this-tutorial-exists" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="why-this-tutorial-exists"><span class="header-section-number">5.1</span> 1. Why This Tutorial Exists</h2>
 <p>If you’ve spent time with relational databases, your mental model of data storage is probably something like this:</p>
 <ul>
 <li>Data lives in <strong>tables</strong> with a <strong>fixed schema</strong> (columns defined in advance, with types).</li>
@@ -282,8 +300,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>NoSQL databases (of which MongoDB is the most popular example) relax or abandon several of these assumptions. Understanding <em>why</em> they do this, and <em>what you gain and lose</em>, is the goal of this tutorial.</p>
 <hr>
 </section>
-<section id="what-nosql-actually-means" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="what-nosql-actually-means"><span class="header-section-number">4.2</span> 2. What “NoSQL” Actually Means</h2>
+<section id="what-nosql-actually-means" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="what-nosql-actually-means"><span class="header-section-number">5.2</span> 2. What “NoSQL” Actually Means</h2>
 <p>“NoSQL” is a loose umbrella term (sometimes glossed as “Not Only SQL”) covering several different data models that don’t follow the relational (table-and-join) paradigm. The major families are:</p>
 <table class="caption-top table">
 <colgroup>
@@ -324,8 +342,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This tutorial focuses on <strong>document stores</strong>, and specifically <strong>MongoDB</strong>, because they’re the most common entry point and the comparison to relational tables is the most direct.</p>
 <hr>
 </section>
-<section id="the-core-idea-documents-instead-of-rows" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="the-core-idea-documents-instead-of-rows"><span class="header-section-number">4.3</span> 3. The Core Idea: Documents Instead of Rows</h2>
+<section id="the-core-idea-documents-instead-of-rows" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="the-core-idea-documents-instead-of-rows"><span class="header-section-number">5.3</span> 3. The Core Idea: Documents Instead of Rows</h2>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -362,8 +380,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A “document” is essentially a JSON object (technically stored as <strong>BSON</strong>, a binary superset of JSON with extra types like dates and integers). Documents are grouped into <strong>collections</strong>, which are the loose analogue of tables — except a collection has no fixed schema. Two documents in the same collection can have completely different fields.</p>
-<section id="a-translation-table-for-vocabulary" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="a-translation-table-for-vocabulary"><span class="header-section-number">4.3.1</span> A translation table for vocabulary</h3>
+<section id="a-translation-table-for-vocabulary" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="a-translation-table-for-vocabulary"><span class="header-section-number">5.3.1</span> A translation table for vocabulary</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
@@ -409,8 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="why-embed-instead-of-normalize" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="why-embed-instead-of-normalize"><span class="header-section-number">4.4</span> 4. Why Embed Instead of Normalize?</h2>
+<section id="why-embed-instead-of-normalize" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="why-embed-instead-of-normalize"><span class="header-section-number">5.4</span> 4. Why Embed Instead of Normalize?</h2>
 <p>This is the conceptual heart of the difference, and it’s worth dwelling on because it inverts a habit that’s deeply ingrained if you’ve learned relational design.</p>
 <p><strong>Relational design philosophy:</strong> normalize aggressively. Store each fact once. Avoid redundancy. Joins are cheap(-ish) and consistency matters more than read speed.</p>
 <p><strong>Document design philosophy:</strong> model around your <em>access patterns</em>. If you almost always fetch a customer along with their orders together, store them together, even if that means the word “Widget” is duplicated across many documents. Reads become a single lookup instead of a join across multiple tables — this matters a lot for web-application workloads with high read volume and simple, predictable query shapes.</p>
@@ -418,8 +436,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>There’s no free lunch here — it’s an explicit modeling decision, not a strictly-better technology.</p>
 <hr>
 </section>
-<section id="schema-flexibility-a-blessing-and-a-curse" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="schema-flexibility-a-blessing-and-a-curse"><span class="header-section-number">4.5</span> 5. Schema Flexibility: A Blessing and a Curse</h2>
+<section id="schema-flexibility-a-blessing-and-a-curse" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="schema-flexibility-a-blessing-and-a-curse"><span class="header-section-number">5.5</span> 5. Schema Flexibility: A Blessing and a Curse</h2>
 <p>In a relational database, adding a column to a 10-million-row table requires an <code>ALTER TABLE</code> migration and some care. In MongoDB, you can insert a document with a new field at any time — the collection doesn’t complain.</p>
 <p>For a statistician, the closest analogy is the difference between:</p>
 <ul>
@@ -437,11 +455,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This flexibility is genuinely useful when your data is naturally irregular (user-generated content, event logs with varying attributes, nested/hierarchical records). It’s a liability when you <em>want</em> the enforcement — e.g., you want the database itself to guarantee that <code>age</code> is always numeric, or that every document has an <code>email</code>. MongoDB does support optional <strong>schema validation</strong> rules, but they’re opt-in rather than the default posture of the system.</p>
 <hr>
 </section>
-<section id="querying-dplyrsql-habits-vs.-mongodbs-query-language" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="querying-dplyrsql-habits-vs.-mongodbs-query-language"><span class="header-section-number">4.6</span> 6. Querying: <code>dplyr</code>/SQL Habits vs.&nbsp;MongoDB’s Query Language</h2>
+<section id="querying-dplyrsql-habits-vs.-mongodbs-query-language" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="querying-dplyrsql-habits-vs.-mongodbs-query-language"><span class="header-section-number">5.6</span> 6. Querying: <code>dplyr</code>/SQL Habits vs.&nbsp;MongoDB’s Query Language</h2>
 <p>MongoDB queries are expressed as documents themselves (essentially, nested lists/JSON), which feels unusual at first if you’re used to SQL’s <code>SELECT ... WHERE ...</code> syntax or <code>dplyr::filter()</code>.</p>
-<section id="comparison-table" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="comparison-table"><span class="header-section-number">4.6.1</span> Comparison table</h3>
+<section id="comparison-table" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="comparison-table"><span class="header-section-number">5.6.1</span> Comparison table</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 11%">
@@ -495,8 +513,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="using-mongodb-from-r" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="using-mongodb-from-r"><span class="header-section-number">4.7</span> 7. Using MongoDB from R</h2>
+<section id="using-mongodb-from-r" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="using-mongodb-from-r"><span class="header-section-number">5.7</span> 7. Using MongoDB from R</h2>
 <p>You don’t have to leave R to work with MongoDB. The <code>mongolite</code> package provides a clean interface, and the workflow will feel close to what you already do with <code>DBI</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"mongolite"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mongolite)</span>
@@ -526,15 +544,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The big practical difference: <code>mongolite</code> queries and pipeline stages are written as <strong>JSON strings</strong>, not SQL strings — but the round trip (query in, tibble/data.frame out) is conceptually identical, which is good news for how much of your existing R workflow transfers.</p>
 <hr>
 </section>
-<section id="consistency-transactions-and-why-this-matters-to-you" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="consistency-transactions-and-why-this-matters-to-you"><span class="header-section-number">4.8</span> 8. Consistency, Transactions, and Why This Matters to You</h2>
+<section id="consistency-transactions-and-why-this-matters-to-you" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="consistency-transactions-and-why-this-matters-to-you"><span class="header-section-number">5.8</span> 8. Consistency, Transactions, and Why This Matters to You</h2>
 <p>Relational databases are traditionally built around <strong>ACID</strong> guarantees (Atomicity, Consistency, Isolation, Durability) — a transaction either fully happens or fully doesn’t, and the database enforces referential integrity via constraints.</p>
 <p>Historically, NoSQL document stores traded some of these guarantees for scalability, often described (loosely) via the <strong>CAP theorem</strong>: in the presence of a network partition across distributed servers, a system must choose between <strong>Consistency</strong> (every read gets the latest write) and <strong>Availability</strong> (every request gets <em>a</em> response, possibly stale). Many early NoSQL systems leaned toward availability and “eventual consistency.”</p>
 <p>Modern MongoDB has narrowed this gap substantially — it now supports multi-document ACID transactions — but the <em>default</em> mode of use, and the ecosystem’s design instincts, still favor flexible, denormalized, single-document operations over enforced cross-table integrity. If your work involves financial ledgers or anything where “the numbers must always add up, no exceptions, ever,” that’s traditionally been relational-database territory, and it’s worth understanding that this is a design lineage question, not just a feature checkbox — you can bolt strong consistency onto MongoDB, but it’s swimming against the current of how the system is typically used.</p>
 <hr>
 </section>
-<section id="when-each-approach-tends-to-fit-better" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="when-each-approach-tends-to-fit-better"><span class="header-section-number">4.9</span> 9. When Each Approach Tends to Fit Better</h2>
+<section id="when-each-approach-tends-to-fit-better" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="when-each-approach-tends-to-fit-better"><span class="header-section-number">5.9</span> 9. When Each Approach Tends to Fit Better</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 55%">
@@ -568,8 +586,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For a lot of statistical work — clean, rectangular datasets destined for modeling — relational databases (or just flat files/data frames) remain a very natural fit, and you’ll often find yourself <strong>flattening</strong> MongoDB documents back into rectangular data frames before doing any actual analysis, since most statistical methods assume tidy, rectangular input.</p>
 <hr>
 </section>
-<section id="a-worked-mini-example-same-data-both-ways" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="a-worked-mini-example-same-data-both-ways"><span class="header-section-number">4.10</span> 10. A Worked Mini-Example: Same Data, Both Ways</h2>
+<section id="a-worked-mini-example-same-data-both-ways" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="a-worked-mini-example-same-data-both-ways"><span class="header-section-number">5.10</span> 10. A Worked Mini-Example: Same Data, Both Ways</h2>
 <p><strong>Relational (two tables + a join):</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> customers (customer_id <span class="dt">INT</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, name TEXT);</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> orders (</span>
@@ -601,8 +619,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Notice the last line: even when working with MongoDB, you often end up reaching for <code>tidyr::unnest()</code> to get back to the rectangular shape you actually want for modeling. This is a common and completely normal pattern — document stores are often optimized for how an <em>application</em> writes and reads data, not for how a <em>statistician</em> wants to analyze it, and translating between the two is a routine part of the workflow.</p>
 <hr>
 </section>
-<section id="summary" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.11</span> 11. Summary</h2>
+<section id="summary" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.11</span> 11. Summary</h2>
 <ul>
 <li>MongoDB stores flexible, JSON-like <strong>documents</strong> in <strong>collections</strong>, instead of enforcing rows-in-tables with a fixed schema.</li>
 <li>The relational instinct to <em>normalize</em> is replaced by a document instinct to <em>denormalize/embed</em>, optimized around how the data will be read.</li>
@@ -1019,12 +1037,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./starter-template.html" class="pagination-link" aria-label="Using the Starter Template">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./mongodbcon.html" class="pagination-link" aria-label="Getting Your Competition Data Out of MongoDB Atlas and Into R">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Getting Your Competition Data Out of MongoDB Atlas and Into R</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./mongodbcon.html" class="pagination-link" aria-label="MongoDB Atlas to R: Connecting, Pipelines, and Text Analysis">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MongoDB Atlas to R: Connecting, Pipelines, and Text Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

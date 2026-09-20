@@ -123,7 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quarto-guide.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quarto-guide.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -156,20 +156,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./code-of-conduct.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./git-github.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto-guide.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./starter-template.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -184,21 +190,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sqlnosql.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">NoSQL and MongoDB: An Introduction for Statisticians</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mongodbcon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Getting Your Competition Data Out of MongoDB Atlas and Into R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MongoDB Atlas to R: Connecting, Pipelines, and Text Analysis</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./data-dict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Data dictionary for AI Incident Database</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./tidytext.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Resources for tidytext (Text Mining with R)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Resources for tidytext (Text Mining with R)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./visualisation-tables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Good Visualisation &amp; Tables</span></span></a>
   </div>
 </li>
     </ul>
@@ -211,13 +229,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#anatomy-of-a-.qmd-file" id="toc-anatomy-of-a-.qmd-file" class="nav-link active" data-scroll-target="#anatomy-of-a-.qmd-file"><span class="header-section-number">2.1</span> Anatomy of a <code>.qmd</code> file</a></li>
-  <li><a href="#render-your-report" id="toc-render-your-report" class="nav-link" data-scroll-target="#render-your-report"><span class="header-section-number">2.2</span> Render your report</a></li>
-  <li><a href="#set-your-output-format" id="toc-set-your-output-format" class="nav-link" data-scroll-target="#set-your-output-format"><span class="header-section-number">2.3</span> Set your output format</a></li>
-  <li><a href="#build-presentation-slides-required-from-every-team" id="toc-build-presentation-slides-required-from-every-team" class="nav-link" data-scroll-target="#build-presentation-slides-required-from-every-team"><span class="header-section-number">2.4</span> Build presentation slides (required from every team)</a></li>
-  <li><a href="#set-up-pdf-rendering-before-the-event" id="toc-set-up-pdf-rendering-before-the-event" class="nav-link" data-scroll-target="#set-up-pdf-rendering-before-the-event"><span class="header-section-number">2.5</span> Set up PDF rendering (before the event)</a></li>
-  <li><a href="#keep-the-report-reproducible-and-inside-the-word-limit" id="toc-keep-the-report-reproducible-and-inside-the-word-limit" class="nav-link" data-scroll-target="#keep-the-report-reproducible-and-inside-the-word-limit"><span class="header-section-number">2.6</span> Keep the report reproducible and inside the word limit</a></li>
-  <li><a href="#learn-more" id="toc-learn-more" class="nav-link" data-scroll-target="#learn-more"><span class="header-section-number">2.7</span> Learn more</a></li>
+  <li><a href="#anatomy-of-a-.qmd-file" id="toc-anatomy-of-a-.qmd-file" class="nav-link active" data-scroll-target="#anatomy-of-a-.qmd-file"><span class="header-section-number">3.1</span> Anatomy of a <code>.qmd</code> file</a></li>
+  <li><a href="#render-your-report" id="toc-render-your-report" class="nav-link" data-scroll-target="#render-your-report"><span class="header-section-number">3.2</span> Render your report</a></li>
+  <li><a href="#set-your-output-format" id="toc-set-your-output-format" class="nav-link" data-scroll-target="#set-your-output-format"><span class="header-section-number">3.3</span> Set your output format</a></li>
+  <li><a href="#build-presentation-slides-required-from-every-team" id="toc-build-presentation-slides-required-from-every-team" class="nav-link" data-scroll-target="#build-presentation-slides-required-from-every-team"><span class="header-section-number">3.4</span> Build presentation slides (required from every team)</a></li>
+  <li><a href="#set-up-pdf-rendering-before-the-event" id="toc-set-up-pdf-rendering-before-the-event" class="nav-link" data-scroll-target="#set-up-pdf-rendering-before-the-event"><span class="header-section-number">3.5</span> Set up PDF rendering (before the event)</a></li>
+  <li><a href="#keep-the-report-reproducible-and-inside-the-word-limit" id="toc-keep-the-report-reproducible-and-inside-the-word-limit" class="nav-link" data-scroll-target="#keep-the-report-reproducible-and-inside-the-word-limit"><span class="header-section-number">3.6</span> Keep the report reproducible and inside the word limit</a></li>
+  <li><a href="#learn-more" id="toc-learn-more" class="nav-link" data-scroll-target="#learn-more"><span class="header-section-number">3.7</span> Learn more</a></li>
   </ul>
 </nav>
     </div>
@@ -226,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-quarto" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Quarto</span></span></h1>
+<h1 class="title"><span id="sec-quarto" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></span></h1>
 </div>
 
 
@@ -256,9 +274,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Your submission requires both a reproducible report and a set of presentation slides — Quarto builds both from the same kind of source file. It runs your R code and inserts the real output every time you render, so you never copy-paste a number or a plot in by hand.</p>
 </div>
 </div>
-<p>The starter template (<a href="starter-template.html" class="quarto-xref"><span>Chapter 3</span></a>) already includes both: <code>docs/report.qmd</code> for the written report and <code>docs/slides.qmd</code> for presentation slides.</p>
-<section id="anatomy-of-a-.qmd-file" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="anatomy-of-a-.qmd-file"><span class="header-section-number">2.1</span> Anatomy of a <code>.qmd</code> file</h2>
+<p>The starter template (<a href="starter-template.html" class="quarto-xref"><span>Chapter 4</span></a>) already includes both: <code>docs/report.qmd</code> for the written report and <code>docs/slides.qmd</code> for presentation slides.</p>
+<section id="anatomy-of-a-.qmd-file" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="anatomy-of-a-.qmd-file"><span class="header-section-number">3.1</span> Anatomy of a <code>.qmd</code> file</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Team Name — Datathon Submission"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Team Name"</span></span>
@@ -279,8 +297,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Add <code>#| echo: false</code> inside a chunk to keep the output but hide the code — useful for staying within a word limit.</li>
 </ul>
 </section>
-<section id="render-your-report" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="render-your-report"><span class="header-section-number">2.2</span> Render your report</h2>
+<section id="render-your-report" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="render-your-report"><span class="header-section-number">3.2</span> Render your report</h2>
 <ul>
 <li><p>RStudio/Positron: click <strong>Render</strong>, or press <code>Cmd/Ctrl+Shift+K</code>.</p></li>
 <li><p>Command line:</p>
@@ -290,8 +308,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Use <code>quarto preview</code> while you write — it catches broken chunks immediately instead of at the end.</p>
 </section>
-<section id="set-your-output-format" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="set-your-output-format"><span class="header-section-number">2.3</span> Set your output format</h2>
+<section id="set-your-output-format" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="set-your-output-format"><span class="header-section-number">3.3</span> Set your output format</h2>
 <p>Both HTML <strong>and</strong> PDF are required for the report — list both formats in the YAML and Quarto renders one file for each:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
@@ -302,8 +320,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render report.qmd   <span class="co"># produces report.html and report.pdf</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The report has a <strong>3,000-word limit</strong>, excluding code, tables, figure captions, and references.</p>
 </section>
-<section id="build-presentation-slides-required-from-every-team" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="build-presentation-slides-required-from-every-team"><span class="header-section-number">2.4</span> Build presentation slides (required from every team)</h2>
+<section id="build-presentation-slides-required-from-every-team" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="build-presentation-slides-required-from-every-team"><span class="header-section-number">3.4</span> Build presentation slides (required from every team)</h2>
 <p>A finished slide deck is part of your submission, not an optional extra — every team builds one, even though only the 5 finalists actually present it live (2:15–3:30 PM, Day 2: 10 min talk + 5 min Q&amp;A each). Treat it with the same care as the report: it’s judged on Professional Communication just like everything else you submit.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Team Name — Datathon Presentation"</span></span>
@@ -329,15 +347,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>Key finding...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="set-up-pdf-rendering-before-the-event" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="set-up-pdf-rendering-before-the-event"><span class="header-section-number">2.5</span> Set up PDF rendering (before the event)</h2>
+<section id="set-up-pdf-rendering-before-the-event" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="set-up-pdf-rendering-before-the-event"><span class="header-section-number">3.5</span> Set up PDF rendering (before the event)</h2>
 <p>Since PDF is a required output, don’t leave this until Day 2. PDF needs LaTeX — install it once, ahead of time:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Render both formats and open both files before the deadline — a report that renders fine to HTML can still fail on PDF (e.g.&nbsp;an image or table that doesn’t fit the page).</p>
 </section>
-<section id="keep-the-report-reproducible-and-inside-the-word-limit" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="keep-the-report-reproducible-and-inside-the-word-limit"><span class="header-section-number">2.6</span> Keep the report reproducible and inside the word limit</h2>
+<section id="keep-the-report-reproducible-and-inside-the-word-limit" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="keep-the-report-reproducible-and-inside-the-word-limit"><span class="header-section-number">3.6</span> Keep the report reproducible and inside the word limit</h2>
 <ol type="1">
 <li>Render early and often — don’t wait until the deadline to find a broken chunk.</li>
 <li>Decide how much code you want visible in the final report — the <code>echo</code>, <code>warning</code>, and <code>message</code> options (set per chunk, or globally under <code>execute:</code> in the YAML) control this. There’s no required setup here; choose whatever makes your report read cleanly.</li>
@@ -346,8 +364,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Keep the raw <code>.qmd</code> in your GitHub repo, not just the rendered file — the repo is what gets checked for reproducibility.</li>
 </ol>
 </section>
-<section id="learn-more" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="learn-more"><span class="header-section-number">2.7</span> Learn more</h2>
+<section id="learn-more" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="learn-more"><span class="header-section-number">3.7</span> Learn more</h2>
 <ul>
 <li>&lt;startr.numbat.space&gt; — the club’s starting point for Quarto.</li>
 <li><a href="https://quarto.org/docs/guide/" class="uri">https://quarto.org/docs/guide/</a> — official docs, every format and option.</li>
@@ -762,12 +780,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./git-github.html" class="pagination-link" aria-label="Git + GitHub Desktop">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Git + GitHub Desktop</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./starter-template.html" class="pagination-link" aria-label="Using the Starter Template">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using the Starter Template</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

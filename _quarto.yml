@@ -6,6 +6,7 @@ book:
   author: "MBAT Club"
   chapters:
     - index.qmd
+    - code-of-conduct.qmd
     - git-github.qmd
     - quarto-guide.qmd
     - starter-template.qmd

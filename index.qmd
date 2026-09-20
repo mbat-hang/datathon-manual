@@ -17,6 +17,8 @@ and @sec-mongodb-connect for the full setup.
 
 ## How to use this manual
 
+- @sec-code-of-conduct — the standards of behaviour we expect from everyone
+  at the event, and how to report a concern.
 - @sec-git-github — your team's submission is a public GitHub repository,
   so this is the one chapter everyone on the team should be comfortable
   with before Day 1.

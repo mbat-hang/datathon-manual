@@ -123,7 +123,7 @@ MONGO_URI="mongodb+srv://myusername:mypassword@ai-incident-database.ugkyb5n.mong
 ```r
 library(mongolite)
 
-db_name <- "aiidprod"   # confirm with organisers
+db_name <- "aiidprod"  
 
 reports_conn <- mongo(collection = "reports", db = db_name,
                        url = Sys.getenv("MONGO_URI"))
@@ -151,13 +151,15 @@ server-side:
 ```r
 library(tidyverse)
 
-reports <- reports_conn$find(
-  fields = '{
+report_cols <- '{
     "_id": 1, "report_number": 1, "title": 1, "plain_text": 1,
     "description": 1, "tags": 1, "authors": 1, "language": 1,
     "source_domain": 1, "date_published": 1
   }'
-) |> as_tibble()
+
+
+reports <- reports_conn$find(
+  fields = report_cols) |> as_tibble()
 
 glimpse(reports)
 ```
@@ -173,6 +175,9 @@ reports_en <- reports_conn$find(
   fields = '{"_id": 1, "report_number": 1, "title": 1, "plain_text": 1}'
 ) |> as_tibble()
 ```
+
+For more information on the query syntax visit,
+<https://jeroen.github.io/mongolite/query-data.html#query-syntax>
 
 ### 4.3 Pull the incidents and join on `report_number`
 
@@ -253,6 +258,11 @@ tends to carry boilerplate (bylines, "read more" links, share-button text). Do a
 light cleaning pass and keep the original column in case later analysis needs
 it:
 
+::: {.callout-warning}
+The following is only a suggestion and is not guaranteed to produce fully
+cleaned text ready for analysis.
+:::
+
 ```r
 library(textclean)
 
@@ -260,7 +270,7 @@ reports <- reports |>
   mutate(
     text_clean = plain_text |>
       replace_contraction() |>          # "don't" -> "do not"
-      replace_url("") |>
+      replace_url() |>
       replace_html() |>
       str_squish()                       # trim/collapse whitespace
   )
